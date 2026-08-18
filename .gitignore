@@ -1,0 +1,31 @@
+# 中间产物（说文数据库、字书数据源、npm 包等，体积大且可重建）
+.workbuddy/
+
+# 备份文件
+*.bak
+
+# 大文件（PDF 资料）
+*.pdf
+
+# 商业字体（方正甲骨文、金文大篆体有版权，不随仓库分发）
+fonts/
+
+# 遗留资源
+data/oracle_font_chars.json
+data/chars.js
+
+# 其他项目目录
+obsidian/
+
+# 测试/旧文件
+simple.html
+static_preview.html
+
+# 中文重复脚本
+build_补全字段.py
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

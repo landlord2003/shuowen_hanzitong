@@ -1,0 +1,41 @@
+# 许可证
+
+本项目采用 **Creative Commons 署名-非商业性使用-相同方式共享 4.0 国际（CC BY-NC-SA 4.0）** 许可证。
+
+完整法律文本：https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-hans
+
+## 简要说明（非法律摘要）
+
+**你可以：**
+- ✅ 共享：复制、分发本项目
+- ✅ 改编：修改、构建于本项目之上
+- ✅ 个人学习、研究、非商业使用
+
+**你必须遵守：**
+- ⚠️ **署名（BY）**：注明来源，包括 EVOBC 数据集（见下方署名要求）
+- 🔴 **非商业（NC）**：不得用于商业目的
+- 🔴 **相同方式共享（SA）**：改编作品必须以相同许可证（CC BY-NC-SA 4.0）发布
+
+## 署名要求
+
+使用本项目时，请注明以下数据来源：
+
+> - 字形数据：EVOBC（Haisu Guan et al., "An open dataset for the evolution of oracle bone characters: EVOBC", 2024），CC BY-NC-SA 4.0
+> - 说文数据：shuowenjiezi/shuowen（Apache 2.0）
+> - 后起字溯源：《玉篇》《广韵》《康熙字典》（公版古籍），文本整理自 mengzhiwu/chtxt
+
+## 各组成部分的许可证
+
+| 组成部分 | 许可证 |
+|---|---|
+| 代码（Python 构建脚本、JS 渲染逻辑） | CC BY-NC-SA 4.0（随项目整体） |
+| 说文原文/反切/段注/异体 | Apache 2.0（原始数据），随项目以 CC BY-NC-SA 4.0 发布 |
+| 字形图（data/dataset.bin） | CC BY-NC-SA 4.0（EVOBC 原始许可） |
+| 六书/本义/今义/演变（AI 生成） | 自有，随项目以 CC BY-NC-SA 4.0 发布 |
+
+## 关于商业化
+
+本项目**不可直接商业化**，因为字形图底层 EVOBC 数据集的 **NC（非商业）** 条款。如需商业使用，请：
+
+1. 联系 EVOBC 作者（Haisu Guan，华中科技大学）获取商业授权；或
+2. 更换为可商用的字形数据源。
