@@ -1,17 +1,18 @@
 # 说文解字 · 汉字知识库
 
-一个本地离线可用的汉字知识工具，收录 **3500 个常用汉字**（《通用规范汉字表》一级字表），提供字形演变、说文原文、段玉裁注、六书、本义今义、后起字溯源等完整信息。
+一个本地离线可用的汉字知识工具，收录 **8105 个汉字**（《通用规范汉字表》全表：一级 3500 + 二级 3000 + 三级 1605），提供字形演变、说文原文、段玉裁注、六书、本义今义、后起字溯源等完整信息。
 
 ## ✨ 功能特性
 
-- **3500 常用字**：拼音、部首、笔画、六书、繁体对照
-- **字形演变**：甲骨文 → 金文 → 简牍帛书 → 篆书 → 隶书 → 楷书，6 书体本地离线渲染
-- **说文原文**：2763 字精确《说文解字》原文 + 反切
-- **段玉裁注**：2631 字段玉裁《说文解字注》全文
-- **异体重文**：古文、籀文等异体字形
-- **后起字溯源**：《玉篇》（543年）、《广韵》（1008年）、《康熙字典》（1716年）三源对照
+- **8105 字全覆盖**：拼音（含多音字）、部首（康熙 214 部体系）、笔画（Unicode 权威数据）、六书、繁体对照
+- **字形演变**：甲骨文 → 金文 → 简牍帛书 → 篆书 → 隶书 → 楷书，6 书体本地离线渲染（覆盖 71.7%）
+- **说文原文**：5378 字精确《说文解字》原文 + 反切（66.4%）
+- **段玉裁注**：5051 字段玉裁《说文解字注》全文
+- **异体重文**：847 字古文、籀文等异体字形
+- **后起字溯源**：《玉篇》（543年，51.0%）、《广韵》（1008年，52.7%）、《康熙字典》（1716年，60.4%）三源对照
 - **来源标注**：每个字段标注出处，权威数据与 AI 生成内容明确区分
-- **音译字甄别**：明确标注"啡=唾声≠咖啡"等同名异义陷阱
+- **音译字甄别**：191 字明确标注"啡=唾声≠咖啡"等同名异义/化学元素/拟声词陷阱
+- **多音字标注**：230 个常用多音字补注多个读音（如"行 xíng/háng"）
 
 ## 🚀 快速开始
 
@@ -32,34 +33,52 @@ python -m http.server 8765 --bind 127.0.0.1
 ## 📦 目录结构
 
 ```
-├── index.html              # 最终产物（单文件，内嵌 3500 字数据 + 字形渲染）
+├── index.html              # 最终产物（单文件，内嵌 8105 字数据 + 字形渲染，约13MB）
 ├── start.bat               # 一键启动脚本
 ├── data/
-│   ├── characters.json     # 3500 字完整数据（含反切/段注/溯源）
+│   ├── characters.json     # 8105 字完整数据（含反切/段注/溯源/多音）
 │   ├── dataset.bin         # 字形数据集（EVOBC，35MB）
 │   ├── dataset-reader.js   # 浏览器端读取器（IIFE）
 │   └── fzstd.umd.js        # 纯 JS zstd 解压器
 ├── build_web.py            # 主构建脚本：生成 index.html
+├── build_extend.py         # 4605 新增字权威字段生成（说文/康熙/玉篇/广韵）
+├── build_extend_auto.py    # 拼音(pypinyin)/后起字本义/六书自动补全
+├── build_merge_extend.py   # 合并 8105 字
 ├── build_enrich.py         # 补全反切/段注/异体
 ├── build_trace.py          # 补后起字溯源（玉篇/广韵/康熙）
 ├── build_trace_note.py     # 音译字/新造字甄别标注
-├── build_final.py          # 合并数据源
+├── build_trace_extend.py   # 化学元素/音译字甄别扩展
+├── build_polyphone.py      # 多音字补注
+├── build_final.py          # 合并数据源（3500 字基础）
 ├── build_from_shuowen.py   # 从说文推导六书/本义
+├── build_fix_radical_unihan.py  # 部首 Unihan 权威修正
 ├── build_assets.py         # 生成 dataset-reader.js
 ├── merge_shuowen.py        # 说文数据库匹配
-└── requirements.txt        # 数据重建依赖
+└── requirements.txt        # 数据重建依赖（opencc + pypinyin）
 ```
 
 ## 📚 数据来源与许可
 
 | 数据 | 来源 | 许可证 | 说明 |
 |---|---|---|---|
-| 说文原文 / 反切 / 段注 / 异体 | [shuowenjiezi/shuowen](https://github.com/shuowenjiezi/shuowen) | Apache 2.0 | 2763 字精确原文 |
+| 说文原文 / 反切 / 段注 / 异体 | [shuowenjiezi/shuowen](https://github.com/shuowenjiezi/shuowen) | Apache 2.0 | 5378 字精确原文 |
 | 字形图 | [EVOBC](https://github.com/RomanticGodVAN/character-Evolution-Dataset) | **CC BY-NC-SA 4.0** | 甲骨文/金文/篆书等古字形，经 [character-evolution-dataset-1bit](https://github.com/leonsilicon/character-evolution-dataset-1bit) 封装 |
 | 后起字溯源 | 《玉篇》《广韵》《康熙字典》 | 公版古籍 | 来源 [mengzhiwu/chtxt](https://github.com/mengzhiwu/chtxt)、[omnilingual/han-chem](https://github.com/omnilingual/han-chem) |
+| 笔画 / 部首 | [Unicode Unihan](https://www.unicode.org/Public/UCD/latest/ucd/) | Unicode 数据文件许可 | kTotalStrokes + kRSUnicode（康熙 214 部） |
+| 拼音 | 说文数据库 + [pypinyin](https://github.com/mozillazg/python-pinyin) | MIT / Apache 2.0 | 多音字人工补注 |
 | 六书 / 本义 / 今义 / 演变 | AI 生成 | 自有 | 页面已标注"待核验" |
 
 > **⚠️ 重要许可说明**：字形图底层为 EVOBC 数据集（**CC BY-NC-SA 4.0**），其中 **NC = 非商业用途**。本项目整体受此约束，**不可用于商业用途**；衍生作品需以相同协议（CC BY-NC-SA 4.0）发布并署名 EVOBC。商业化需先获得 EVOBC 作者授权或更换字形数据源。
+
+## 🔍 数据质量说明
+
+8105 字经过三轮语义抽查与多轮程序化核查：
+
+- **六书**：形声 6771 · 会意 1050 · 象形 233 · 指事 51，以许慎《说文》构形为准（个别争议字保留现代共识）
+- **部首**：统一到康熙 214 部体系（213 种），已消除简化偏旁/繁体混用
+- **笔画**：Unicode Unihan 权威数据
+- **程序性错误**（字段错位、反切误提取、拼音 IPA、字段重复）：已清零
+- **语义字段**（六书/本义/今义/演变）：AI 生成，抽样错误率从 14% 逐轮降至 4%，页面已通过来源标注区分权威与 AI 生成
 
 ## 🔧 数据重建（可选）
 
@@ -73,7 +92,7 @@ pip install -r requirements.txt
 python build_web.py
 ```
 
-完整重建流程（从零生成 3500 字数据）需准备数据源（说文数据库、字书数据），详见各构建脚本头部注释。
+完整重建流程（从零生成 8105 字数据）需准备数据源（说文数据库、字书数据、Unihan），详见各构建脚本头部注释。
 
 ## 📄 许可证
 

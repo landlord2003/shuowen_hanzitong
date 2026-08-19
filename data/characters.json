@@ -107590,7 +107590,7 @@
    "trace_yupian": "",
    "trace_guangyun": "子荅，歍嘁",
    "original_source": "《康熙字典》(1716年)",
-   "trace_note": "拟声词/音译字，近代新造"
+   "trace_note": "拟声词，近代新造"
   },
   {
    "id": 5699,
@@ -112652,8 +112652,7 @@
    "trace_kangxi": "嚕【玉篇】力覩切【集韻】籠五切，𠀤音魯。【玉篇】語也。　又【類篇】諂也。　又【正字通】吐嚕猶可惜也。【元梁王女阿㯼詩】吐嚕吐嚕叚阿奴。",
    "trace_yupian": "力覩切。語也。",
    "trace_guangyun": "",
-   "original_source": "《玉篇》(543年)",
-   "trace_note": "拟声词/音译字，近代新造"
+   "original_source": "《玉篇》(543年)"
   },
   {
    "id": 5936,
@@ -157211,7 +157210,7 @@
    "radical": "方",
    "radical_name": "方部",
    "stroke": 18,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "導車所以載。全羽以爲允。允，進也",
    "modern": "导车之羽旗",
    "shuowen": "導車所以載。全羽以爲允。允，進也。从㫃遂聲。",
@@ -157469,7 +157468,7 @@
    "radical": "鬲",
    "radical_name": "鬲部",
    "stroke": 19,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "釜屬",
    "modern": "釜类炊器；聚集",
    "shuowen": "釜屬。从鬲㚇聲。",
