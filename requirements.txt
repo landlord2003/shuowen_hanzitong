@@ -1,2 +1,3 @@
 # 数据构建依赖（仅"重建/修改数据"时需要，仅"查看页面"无需安装）
 opencc-python-reimplemented>=0.1.7
+pypinyin>=0.51.0
