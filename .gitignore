@@ -29,3 +29,7 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# 换源管线中间产物（抓取图与原图，体积大，运行期生成，不入库）
+data/sinica_raw/
+tools/sinica_pipeline/__pycache__/

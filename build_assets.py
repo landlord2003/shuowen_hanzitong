@@ -30,7 +30,9 @@ body = "\n".join(body_lines).strip()
 
 header = """/* 精简浏览器端 dataset reader（IIFE，普通 <script> 可加载，file:// 双击可用）
  * 依赖：全局 fzstd（先加载 fzstd.umd.js）
- * 来源：character-evolution-dataset-1bit (底层 EVOBC, CC BY-NC-SA 4.0)
+ * 代码库：character-evolution-dataset-1bit（MIT，作者 Leon Si）——仅读取/解码逻辑
+ * 数据来源：已切换为「中央研究院漢字構形資料庫 / 小學堂」（CC BY-SA 2.5 TW，可商用，须署名 + 衍生同授权）
+ *   旧版非商业授权字形图已下架，禁止再拷入 dataset.bin
  */
 (function (global) {
 "use strict";
@@ -61,9 +63,14 @@ with open(DST_READER, "w", encoding="utf-8") as f:
     f.write(out)
 print("[1/3] reader  ->", DST_READER, "(%d chars)" % len(out))
 
-# 2) 复制 dataset.bin
-shutil.copyfile(SRC_BIN, DST_BIN)
-print("[2/3] bin     ->", DST_BIN, "(%d bytes)" % os.path.getsize(DST_BIN))
+# 2) dataset.bin —— 已由 sinica_pipeline 管线管理，禁止拷入 EVOBC(NC) 原包
+#    SRC_BIN 指向 npm 包里的 EVOBC 数据（CC BY-NC-SA 4.0），商用侵权，故此处不再覆盖。
+#    合规空 bin（154B，MAGIC=CEDS0002，0 记录）现已就位，App 自动降级为纯文字字形演变。
+#    待从可联网环境跑通 sinica_pipeline 后，再用合规字形覆盖本文件。
+if os.path.exists(DST_BIN):
+    print("[2/3] bin     -> 保留现有合规 dataset.bin (%d bytes)，跳过 EVOBC 拷贝" % os.path.getsize(DST_BIN))
+else:
+    print("[2/3] bin     -> 警告：缺失 dataset.bin，请运行 sinica_pipeline/gen_empty_bin.py 生成合规空包")
 
 # 3) 复制 fzstd umd
 shutil.copyfile(SRC_FZSTD, DST_FZSTD)

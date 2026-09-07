@@ -1,6 +1,8 @@
 /* 精简浏览器端 dataset reader（IIFE，普通 <script> 可加载，file:// 双击可用）
  * 依赖：全局 fzstd（先加载 fzstd.umd.js）
- * 来源：character-evolution-dataset-1bit (底层 EVOBC, CC BY-NC-SA 4.0)
+ * 代码库：character-evolution-dataset-1bit（MIT，作者 Leon Si）——仅读取/解码逻辑
+ * 数据来源：已切换为「中央研究院漢字構形資料庫 / 小學堂」（CC BY-SA 2.5 TW，可商用，须署名 + 衍生同授权）
+ *   旧版非商业授权字形图已下架，禁止再拷入 dataset.bin
  */
 (function (global) {
 "use strict";
