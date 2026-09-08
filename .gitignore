@@ -33,3 +33,12 @@ venv/
 # 换源管线中间产物（抓取图与原图，体积大，运行期生成，不入库）
 data/sinica_raw/
 tools/sinica_pipeline/__pycache__/
+tools/rubbing_pipeline/_glyph_tmp/
+tools/rubbing_pipeline/_selftest_*/
+tools/rubbing_pipeline/_test_*.bin
+tools/rubbing_pipeline/_*.png
+tools/rubbing_pipeline/_selftest_dataset.bin
+tools/rubbing_pipeline/_probe.svg
+tools/rubbing_pipeline/dataset.attribution.json
+# BabelStone 等外部字体不随仓库分发（无鉴权映射表，已确认不可用于古文字渲染）
+data/fonts/

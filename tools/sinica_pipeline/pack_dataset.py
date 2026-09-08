@@ -52,12 +52,19 @@ SCRIPT_PREFIX = {
     "seal": "Z_",
     "clerical": "L_",
     "regular": "K_",
+    "glyphwiki": "G_",
 }
 
 
 def load_image_as_gray(path, max_side=160, threshold=128):
     """加载图片 -> 1 通道 8bit 灰度像素(0/255)，黑底白字或白底黑字统一成黑字白底(便于 App 黑底显示反向)。"""
-    im = Image.open(path).convert("L")  # 灰度
+    im = Image.open(path)
+    # 透明背景（SVG 栅格化常见）先合成到白底，否则 convert("L") 会把透明当成黑色
+    if im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info):
+        im = im.convert("RGBA")
+        bg = Image.new("RGBA", im.size, (255, 255, 255, 255))
+        im = Image.alpha_composite(bg, im)
+    im = im.convert("L")  # 灰度
     # 等比缩放到 max_side 以内
     w, h = im.size
     scale = min(1.0, max_side / max(w, h))

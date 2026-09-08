@@ -3,6 +3,7 @@
  * 代码库：character-evolution-dataset-1bit（MIT，作者 Leon Si）——仅读取/解码逻辑
  * 数据来源：已切换为「中央研究院漢字構形資料庫 / 小學堂」（CC BY-SA 2.5 TW，可商用，须署名 + 衍生同授权）
  *   旧版非商业授权字形图已下架，禁止再拷入 dataset.bin
+ *   新增「字源」阶段：GlyphWiki（CC BY-SA 2.1 JP，可商用，须署名 + 衍生同授权）
  */
 (function (global) {
 "use strict";
@@ -61,13 +62,14 @@ const MAGIC = new Uint8Array([
 //#region src/dataset.ts
 /** Chronological rank of each {@link Script}, oldest first. */
 const SCRIPT_ORDER = {
-	"oracle-bone": 0,
-	bronze: 1,
-	"bamboo-silk": 2,
-	seal: 3,
-	clerical: 4,
-	regular: 5,
-	other: 6
+	"glyphwiki": 0,
+	"oracle-bone": 1,
+	"bronze": 2,
+	"bamboo-silk": 3,
+	"seal": 4,
+	"clerical": 5,
+	"regular": 6,
+	"other": 7
 };
 /**
 * Classify a glyph key (or bare filename) into a {@link Script} from its prefix.
@@ -87,6 +89,7 @@ function parseScript(keyOrFilename) {
 	if (filename.startsWith("L_")) return "clerical";
 	if (filename.startsWith("K_")) return "regular";
 	if (filename.startsWith("X_")) return "regular";
+	if (filename.startsWith("G_")) return "glyphwiki";
 	return "other";
 }
 /**
@@ -328,6 +331,7 @@ var SCRIPT_METADATA = {
   "seal": { chinese: "篆文" },
   "clerical": { chinese: "隶书" },
   "regular": { chinese: "楷书" },
+  "glyphwiki": { chinese: "字源" },
   "other": { chinese: "其他" }
 };
 global.__CDS = {

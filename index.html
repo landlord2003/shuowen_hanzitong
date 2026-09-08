@@ -55,7 +55,7 @@ input:focus{border-color:var(--accent)}
 .src-legend .warn{color:#ffb400}
 </style></head><body>
 <h1>说文解字</h1>
-<p class="sub">8105字·甲骨文到简体演变·字形来源·中央研究院漢字構形資料庫（CC BY-SA 2.5 TW）</p>
+<p class="sub">8105字·字源溯源＋字形演变（字源：GlyphWiki CC BY-SA 2.1 JP；甲骨→隶：中研院漢字構形資料庫 CC BY-SA 2.5 TW 待补全）</p>
 <input id="searchInput" placeholder="搜索：输入b=拼音b开头，shuǐ=精确" autofocus>
 <div class="filters" id="liushuFilters">
 <button class="filter-btn active" data-ls="全部">全部</button>
@@ -120,7 +120,7 @@ function buildLocalStages(baseChar, hasTrad, c){
   var glyphs = CDS_READER.glyphsForCharacter(baseChar);
   if ((!glyphs || !glyphs.length) && hasTrad) glyphs = CDS_READER.glyphsForCharacter(c.char);
   if (!glyphs || !glyphs.length) return [];
-  var order = ["oracle-bone","bronze","bamboo-silk","seal","clerical","regular"];
+  var order = ["glyphwiki","oracle-bone","bronze","bamboo-silk","seal","clerical","regular"];
   var stages = [];
   for (var i=0;i<order.length;i++){
     var list = glyphs.filter(function(g){ return g.script === order[i]; });
@@ -200,7 +200,7 @@ function showDetail(id) {
       "<div>\u62fc\u97f3: <span>" + c.pinyin + "</span></div>" +
       (c.fanqie ? "<div>\u53cd\u5207: <span>" + c.fanqie + "</span><i class='src-mini'>\u51fa\u300a\u8bf4\u6587\u300b</i></div>" : "") +
     "</div>" +
-    "<div class='detail-section'><h4>\u5b57\u5f62\u6f14\u53d8</h4><i class='src-mini'>\u51fa\uff1a\u4e2d\u592e\u7814\u7a76\u9662\u6f22\u5b57\u69cb\u5f62\u8cc7\u6599\u5eab\uff08CC BY-SA 2.5 TW\uff09</i>" + noteHTML + "<div class='evo-timeline'>" + evoHTML + "</div></div>" +
+    "<div class='detail-section'><h4>\u5b57\u5f62\u6f14\u53d8</h4><i class='src-mini'>\u5b57\u6e90\u56fe\uff1aGlyphWiki\uff08CC BY-SA 2.1 JP\uff09\uff5c\u7532\u9aa8\u2192\u96b6\uff1a\u4e2d\u7814\u9662\u6f22\u5b57\u69cb\u5f62\u8cc7\u6599\u5eab\uff08CC BY-SA 2.5 TW\uff0c\u5f85\u8865\u5168\uff09</i>" + noteHTML + "<div class='evo-timeline'>" + evoHTML + "</div></div>" +
     "<div class='detail-section'><h4>\u672c\u4e49 vs \u4eca\u4e49</h4>" +
       "<div class='meaning-compare'>" +
         "<div class='meaning-box'><div class='label'>\u672c\u4e49\uff08\u539f\u59cb\u542b\u4e49\uff09</div><div class='content'>" + (c.original||"") + "</div></div>" +
