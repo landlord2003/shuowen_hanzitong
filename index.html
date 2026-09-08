@@ -125,11 +125,16 @@ function buildLocalStages(baseChar, hasTrad, c){
   var order = ["glyphwiki","oracle-bone","bronze","bamboo-silk","seal","clerical","regular"];
   var stages = [];
   for (var i=0;i<order.length;i++){
-    var list = glyphs.filter(function(g){ return g.script === order[i]; });
-    if (!list.length) continue;
-    var raw = CDS_READER.getRaw(list[0].key);
-    var era = __CDS.SCRIPT_METADATA[order[i]].chinese;
-    stages.push({era: era, img: glyphToDataURL(raw)});
+    var script = order[i];
+    if (script === "regular") continue;
+    var list = glyphs.filter(function(g){ return g.script === script; });
+    if (list.length){
+      var raw = CDS_READER.getRaw(list[0].key);
+      var era = __CDS.SCRIPT_METADATA[script].chinese;
+      stages.push({era: era, img: glyphToDataURL(raw)});
+    } else {
+      stages.push({era: __CDS.SCRIPT_METADATA[script].chinese, pending: true});
+    }
   }
   if (hasTrad) stages.push({era:"\u7e41\u4f53", glyph: c.trad});
   stages.push({era:"\u7b80\u4f53", glyph: c.char});
