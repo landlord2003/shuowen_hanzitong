@@ -40,5 +40,8 @@ tools/rubbing_pipeline/_*.png
 tools/rubbing_pipeline/_selftest_dataset.bin
 tools/rubbing_pipeline/_probe.svg
 tools/rubbing_pipeline/dataset.attribution.json
+# B 路线交付物（WeChat 直发用，可由 tools/rubbing_pipeline/make_deliverable.py 重建）
+shuowen_b_route_package.zip
+B路线操作手册.pdf
 # BabelStone 等外部字体不随仓库分发（无鉴权映射表，已确认不可用于古文字渲染）
 data/fonts/
