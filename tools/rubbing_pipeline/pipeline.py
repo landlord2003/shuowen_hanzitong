@@ -14,11 +14,13 @@ sys.path.insert(0, os.path.join(HERE, "..", "sinica_pipeline"))
 from pack_dataset import build_records, pack  # noqa: E402
 from sources import Attribution  # noqa: E402
 from adapters.wikimedia_seal import fetch as wm_fetch  # noqa: E402
+from adapters.wikimedia_ancient import fetch as wa_fetch  # noqa: E402
 from adapters.glyphwiki import fetch as gw_fetch  # noqa: E402
 from adapters import scan_trace  # noqa: E402
 
 SOURCE_FUNCS = {
     "wikimedia_seal": wm_fetch,
+    "wikimedia_ancient": wa_fetch,
     "glyphwiki": gw_fetch,
     "scan_trace": scan_trace.fetch,
 }

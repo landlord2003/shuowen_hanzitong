@@ -3,5 +3,25 @@
     "source": "GlyphWiki",
     "license": "CC BY-SA 2.1 JP（须署名 + 衍生同授权）",
     "count": 8105
+  },
+  "seal": {
+    "source": "Wikimedia Commons (Ancient Chinese characters)",
+    "license": "Public Domain / 公版（可自由商用）",
+    "count": 747
+  },
+  "bamboo-silk": {
+    "source": "Wikimedia Commons (Ancient Chinese characters)",
+    "license": "Public Domain / 公版（可自由商用）",
+    "count": 321
+  },
+  "bronze": {
+    "source": "Wikimedia Commons (Ancient Chinese characters)",
+    "license": "Public Domain / 公版（可自由商用）",
+    "count": 500
+  },
+  "oracle-bone": {
+    "source": "Wikimedia Commons (Ancient Chinese characters)",
+    "license": "Public Domain / 公版（可自由商用）",
+    "count": 390
   }
 }

@@ -45,3 +45,25 @@ shuowen_b_route_package.zip
 B路线操作手册.pdf
 # BabelStone 等外部字体不随仓库分发（无鉴权映射表，已确认不可用于古文字渲染）
 data/fonts/
+
+# rubbing_pipeline 运行时产物（抓取 PNG/SVG 85MB+、日志、中间 bin、自测产物）
+tools/rubbing_pipeline/_glyph_tmp/
+tools/rubbing_pipeline/_selftest_tmp/
+tools/rubbing_pipeline/_full_run*.log
+tools/rubbing_pipeline/_thumb_guess.log
+tools/rubbing_pipeline/_proxy_diag.txt
+tools/rubbing_pipeline/__pycache__/
+tools/rubbing_pipeline/adapters/__pycache__/
+
+# 中间 bin（合并前的分源产物，最终只有 data/dataset.bin）
+data/dataset.bin.prev
+data/dataset.bin.tmp
+data/dataset_b_route.bin
+data/dataset_b_seal.bin
+data/dataset_glyphwiki.bin
+
+# 已作废方案（BabelStone 字体含 51MB ttf 大文件；中研院海外伙伴方案已废弃）
+tools/babelstone_pipeline/
+partner_package/
+partner_package.zip
+PARTNER_README.txt

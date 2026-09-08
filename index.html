@@ -2,9 +2,13 @@
 <html lang="zh-CN">
 <head><meta charset="UTF-8"><title>说文解字·汉字知识库</title>
 <style>
+/* BabelStone Han 子集字体（仅含 8105 字+繁体的现代楷体形态，1.94 MB woff2） */
+/* 授权：Arphic Public License（可商用），禁止在衍生字体名中含 "BabelStone" 字样 */
+@font-face{font-family:"BabelStoneHan";font-style:normal;font-weight:400;font-display:swap;src:url("data/fonts/BabelStoneHan-subset.woff2") format("woff2")}
+.glyph-babelstone{font-family:"BabelStoneHan","Microsoft YaHei","PingFang SC",sans-serif}
 :root{--bg:#1a1a2e;--card:#1e2a4a;--text:#e0e0e0;--text2:#999;--text3:#666;--accent:#534ab7;--accent2:rgba(83,74,183,.2);--border:#2a2a4a;--radius:8px}
 *{box-sizing:border-box}
-body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);padding:16px;margin:0;max-width:1200px;margin:0 auto}
+body{font-family:"BabelStoneHan","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);padding:16px;margin:0;max-width:1200px;margin:0 auto}
 h1{font-size:22px;margin:0 0 4px}.sub{font-size:13px;color:var(--text3);margin:0 0 16px}
 input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);font-size:15px;margin-bottom:12px;outline:none}
 input:focus{border-color:var(--accent)}
@@ -109,7 +113,7 @@ input:focus{border-color:var(--accent)}
 </div>
 <div class="stats" id="stats"></div>
 <div class="char-grid" id="charGrid"></div>
-<div class="src-legend"><h3>数据来源与说明</h3><ul><li><b>说文原文 / 反切 / 段玉裁注 / 异体重文</b>：出自《说文解字》（东汉·许慎），含清代段玉裁注</li><li><b>后起字溯源</b>：出自《玉篇》（543年）、《广韵》（1008年）、《康熙字典》（1716年）。《康熙字典》为集大成字书，整合历代韵书反切与释义；《玉篇》《广韵》年代更早，可定位更早的字义</li><li><b class="warn">⚠️ 音译字提示</b>：部分字古字书释义与今义不同——如「啡」古为「唾声」非「咖啡」、「吨」古为「气相冲」非重量单位、「她」古为「姐」非第三人称。此类已在溯源中单独标注</li><li><b>字形演变图</b>：出自 中央研究院漢字構形資料庫（CC BY-SA 2.5 TW，可商用，须署名 + 衍生同授权）；当前版本以文字说明呈现，完整字形图将经「换源管线」补全</li><li><b>六书 / 本义 / 今义 / 演变</b>：AI 生成，待核验</li><li><b>五行属性</b>：民俗归类（字源五行法），非文字学客观属性；依「字义＞偏旁」判定并标注出处，约 44% 字（人体、动作、抽象、虚词等）无明确归属</li></ul></div>
+<div class="src-legend"><h3>数据来源与说明</h3><ul><li><b>说文原文 / 反切 / 段玉裁注 / 异体重文</b>：出自《说文解字》（东汉·许慎），含清代段玉裁注</li><li><b>后起字溯源</b>：出自《玉篇》（543年）、《广韵》（1008年）、《康熙字典》（1716年）。《康熙字典》为集大成字书，整合历代韵书反切与释义；《玉篇》《广韵》年代更早，可定位更早的字义</li><li><b class="warn">⚠️ 音译字提示</b>：部分字古字书释义与今义不同——如「啡」古为「唾声」非「咖啡」、「吨」古为「气相冲」非重量单位、「她」古为「姐」非第三人称。此类已在溯源中单独标注</li><li><b>字形演变图</b>：阶段1 <b>现代字形</b>由 <b>BabelStone Han</b> 字体渲染（Arphic Public License，可商用），覆盖全 8105 字；阶段2 将补充真实古文字（甲骨/金文/小篆）拓片图（公版原典描摹）</li><li><b>六书 / 本义 / 今义 / 演变</b>：AI 生成，待核验</li><li><b>五行属性</b>：民俗归类（字源五行法），非文字学客观属性；依「字义＞偏旁」判定并标注出处，约 44% 字（人体、动作、抽象、虚词等）无明确归属</li></ul></div>
 <div class="footer">字形来源：中央研究院漢字構形資料庫（CC BY-SA 2.5 TW）｜说文解字汉字知识库</div>
 <div class="overlay" id="overlay" onclick="if(event.target===this)closeDetail()"><div class="detail-panel" id="detail"></div></div>
 <script src="data/fzstd.umd.js"></script>
@@ -246,15 +250,15 @@ function showDetail(id) {
   }
   var evoHTML = stages.map(function(s,i){
     var arrow = i>0 ? "<div class='evo-arrow'>&rarr;</div>" : "";
-    if (s.img) { return arrow + "<div class='evo-step'><div class='era-name'>" + s.era + "</div>(ERA_DESC[s.era] ? "<div class='era-desc'>" + ERA_DESC[s.era] + "</div>" : "") + "<img class='era-img' src='" + s.img + "'></div>"; }
-    if (s.pending) { return arrow + "<div class='evo-step pending'><div class='era-name'>" + s.era + "</div><div (ERA_DESC[s.era] ? "<div class='era-desc pending-desc'>" + ERA_DESC[s.era] + "</div>" : "") + "<div class='era-pending'>\u5f85\u8865\u5168</div></div>"; }
-    return arrow + "<div class='evo-step'><div class='era-name'>" + s.era + "</div>(ERA_DESC[s.era] ? "<div class='era-desc'>" + ERA_DESC[s.era] + "</div>" : "") + <span style='font-size:24px'>" + s.glyph + "</span></div>";
+    if (s.img) { return arrow + "<div class='evo-step'><div class='era-name'>" + s.era + "</div>" + (ERA_DESC[s.era] ? "<div class='era-desc'>" + ERA_DESC[s.era] + "</div>" : "") + "<img class='era-img' src='" + s.img + "'></div>"; }
+    if (s.pending) { return arrow + "<div class='evo-step pending'><div class='era-name'>" + s.era + "</div>" + (ERA_DESC[s.era] ? "<div class='era-desc pending-desc'>" + ERA_DESC[s.era] + "</div>" : "") + "<div class='era-pending'>\u5f85\u8865\u5168</div></div>"; }
+    return arrow + "<div class='evo-step'><div class='era-name'>" + s.era + "</div>" + (ERA_DESC[s.era] ? "<div class='era-desc'>" + ERA_DESC[s.era] + "</div>" : "") + "<span style='font-size:24px'>" + s.glyph + "</span></div>";
   }).join("");
   var strokeHTML = "";
   if (STROKE_DB && STROKE_DB[c.char]) {
-    strokeHTML = "<div class='stroke-section'><h4>\u7b14\u987a</h4><svg class='stroke-svg' viewBox='0 0 1024 1024'>" + STROKE_DB[c.char].map(function(p,i){ var m=p.match(/M\s*([\d.]+)[\s,]+([\d.]+)/); var sx=m?parseFloat(m[1]):512, sy=m?parseFloat(m[2]):512; return "<path d='" + p + "' fill='#e0e0e0' stroke='none'/>+"<circle cx='" + sx + "' cy='" + sy + "' r='30' fill='#1e2a4a' stroke='#7c6ff0' stroke-width='6'/>+"<text x='" + sx + "' y='" + (sy+15) + "' font-size='38' fill='#cdbcff' text-anchor='middle' dominant-baseline='middle' font-weight='bold'>" + (i+1) + "</text>"; }).join("") + "</svg><i class='src-mini">\u7b14\u987a\u6570\u636e\u6e90\uff1a\u516c\u5f00\u7b14\u987a\u6570\u636e\u96c6\uff08\u5982 Hanzi Writer Data\uff09</i></div>";
+    strokeHTML = "<div class='stroke-section'><h4>\u7b14\u987a</h4><svg class='stroke-svg' viewBox='0 0 1024 1024'>" + STROKE_DB[c.char].map(function(p,i){ var m=p.match(/M\s*([\d.]+)[\s,]+([\d.]+)/); var sx=m?parseFloat(m[1]):512, sy=m?parseFloat(m[2]):512; return "<path d='" + p + "' fill='#e0e0e0' stroke='none'/>" + "<circle cx='" + sx + "' cy='" + sy + "' r='30' fill='#1e2a4a' stroke='#7c6ff0' stroke-width='6'/>" + "<text x='" + sx + "' y='" + (sy+15) + "' font-size='38' fill='#cdbcff' text-anchor='middle' dominant-baseline='middle' font-weight='bold'>" + (i+1) + "</text>"; }).join("") + "</svg><i class='src-mini'>\u7b14\u987a\u6570\u636e\u6e90\uff1a\u516c\u5f00\u7b14\u987a\u6570\u636e\u96c6\uff08\u5982 Hanzi Writer Data\uff09</i></div>";
   } else {
-    strokeHTML = "<div class='stroke-section'><h4>\u7b14\u987a</h4><div class='trace-note">\u5f85\u8865\u5168\uff1a\u7b14\u987a\u52a8\u753b\u9700\u63a5\u5165\u516c\u5f00\u7b14\u987a\u6570\u636e\u6e90\uff0c\u672c\u673a\u8fd0\u884c tools/gen_stroke_order.py \u6293\u53d6\u540e\u81ea\u52a8\u663e\u793a</div></div>";
+    strokeHTML = "<div class='stroke-section'><h4>\u7b14\u987a</h4><div class='trace-note'>\u5f85\u8865\u5168\uff1a\u7b14\u987a\u52a8\u753b\u9700\u63a5\u5165\u516c\u5f00\u7b14\u987a\u6570\u636e\u6e90\uff0c\u672c\u673a\u8fd0\u884c tools/gen_stroke_order.py \u6293\u53d6\u540e\u81ea\u52a8\u663e\u793a</div></div>";
   }
   var noteHTML = c.oracle_note ? "<div class='oracle-note'>\u2b50\u7532\u9aa8\u6587\u8bf4\u660e\uff1a" + c.oracle_note + "</div>" : "";
   document.getElementById("detail").innerHTML = 
@@ -290,7 +294,7 @@ function showDetail(id) {
       (c.trace_kangxi ? "<p class='src-line'><b>" + SRC_KX + ":</b>" + c.trace_kangxi + "</p>" : "") +
     "</div>" : "") +
     "<div class='detail-section'><h4>\u6f14\u53d8\u8fc7\u7a0b</h4><p>" + (c.evolution||"") + "</p><i class='src-mini'>AI\u751f\u6210\u00b7\u5f85\u6838\u9a8c</i></div>";
-    (CULTURAL_DB && CULTURAL_DB[c.char] ? "<div class='detail-section cultural-section'><h4>" + \u5b57\u6e90\u6545\u4e8b \u00b7 \u6210\u8bed \u00b7 \u8bd7\u8bcd + "</h4>" + culturalHTML(CULTURAL_DB[c.char]) + "<i class='src-mini'>AI\u751f\u6210\u00b7\u5f85\u62bd\u68c0</i></div>" : "") +
+    (CULTURAL_DB && CULTURAL_DB[c.char] ? "<div class='detail-section cultural-section'><h4>" + "\u5b57\u6e90\u6545\u4e8b \u00b7 \u6210\u8bed \u00b7 \u8bd7\u8bcd" + "</h4>" + culturalHTML(CULTURAL_DB[c.char]) + "<i class='src-mini'>AI\u751f\u6210\u00b7\u5f85\u62bd\u68c0</i></div>" : "") +
   document.getElementById("overlay").classList.add("show");
   document.body.style.overflow = "hidden";
 }

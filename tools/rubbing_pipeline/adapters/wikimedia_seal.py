@@ -6,36 +6,33 @@
 """
 import os
 import json
+import time
 
-from sources import download_file, svg_to_png, LICENSES
+from sources import download_file, svg_to_png, normalize_png, LICENSES, make_session
 
 API = "https://commons.wikimedia.org/w/api.php"
-SEARCH_QUERY = "{char} seal script"  # 伙伴可按 Commons 实际命名调整
+# Wikimedia Commons「Ancient Chinese characters project」(ACC) 命名规范：
+#   小篆 = {汉字}-seal.svg（如 口-seal.svg / 說-seal.svg / 書-seal.svg）
+# 公版 (Public Domain)，直接按文件名构造直链，无需搜索。
+#
+# 关键：upload.wikimedia.org（图片 CDN）对代理/梯子出口 IP 永久 429（拉黑），
+# 但 commons.wikimedia.org 的 thumb.php 缩略图服务可正常访问，且对 SVG 直接返回
+# 栅格化后的 PNG（512px），绕开 upload 域名限流 + 省掉本地 svg_to_png。
+FILE_URL = "https://commons.wikimedia.org/w/thumb.php?f={char}-seal.svg&w=512"
+
+# Wikimedia 对无 UA / 高频请求限流（429 + Retry-After），必须：
+#   1) 规范 UA（Wikimedia 要求含联系方式）
+#   2) 字间延迟
+#   3) 429 时等 Retry-After 再重试
+USER_AGENT = "rubbing-pipeline/1.0 (local research; no contact)"
+REQUEST_DELAY = 1.2  # 秒，每字之间的间隔，降低触发限流概率
 
 
 def _search_svg(char, limit=1):
-    """返回该字匹配的 SVG 文件直链（Special:FilePath）。"""
-    import requests
-    q = SEARCH_QUERY.format(char=char)
-    params = {
-        "action": "query", "format": "json", "list": "search",
-        "srsearch": q, "srnamespace": "6", "srlimit": str(limit),
-    }
-    try:
-        r = requests.get(API, params=params, timeout=30,
-                         headers={"User-Agent": "rubbing-pipeline/1.0"})
-        data = r.json()
-    except Exception:
-        return []
-    out = []
-    for item in data.get("query", {}).get("search", []):
-        title = item["title"]  # 形如 File:xxx.svg
-        if not title.lower().endswith(".svg"):
-            continue
-        fname = title.split(":", 1)[-1]
-        url = "https://commons.wikimedia.org/wiki/Special:FilePath/" + fname
-        out.append(url)
-    return out
+    """返回该字的小篆图片直链（thumb.php，直接给 PNG）。"""
+    from urllib.parse import quote
+    direct = FILE_URL.format(char=quote(char))
+    return [direct]
 
 
 def fetch(chars, out_dir, attribution=None, limit=None, **kw):
@@ -43,7 +40,11 @@ def fetch(chars, out_dir, attribution=None, limit=None, **kw):
     os.makedirs(out_dir, exist_ok=True)
     results = []
     items = chars if limit is None else chars[:limit]
-    for c in items:
+    session = make_session()
+    session.headers.update({"User-Agent": USER_AGENT})
+    delay = float(kw.get("delay", REQUEST_DELAY))
+    n = len(items)
+    for idx, c in enumerate(items, 1):
         ch = c.get("trad") or c.get("char")
         ch = _strip(ch)
         if not ch:
@@ -51,9 +52,9 @@ def fetch(chars, out_dir, attribution=None, limit=None, **kw):
         urls = _search_svg(ch, limit=3)
         got = False
         for url in urls:
-            svg_path = os.path.join(out_dir, f"wm_{c['id']}.svg")
+            # thumb.php 直接返回栅格化后的 PNG（512px 白底），无需 svg_to_png
             png_path = os.path.join(out_dir, f"wm_{c['id']}.png")
-            if download_file(url, svg_path) and svg_to_png(svg_path, png_path, size=160):
+            if download_file(url, png_path, session=session) and normalize_png(png_path, size=160, keep_alpha=True):
                 results.append({
                     "id": str(c["id"]), "char": _strip(c["char"]),
                     "script": "seal", "img": png_path,
@@ -64,6 +65,9 @@ def fetch(chars, out_dir, attribution=None, limit=None, **kw):
                 break
         if not got:
             pass  # 留空，交给其它源 / A 路线
+        if idx % 20 == 0:
+            print(f"  [wikimedia_seal] 已处理 {idx}/{n}，命中 {len(results)}")
+        time.sleep(delay)
     return results
 
 

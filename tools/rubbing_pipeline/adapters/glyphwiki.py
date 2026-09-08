@@ -56,6 +56,7 @@ def fetch(chars, out_dir, attribution=None, limit=None, workers=8, **kw):
     from urllib3.util.retry import Retry
 
     session = requests.Session()
+    session.trust_env = False  # 关键：绕过沙箱环境代理（https_proxy 会拦境外 glyphwiki.org），直连
     retry = Retry(total=4, backoff_factor=0.4, status_forcelist=[429, 500, 502, 503, 504])
     session.mount("https://", HTTPAdapter(max_retries=retry, pool_connections=workers, pool_maxsize=workers))
 
