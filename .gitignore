@@ -33,7 +33,7 @@ venv/
 # 换源管线中间产物（抓取图与原图，体积大，运行期生成，不入库）
 data/sinica_raw/
 tools/sinica_pipeline/__pycache__/
-tools/rubbing_pipeline/_glyph_tmp/
+tools/rubbing_pipeline/glyphwiki_src_backup_8105/
 tools/rubbing_pipeline/_selftest_*/
 tools/rubbing_pipeline/_test_*.bin
 tools/rubbing_pipeline/_*.png

@@ -32,6 +32,8 @@ input:focus{border-color:var(--accent)}
 .evo-step{text-align:center;min-width:70px;padding:8px 4px;border-radius:8px;background:var(--card);border:1px solid var(--border)}
 .evo-step .era-name{font-size:11px;color:var(--text2);margin-bottom:4px}
 .evo-step .era-img{width:56px;height:56px;object-fit:contain;display:block;margin:0 auto;background:#fff;border-radius:4px}
+.evo-step.pending{border-style:dashed;opacity:.92}
+.evo-step.pending .era-pending{font-size:11px;color:var(--text3);padding:18px 0;letter-spacing:2px}
 .evo-arrow{color:var(--accent);font-size:14px;padding-top:24px}
 .meaning-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .meaning-box{background:var(--card);border-radius:var(--radius);padding:12px}
@@ -96,7 +98,7 @@ var WUXING_LABEL = {"\u504f\u65c1": "\u51fa\uff1a\u504f\u65c1\u90e8\u9996", "\u5
 var CDS_READER = null;
 (function(){
   if (!window.__CDS || !window.fzstd) return;
-  fetch("data/dataset.bin").then(function(r){ if(!r.ok) return null; return r.arrayBuffer(); }).then(function(ab){
+  fetch("data/dataset.bin?v=20260908b").then(function(r){ if(!r.ok) return null; return r.arrayBuffer(); }).then(function(ab){
     if(!ab) return;
     CDS_READER = new __CDS.DatasetReader(new Uint8Array(ab));
     document.body.classList.add("has-local-glyphs");
@@ -134,7 +136,11 @@ function buildLocalStages(baseChar, hasTrad, c){
   return stages;
 }
 function buildFallbackStages(c, hasTrad){
+  var order = ["glyphwiki","oracle-bone","bronze","bamboo-silk","seal","clerical"];
   var stages = [];
+  order.forEach(function(script){
+    stages.push({era: __CDS.SCRIPT_METADATA[script].chinese, pending: true});
+  });
   if (hasTrad) stages.push({era:"\u7e41\u4f53", glyph: c.trad});
   stages.push({era:"\u7b80\u4f53", glyph: c.char});
   return stages;
@@ -185,6 +191,7 @@ function showDetail(id) {
   var evoHTML = stages.map(function(s,i){
     var arrow = i>0 ? "<div class='evo-arrow'>&rarr;</div>" : "";
     if (s.img) { return arrow + "<div class='evo-step'><div class='era-name'>" + s.era + "</div><img class='era-img' src='" + s.img + "'></div>"; }
+    if (s.pending) { return arrow + "<div class='evo-step pending'><div class='era-name'>" + s.era + "</div><div class='era-pending'>\u5f85\u8865\u5168</div></div>"; }
     return arrow + "<div class='evo-step'><div class='era-name'>" + s.era + "</div><span style='font-size:24px'>" + s.glyph + "</span></div>";
   }).join("");
   var noteHTML = c.oracle_note ? "<div class='oracle-note'>\u2b50\u7532\u9aa8\u6587\u8bf4\u660e\uff1a" + c.oracle_note + "</div>" : "";
@@ -200,7 +207,7 @@ function showDetail(id) {
       "<div>\u62fc\u97f3: <span>" + c.pinyin + "</span></div>" +
       (c.fanqie ? "<div>\u53cd\u5207: <span>" + c.fanqie + "</span><i class='src-mini'>\u51fa\u300a\u8bf4\u6587\u300b</i></div>" : "") +
     "</div>" +
-    "<div class='detail-section'><h4>\u5b57\u5f62\u6f14\u53d8</h4><i class='src-mini'>\u5b57\u6e90\u56fe\uff1aGlyphWiki\uff08CC BY-SA 2.1 JP\uff09\uff5c\u7532\u9aa8\u2192\u96b6\uff1a\u4e2d\u7814\u9662\u6f22\u5b57\u69cb\u5f62\u8cc7\u6599\u5eab\uff08CC BY-SA 2.5 TW\uff0c\u5f85\u8865\u5168\uff09</i>" + noteHTML + "<div class='evo-timeline'>" + evoHTML + "</div></div>" +
+    "<div class='detail-section'><h4>\u5b57\u5f62\u6f14\u53d8</h4><i class='src-mini'>\u5b57\u6e90\u56fe\uff1aGlyphWiki\uff08CC BY-SA 2.1 JP\uff0c\u5df2\u843d\u5730\uff09\uff5c\u7532\u9aa8\u2192\u96b6\u4e94\u9636\u6bb5\uff1a\u4e2d\u7814\u9662\u6f22\u5b57\u69cb\u5f62\u8cc7\u6599\u5eab\uff08CC BY-SA 2.5 TW\uff09\uff0c\u5f85\u6d77\u5916\u4f19\u4f34\u7ecf B \u8def\u7ebf\u8865\u5168</i>" + noteHTML + "<div class='evo-timeline'>" + evoHTML + "</div></div>" +
     "<div class='detail-section'><h4>\u672c\u4e49 vs \u4eca\u4e49</h4>" +
       "<div class='meaning-compare'>" +
         "<div class='meaning-box'><div class='label'>\u672c\u4e49\uff08\u539f\u59cb\u542b\u4e49\uff09</div><div class='content'>" + (c.original||"") + "</div></div>" +
