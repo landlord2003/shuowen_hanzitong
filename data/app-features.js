@@ -275,3 +275,19 @@ function closeQuiz() {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
   else inject();
 })();
+
+// ---- 笔顺 SVG 渲染（strokes.min.json 用 y 轴向上的 makemeahanzi 坐标，需翻转）----
+function renderStrokeSVG(char) {
+  var data = (typeof STROKE_DB !== 'undefined' && STROKE_DB) ? STROKE_DB[char] : null;
+  if (!data || !data.length) return '';
+  var inner = data.map(function (p, i) {
+    var m = p.match(/M\s*([\d.]+)[\s,]+([\d.]+)/);
+    var sx = m ? parseFloat(m[1]) : 512;
+    var sy = m ? parseFloat(m[2]) : 512;
+    var fy = 1024 - sy;
+    return "<path transform='translate(0,1024) scale(1,-1)' d='" + p + "' fill='#e0e0e0' stroke='none'/>" +
+           "<circle cx='" + sx + "' cy='" + fy + "' r='30' fill='#1e2a4a' stroke='#7c6ff0' stroke-width='6'/>" +
+           "<text x='" + sx + "' y='" + (fy + 15) + "' font-size='38' fill='#cdbcff' text-anchor='middle' dominant-baseline='middle' font-weight='bold'>" + (i + 1) + "</text>";
+  }).join('');
+  return "<div class='stroke-section'><h4>笔顺</h4><svg class='stroke-svg' viewBox='0 0 1024 1024'>" + inner + "</svg><i class='src-mini'>笔顺数据源：公开笔顺数据集（如 Hanzi Writer Data）</i></div>";
+}
