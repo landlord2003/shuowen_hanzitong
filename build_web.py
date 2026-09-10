@@ -81,6 +81,10 @@ lines.append('.src-mini{font-style:normal;font-size:10px;color:var(--text3);bord
 lines.append('.src-line{font-size:13px;color:var(--text2);margin:6px 0;line-height:1.7}')
 lines.append('.src-line b{color:var(--text)}')
 lines.append('.trace-note{background:rgba(255,180,0,.08);border-left:3px solid #ffb400;padding:8px 12px;font-size:13px;color:var(--text2);border-radius:0 6px 6px 0;margin:6px 0;line-height:1.7}')
+lines.append('.dispute-badge{font-style:normal;font-size:10px;color:#ffd27f;border:1px solid #6b5a2a;background:rgba(255,180,0,.12);border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle;white-space:nowrap;cursor:help}')
+lines.append('.dispute-note{background:rgba(255,180,0,.08);border-left:3px solid #ffb400;padding:6px 12px;font-size:12px;color:var(--text2);border-radius:0 6px 6px 0;margin:6px 0;line-height:1.6}')
+lines.append('.evo-step.font-fill{border-color:#3a5a8a}')
+lines.append('.era-font{font-size:44px;color:var(--text);line-height:1.5;padding:6px 0;display:block}')
 lines.append('.duan-box{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin:6px 0}')
 lines.append('.duan-box summary{cursor:pointer;font-size:13px;color:var(--accent);user-select:none}')
 lines.append('.duan-box p{font-size:13px;color:var(--text2);line-height:1.8;margin:8px 0 0;max-height:240px;overflow-y:auto}')
@@ -221,7 +225,7 @@ js_parts.append('}')
 # 实证：uXXXX-j=甲骨文、uXXXX-t=隶书（GlyphWiki 关联字形命名）；金文/篆用 -b/-s 候选探测
 # 命中即显示，未命中保持"待补全"，不破坏现有渲染
 js_parts.append('function fillAncientGlyphs(){')
-js_parts.append('  var map = { "oracle-bone":["-j"], "bronze":["-b","-bronze"], "seal":["-s","-ss","-seal"], "clerical":["-t"] };')
+js_parts.append('  var map = { "oracle-bone":["-j","-o"], "bronze":["-b","-bronze","-c"], "seal":["-s","-ss","-seal","-sh"], "clerical":["-t","-tl","-l"] };')
 js_parts.append('  var nodes = document.querySelectorAll(".evo-step.pending[data-script]");')
 js_parts.append('  nodes.forEach(function(node){')
 js_parts.append('    var script = node.getAttribute("data-script");')
@@ -229,11 +233,11 @@ js_parts.append('    var code = node.getAttribute("data-code");')
 js_parts.append('    var cands = map[script]; if (!cands || !code) return;')
 js_parts.append('    var base = "u" + code.toUpperCase();')
 js_parts.append('    var era = node.querySelector(".era-name") ? node.querySelector(".era-name").textContent : "";')
-js_parts.append('    tryGw(base, cands, 0, node, era);')
+js_parts.append('    tryGw(base, cands, 0, node, era, script);')
 js_parts.append('  });')
 js_parts.append('}')
-js_parts.append('function tryGw(base, cands, i, node, era){')
-js_parts.append('  if (i >= cands.length) return;')
+js_parts.append('function tryGw(base, cands, i, node, era, script){')
+js_parts.append('  if (i >= cands.length) { tryFontStage(script, base.substring(1), node, era); return; }')
 js_parts.append('  var name = base + cands[i];')
 js_parts.append('  var tried = 0;')
 js_parts.append('  function loadNext(){')
@@ -250,6 +254,35 @@ js_parts.append('    img.src = "https://glyphwiki.org/glyph/" + name + suffix;')
 js_parts.append('  }')
 js_parts.append('  loadNext();')
 js_parts.append('}')
+# 字体降级层：开源古文字字体就位后，离线补满四阶段（清单与授权见 data/fonts/manifest.json）
+# 用 FontFace 加载 + document.fonts.check 网关，避免缺字显示豆腐块；字体缺失则静默跳过，退回"待补全"
+js_parts.append(r'''var STAGE_FONTS = {
+  "oracle-bone": {"file":"data/fonts/oracle-bone.ttf","family":"AncientOracle"},
+  "bronze": {"file":"data/fonts/bronze-script.ttf","family":"AncientBronze"},
+  "seal": {"file":"data/fonts/chongxi-seal.ttf","family":"ChongXiSeal"},
+  "clerical": {"file":"data/fonts/clerical.ttf","family":"AncientClerical"}
+};''')
+js_parts.append(r'''var __fontReady = {};
+(function preloadAncientFonts(){
+  if (typeof FontFace === "undefined" || !document.fonts) return;
+  Object.keys(STAGE_FONTS).forEach(function(s){
+    var f = STAGE_FONTS[s];
+    try {
+      var ff = new FontFace(f.family, "url(" + f.file + ")");
+      ff.load().then(function(loaded){ document.fonts.add(loaded); __fontReady[s] = true; if (window.__refillFont) window.__refillFont(); }).catch(function(){ __fontReady[s] = false; });
+    } catch(e) { __fontReady[s] = false; }
+  });
+})();''')
+js_parts.append(r'''function tryFontStage(script, code, node, era){
+  var f = STAGE_FONTS[script];
+  if (!f || !__fontReady[script]) return;
+  var ch = String.fromCodePoint(parseInt(code, 16));
+  if (!document.fonts.check("64px " + f.family, ch)) return;
+  node.classList.remove("pending");
+  node.classList.add("font-fill");
+  node.innerHTML = "<div class='era-name'>" + era + "</div>" + (window.ERA_DESC && ERA_DESC[era] ? "<div class='era-desc'>" + ERA_DESC[era] + "</div>" : "") + "<span class='era-font' style='font-family:" + f.family + "'>" + ch + "</span>";
+}''')
+js_parts.append(r'''window.__refillFont = function(){ try { fillAncientGlyphs(); } catch(e){} };''')
 js_parts.append('var activeLiuShu = "' + u('全部') + '";')
 js_parts.append('var activeCategory = "' + u('全部') + '";')
 js_parts.append('var activeSort = "default";')
@@ -334,14 +367,14 @@ js_parts.append('    detailHeaderHTML(c) +')
 js_parts.append('    strokeHTML + "<div class=\'detail-char\'>" + c.char + "</div>" +')
 js_parts.append('    "<div class=\'detail-pinyin\'>" + (hasTrad ? "<span class=\'trad-mini\'>" + c.trad + "</span> " : "") + (typeof renderPinyinAudio===\'function\' ? renderPinyinAudio(c) : c.pinyin) + "</div>" +')
 js_parts.append('    "<div class=\'detail-info\'>" +')
-js_parts.append('      "<div>' + u('六书') + ': <span>" + c.liushu + "</span><i class=\'src-mini\'>' + u('AI生成·待核验') + '</i></div>" +')
+js_parts.append('      "<div>' + u('六书') + ': <span>" + c.liushu + "</span>" + (c.liushu_disputed ? "<span class=\'dispute-badge\' title=\'" + (c.liushu_disputed_note||"") + "\'>学界有争议</span>" : "") + "<i class=\'src-mini\'>' + u('AI生成·待核验') + '</i></div>" + (c.liushu_disputed && c.liushu_disputed_note ? "<div class=\'dispute-note\'>⚠ 学界有争议：" + c.liushu_disputed_note + "</div>" : "") +')
 js_parts.append('      "<div>' + u('部首') + ': <span>" + c.radical + "(" + c.radical_name + ")</span></div>" +')
 js_parts.append('      "<div>' + u('笔画') + ': <span>" + c.stroke + "</span></div>" +')
 js_parts.append('      "<div>' + u('五行') + ': <span>" + (c.wuxing||"-") + "</span><i class=\'src-mini\'>" + (WUXING_LABEL[c.wuxing_source] || "' + u('民俗参考·非文字学属性') + '") + "</i></div>" +')
 js_parts.append('      "<div>' + u('拼音') + ': <span>" + c.pinyin + "</span></div>" +')
 js_parts.append('      (c.fanqie ? "<div>' + u('反切') + ': <span>" + c.fanqie + "</span><i class=\'src-mini\'>' + u('出《说文》') + '</i></div>" : "") +')
 js_parts.append('    "</div>" +')
-js_parts.append('    "<div class=\'detail-section\'><h4>' + u('字形演变') + '</h4><i class=\'src-mini\'>' + u('字源图：GlyphWiki（CC BY-SA 2.1 JP，已落地）｜甲骨→隶五阶段：中研院漢字構形資料庫（CC BY-SA 2.5 TW），待海外伙伴经 B 路线补全') + '</i>" + houqiNote + noteHTML + "<div class=\'evo-timeline\'>" + evoHTML + "</div></div>" +')
+js_parts.append('    "<div class=\'detail-section\'><h4>' + u('字形演变') + '</h4><i class=\'src-mini\'>' + u('字源图：GlyphWiki（CC BY-SA 2.1 JP）｜甲骨→隶：中研院漢字構形資料庫（CC BY-SA 2.5 TW，待 B 路线）｜篆等可由开源字体（崇羲篆体 CC-BY-ND，见 data/fonts/manifest.json）离线补全') + '</i>" + houqiNote + noteHTML + "<div class=\'evo-timeline\'>" + evoHTML + "</div></div>" +')
 js_parts.append('    "<div class=\'detail-section\'><h4>' + u('本义 vs 今义') + '</h4>" +')
 js_parts.append('      "<div class=\'meaning-compare\'>" +')
 js_parts.append('        "<div class=\'meaning-box\'><div class=\'label\'>' + u('本义（原始含义）') + '</div><div class=\'content\'>" + (c.original||"") + "</div></div>" +')
