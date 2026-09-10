@@ -47,6 +47,10 @@ for ch in prod:
         if s in stage_count:
             stage_count[s] += 1
 
+# 3.1) 按"拥有真迹阶段数"分桶（分类 8105 字）
+from collections import Counter
+real_count_dist = Counter(len(eff[ch] & set(REAL)) for ch in prod)
+
 # 仅字源（无真迹阶段）
 only_source = [ch for ch in prod if not (set(eff[ch]) & set(REAL))]
 # 至少 1 真迹阶段
@@ -80,6 +84,16 @@ rep.append(f"| 金文 | 中研院/小學堂(dataset) + cluesurf/mark(OFL 字体)
 rep.append(f"| 简牍帛书 | 中研院/小學堂(dataset) | {stage_count['bamboo-silk']} | {stage_count['bamboo-silk']/len(prod)*100:.1f}% |")
 rep.append(f"| 篆文 | 中研院/小學堂(dataset) + 崇羲篆體(CC-BY-ND-3.0-TW 字体) | {stage_count['seal']} | {stage_count['seal']/len(prod)*100:.1f}% |")
 rep.append(f"| 隶书 | （缺失，待字体就位） | {stage_count['clerical']} | 0% |")
+rep.append("\n## 一之二、按「拥有真迹阶段数」分类 8105 字\n")
+rep.append("| 拥有真迹阶段数 | 含义 | 字数 | 占比 |")
+rep.append("|------|------|------|------|")
+real_meaning = {0:"仅字源图（后起字 / 无古文字形）",1:"有 1 个真迹阶段",2:"有 2 个真迹阶段",3:"有 3 个真迹阶段",4:"有 4 个真迹阶段",5:"5 个全有（甲骨+金+简帛+篆+隶）"}
+for k in range(0, 6):
+    n = real_count_dist.get(k, 0)
+    rep.append(f"| {k} | {real_meaning[k]} | {n} | {n/len(prod)*100:.1f}% |")
+rep.append("")
+rep.append("> 真迹阶段 = 甲骨 / 金 / 简帛 / 篆 / 隶（共 5 类）。「0」= 完全没有真迹古文字段，仅字源图，即上一轮标注的「后起字·无古文字形」。")
+rep.append("")
 rep.append("\n## 二、关键结论\n")
 rep.append(f"- **字源图：100% 全覆盖**（8105/8105），所有字均有 GlyphWiki 字源溯源图，无完全空白字。")
 rep.append(f"- **真迹演变阶段覆盖极低**：仅 {len(any_real)}/{len(prod)}（{len(any_real)/len(prod)*100:.1f}%）的字至少有 1 个真迹古文字段（甲骨/金/简帛/篆/隶）。")

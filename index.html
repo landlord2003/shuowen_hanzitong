@@ -67,6 +67,11 @@ input:focus{border-color:var(--accent)}
 .duan-box p{font-size:13px;color:var(--text2);line-height:1.8;margin:8px 0 0;max-height:240px;overflow-y:auto}
 .ext-link{text-align:center;margin:16px 0}.ext-link a{color:var(--accent);text-decoration:none;font-size:13px}
 .footer{text-align:center;color:var(--text3);font-size:12px;padding:20px}
+.cov-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+.cov-table th,.cov-table td{border:1px solid var(--border);padding:6px 10px;text-align:center}
+.cov-table th{background:var(--bg2);color:var(--text)}
+.cov-table td:first-child{text-align:left;color:var(--text)}
+.cov-note p{font-size:12px;color:var(--text3);line-height:1.7;margin:8px 0 0}
 .src-legend{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:18px 0 0;font-size:13px;color:var(--text2)}
 .src-legend h3{font-size:14px;color:var(--accent);margin:0 0 10px}
 .src-legend ul{margin:0;padding-left:18px}
@@ -86,6 +91,8 @@ input:focus{border-color:var(--accent)}
 .stroke-step-label{font-size:12px;color:var(--text2);margin-left:10px}
 </style></head><body>
 <style>.daily-banner{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--card),#1c1c22);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:14px;flex-wrap:wrap}.daily-label{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:2px;white-space:nowrap}.daily-char{font-size:42px;font-weight:700;line-height:1;cursor:pointer;color:var(--text)}.daily-char:hover{color:var(--accent)}.daily-py{font-size:15px;color:var(--text2)}.daily-desc{font-size:14px;color:var(--text2);flex:1;min-width:200px;line-height:1.6}.fav-btn{margin-left:auto;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer}.fav-btn:hover{border-color:var(--accent);color:var(--accent)}.char-card{position:relative}.fav-dot{position:absolute;top:4px;right:8px;color:#ffb300;font-size:14px}.daily-card{outline:2px solid var(--accent);outline-offset:-2px}.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}</style>
+<style>.welcome-modal{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;z-index:80}.welcome-modal.show{display:flex}.welcome-box{background:#16161a;border:1px solid var(--border);border-radius:16px;padding:26px 30px;max-width:560px;width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.5)}.welcome-box h2{margin:0 0 10px;color:var(--accent);font-size:22px}.welcome-box p{line-height:1.75;color:var(--text2);margin:8px 0;font-size:14px}.welcome-box ul{margin:10px 0;padding-left:20px;line-height:2;color:var(--text2);font-size:14px}.welcome-box .welcome-src{font-size:12px;color:var(--text3);border-top:1px solid var(--border);padding-top:12px;margin-top:14px}.welcome-btn{margin-top:14px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:15px;cursor:pointer;font-weight:600}.welcome-btn:hover{opacity:.9}.help-btn{margin-left:10px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:14px;vertical-align:middle}.help-btn:hover{border-color:var(--accent);color:var(--accent)}</style>
+<div id="welcomeModal" class="welcome-modal"><div class="welcome-box"><h2>说文解字 · 汉字通</h2><p>本 App 收录 8105 个规范汉字，提供字源图、字形演变、六书、本义/今义、《说文》原文与字源故事。</p><ul><li>🔍 顶部搜索框：按拼音 / 部首 / 单字检索</li><li>📜 点任意字卡 → 查看「字形演变」逐阶段标注</li><li>🧱 古字形标注：<b>✓ 有字形</b>（直接显示）｜<b>⏳ 待补</b>（该字古已有之，此阶段数据待补）｜<b>— 无古字形</b>（后起字 / 形声 / 简化字，历史上本无此阶段字形）</li><li>📊 底部「古字形阶段覆盖统计」说明各书体收录比例</li></ul><p class="welcome-src">字源图 GlyphWiki（CC BY-SA 2.1 JP）｜篆书 崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文 cluesurf/mark（OFL）｜隶书 待字体就位（数据受地理封锁，交海外伙伴取字）</p><button class="welcome-btn" onclick="closeWelcome()">开始探索 →</button></div></div>
 <h1>说文解字·汉字通</h1>
 <p class="sub">8105字·字源溯源（100%，GlyphWiki CC BY-SA 2.1 JP）＋字形演变（甲骨/金/篆：开源字体已落地；隶书：待字体就位；简帛：资料所限仅327字）｜\u540e\u8d77\u5b57\u00b7\u65e0\u53e4\u6587\u5b57\u5f62\u5df2\u8bda\u5b9e\u6807\u6ce8</p>
 <input id="searchInput" placeholder="搜索：拼音(如 shuǐ)、部首(如 水)、字(如 海)；笔画筛选见下方按钮" autofocus>
@@ -125,6 +132,18 @@ input:focus{border-color:var(--accent)}
 <div class="char-grid" id="charGrid"></div>
 <div class="src-legend"><h3>什么是「六书」？</h3><p style="margin:0 0 10px;line-height:1.7">「六书」是古人分析汉字造字与用字方法而归纳出的六种条例，由东汉许慎在《说文解字》中系统阐述。App 中的六书分类用于快速理解一个字的构形逻辑：</p><ul><li><b>象形</b>：描摹物体外形，如「日、月、山、水」</li><li><b>指事</b>：用抽象符号或在象形字上加指示符号表示抽象概念，如「上、下、本、末」</li><li><b>会意</b>：把两个或多个字组合起来表示新意，如「明（日月并照）、休（人倚木而息）」</li><li><b>形声</b>：由表示意义类别的「形旁」和表示读音的「声旁」组成，如「江（水形工声）、湖（水形胡声）」</li><li><b>转注</b>：部首相同、意义相通、可互相解释的字，如「考」与「老」</li><li><b>假借</b>：借用同音字表达新概念，如「令（本义发号，借为县令）、长（本义久远，借为长官）</li></ul><p style="margin:8px 0 0;font-size:12px;color:var(--text3)">注：本 App 将常见字归入象形、指事、会意、形声四类；转注、假借更多是用字法，未作为单字主分类。</p></div>
 <div class="src-legend"><h3>数据来源与说明</h3><ul><li><b>说文原文 / 反切 / 段玉裁注 / 异体重文</b>：出自《说文解字》（东汉·许慎），含清代段玉裁注</li><li><b>后起字溯源</b>：出自《玉篇》（543年）、《广韵》（1008年）、《康熙字典》（1716年）。《康熙字典》为集大成字书，整合历代韵书反切与释义；《玉篇》《广韵》年代更早，可定位更早的字义</li><li><b class="warn">⚠️ 音译字提示</b>：部分字古字书释义与今义不同——如「啡」古为「唾声」非「咖啡」、「吨」古为「气相冲」非重量单位、「她」古为「姐」非第三人称。此类已在溯源中单独标注</li><li><b>字源图（单字最古老构形）</b>：取自 GlyphWiki 汉字溯源图层（CC BY-SA 2.1 JP，可商用，须署名 + 衍生同授权），已落地 8105 字，黑底白描拓片风</li><li><b>甲骨→金文→简牍帛书→小篆→隶书五阶段图</b>：计划取自 中央研究院漢字構形資料庫（CC BY-SA 2.5 TW，可商用，须署名 + 衍生同授权）；当前版本以文字说明呈现，完整字形图将经「B 路线换源管线」补全</li><li><b>六书 / 本义 / 今义 / 演变</b>：AI 生成，待核验</li><li><b>五行属性</b>：民俗归类（字源五行法），非文字学客观属性；依「字义＞偏旁」判定并标注出处，约 44% 字（人体、动作、抽象、虚词等）无明确归属</li></ul></div>
+<div class="src-legend cov-note"><h3>古字形阶段覆盖统计</h3>
+<p style="margin:0 0 10px;line-height:1.7">下表对比「各古文字阶段历史上能写的字数（学界基准）」与「本产品在 8105 个规范汉字中实际收录展示的字数」：</p>
+<table class="cov-table">
+<tr><th>古文字阶段</th><th>历史可考总字（基准）</th><th>本产品覆盖（8105 内）</th><th>占历史总字</th><th>占常用字</th></tr>
+<tr><td>甲骨文</td><td>约 4000+<br>（据《甲骨文编》等）</td><td>824 字</td><td>≈21%</td><td>10.2%</td></tr>
+<tr><td>金文</td><td>约 3500+<br>（据《金文编》等）</td><td>1399 字</td><td>≈40%</td><td>17.3%</td></tr>
+<tr><td>篆书</td><td>9353 字头<br>（《说文解字》小篆）</td><td>4547 字</td><td>49%</td><td>56.1%</td></tr>
+<tr><td>隶书</td><td>约 9353<br>（承篆，《说文》字头）</td><td>0 字</td><td>0%</td><td>0%</td></tr>
+<tr><td>简牍帛书</td><td>无统一总表<br>（出土文献散见）</td><td>327 字</td><td>—</td><td>4.0%</td></tr>
+</table>
+<p>口径说明：①「历史可考总字」采用学界对该书体已发现/已释读单字的统计——甲骨文《甲骨文编》约 4000+ 字头、金文《金文编》约 3500+ 字头、篆书《说文解字》9353 字头、隶书承篆以《说文》为基准；②「本产品覆盖」为本产品在 8105 常用字中能实际渲染对应阶段字形的字数（字源图 + 中研院/小學堂数据 + 开源古文字字体兜底）；③ 因常用字是历史总字的子集，占比反映「该书体历史字中，落在现代常用字且已被数字化收录的比例」；④ 隶书阶段 0% 为唯一待补数据源项，取一版干净可商用隶书字体落入 data/fonts/clerical-script.ttf 即自动补满。</p>
+</div>
 <div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文：cluesurf/mark（OFL）｜隶书：待字体就位（中研院漢字構形資料庫 CC BY-SA 2.5 TW，受地理封锁，须用户浏览器或海外伙伴取字落入 data/fonts/clerical-script.ttf）｜说文解字·汉字通</div>
 <div class="overlay" id="overlay" onclick="if(event.target===this)closeDetail()"><div class="detail-panel" id="detail"></div></div>
 <script src="data/fzstd.umd.js"></script>
@@ -227,7 +246,7 @@ function fillAncientGlyphs(){
     if (typeof NO_ANCIENT_GLYPH !== "undefined" && NO_ANCIENT_GLYPH.has(ch)) {
       node.classList.remove("pending"); node.classList.add("no-ancient");
       var era = node.querySelector(".era-name") ? node.querySelector(".era-name").textContent : "";
-      node.innerHTML = "<div class='era-name'>" + era + "</div><div class='era-no-ancient'>后起字·无古文字形</div>";
+      node.innerHTML = "<div class='era-name'>" + era + "</div><div class='era-no-ancient'>" + era + "·无古字形</div>";
     }
   });
 }
@@ -325,7 +344,7 @@ function showDetail(id) {
   var evoHTML = stages.map(function(s,i){
     var arrow = i>0 ? "<div class='evo-arrow'>&rarr;</div>" : "";
     if (s.img) { return arrow + "<div class='evo-step'><div class='era-name'>" + s.era + "</div>" + (ERA_DESC[s.era] ? "<div class='era-desc'>" + ERA_DESC[s.era] + "</div>" : "") + "<img class='era-img' src='" + s.img + "'>" + "</div>"; }
-    if (s.pending) { return arrow + "<div class='evo-step pending' data-script='" + (s.script||"") + "' data-code='" + (s.code||"") + "'><div class='era-name'>" + s.era + "</div>" + (ERA_DESC[s.era] ? "<div class='era-desc pending-desc'>" + ERA_DESC[s.era] + "</div>" : "") + "<div class='era-pending'>" + "\u5f85\u8865\u5168" + "</div></div>"; }
+    if (s.pending) { var _isHq = (typeof NO_ANCIENT_GLYPH!=="undefined" && NO_ANCIENT_GLYPH.has(currentChar)); var _plabel = _isHq ? (s.era + "\u00b7\u65e0\u53e4\u5b57\u5f62") : (s.era + "\u00b7\u5f85\u8865"); return arrow + "<div class='evo-step pending' data-script='" + (s.script||"") + "' data-code='" + (s.code||"") + "'><div class='era-name'>" + s.era + "</div>" + (ERA_DESC[s.era] ? "<div class='era-desc pending-desc'>" + ERA_DESC[s.era] + "</div>" : "") + "<div class='era-pending'>" + _plabel + "</div></div>"; }
     return arrow + "<div class='evo-step'><div class='era-name'>" + s.era + "</div>" + (ERA_DESC[s.era] ? "<div class='era-desc'>" + ERA_DESC[s.era] + "</div>" : "") + "<span style='font-size:24px'>" + s.glyph + "</span></div>";
   }).join("");
   setTimeout(function(){ try { fillAncientGlyphs(); } catch(e){} }, 0);
@@ -403,6 +422,10 @@ document.getElementById("sortControls").addEventListener("click", function(e){
   }
 });
 document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeDetail(); });
+var __welcomeEl = document.getElementById("welcomeModal");
+function closeWelcome(){ if(__welcomeEl){ __welcomeEl.classList.remove("show"); try{ localStorage.setItem("swjz_welcome_seen","1"); }catch(e){} } }
+function openWelcome(){ if(__welcomeEl) __welcomeEl.classList.add("show"); }
+if (__welcomeEl && !localStorage.getItem("swjz_welcome_seen")) { __welcomeEl.classList.add("show"); }
 render();
 render(); renderDaily();</script>
 </body></html>
