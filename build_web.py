@@ -59,6 +59,8 @@ lines.append('.evo-step .era-name{font-size:11px;color:var(--text2);margin-botto
 lines.append('.evo-step .era-img{width:64px;height:64px;object-fit:contain;display:block;margin:0 auto;background:#0a0a0a;border:1px solid #555;border-radius:4px}')
 lines.append('.evo-step.pending{border-style:dashed;opacity:.92}')
 lines.append('.evo-step.pending .era-pending{font-size:11px;color:var(--text3);padding:18px 0;letter-spacing:2px}')
+lines.append('.evo-step.no-ancient{border-style:solid;opacity:.55;border-color:var(--border)}')
+lines.append('.evo-step .era-no-ancient{font-size:11px;color:var(--text3);padding:16px 0;letter-spacing:1px;line-height:1.3}')
 lines.append('.era-desc{font-size:10px;color:var(--text3);line-height:1.45;margin:4px 2px 0;text-align:center;max-width:88px}')
 lines.append('.era-desc.pending-desc{opacity:.7}')
 lines.append('.cultural-section .story-box{margin-bottom:10px}')
@@ -111,7 +113,7 @@ lines.append('</style></head><body>')
 lines.append('<style>.daily-banner{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--card),#1c1c22);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:14px;flex-wrap:wrap}.daily-label{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:2px;white-space:nowrap}.daily-char{font-size:42px;font-weight:700;line-height:1;cursor:pointer;color:var(--text)}.daily-char:hover{color:var(--accent)}.daily-py{font-size:15px;color:var(--text2)}.daily-desc{font-size:14px;color:var(--text2);flex:1;min-width:200px;line-height:1.6}.fav-btn{margin-left:auto;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer}.fav-btn:hover{border-color:var(--accent);color:var(--accent)}.char-card{position:relative}.fav-dot{position:absolute;top:4px;right:8px;color:#ffb300;font-size:14px}.daily-card{outline:2px solid var(--accent);outline-offset:-2px}.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}</style>')
 
 lines.append('<h1>说文解字·汉字通</h1>')
-lines.append('<p class="sub">8105字·字源溯源＋字形演变（字源图：GlyphWiki CC BY-SA 2.1 JP，已落地；甲骨→隶五阶段：中研院漢字構形資料庫 CC BY-SA 2.5 TW，待 B 路线补全）</p>')
+lines.append('<p class="sub">8105字·字源溯源（100%，GlyphWiki CC BY-SA 2.1 JP）＋字形演变（甲骨/金/篆：开源字体已落地；隶书：待字体就位；简帛：资料所限仅327字）｜' + u('后起字·无古文字形已诚实标注') + '</p>')
 lines.append('<input id="searchInput" placeholder="搜索：拼音(如 shuǐ)、部首(如 水)、字(如 海)；笔画筛选见下方按钮" autofocus>')
 lines.append('<div id="dailyBanner" class="daily-banner"></div>')
 lines.append('<div class="filters" id="liushuFilters">')
@@ -140,12 +142,19 @@ lines.append('<div class="stats" id="stats"></div>')
 lines.append('<div class="char-grid" id="charGrid"></div>')
 lines.append('<div class="src-legend"><h3>什么是「六书」？</h3><p style="margin:0 0 10px;line-height:1.7">「六书」是古人分析汉字造字与用字方法而归纳出的六种条例，由东汉许慎在《说文解字》中系统阐述。App 中的六书分类用于快速理解一个字的构形逻辑：</p><ul><li><b>象形</b>：描摹物体外形，如「日、月、山、水」</li><li><b>指事</b>：用抽象符号或在象形字上加指示符号表示抽象概念，如「上、下、本、末」</li><li><b>会意</b>：把两个或多个字组合起来表示新意，如「明（日月并照）、休（人倚木而息）」</li><li><b>形声</b>：由表示意义类别的「形旁」和表示读音的「声旁」组成，如「江（水形工声）、湖（水形胡声）」</li><li><b>转注</b>：部首相同、意义相通、可互相解释的字，如「考」与「老」</li><li><b>假借</b>：借用同音字表达新概念，如「令（本义发号，借为县令）、长（本义久远，借为长官）</li></ul><p style="margin:8px 0 0;font-size:12px;color:var(--text3)">注：本 App 将常见字归入象形、指事、会意、形声四类；转注、假借更多是用字法，未作为单字主分类。</p></div>')
 lines.append('<div class="src-legend"><h3>数据来源与说明</h3><ul><li><b>说文原文 / 反切 / 段玉裁注 / 异体重文</b>：出自《说文解字》（东汉·许慎），含清代段玉裁注</li><li><b>后起字溯源</b>：出自《玉篇》（543年）、《广韵》（1008年）、《康熙字典》（1716年）。《康熙字典》为集大成字书，整合历代韵书反切与释义；《玉篇》《广韵》年代更早，可定位更早的字义</li><li><b class="warn">⚠️ 音译字提示</b>：部分字古字书释义与今义不同——如「啡」古为「唾声」非「咖啡」、「吨」古为「气相冲」非重量单位、「她」古为「姐」非第三人称。此类已在溯源中单独标注</li><li><b>字源图（单字最古老构形）</b>：取自 GlyphWiki 汉字溯源图层（CC BY-SA 2.1 JP，可商用，须署名 + 衍生同授权），已落地 8105 字，黑底白描拓片风</li><li><b>甲骨→金文→简牍帛书→小篆→隶书五阶段图</b>：计划取自 中央研究院漢字構形資料庫（CC BY-SA 2.5 TW，可商用，须署名 + 衍生同授权）；当前版本以文字说明呈现，完整字形图将经「B 路线换源管线」补全</li><li><b>六书 / 本义 / 今义 / 演变</b>：AI 生成，待核验</li><li><b>五行属性</b>：民俗归类（字源五行法），非文字学客观属性；依「字义＞偏旁」判定并标注出处，约 44% 字（人体、动作、抽象、虚词等）无明确归属</li></ul></div>')
-lines.append('<div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW，已落地）｜甲骨/金文/隶：中研院漢字構形資料庫（CC BY-SA 2.5 TW，待字体就位）｜说文解字·汉字通</div>')
+lines.append('<div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文：cluesurf/mark（OFL）｜隶书：待字体就位（中研院漢字構形資料庫 CC BY-SA 2.5 TW，受地理封锁，须用户浏览器或海外伙伴取字落入 data/fonts/clerical-script.ttf）｜说文解字·汉字通</div>')
 lines.append('<div class="overlay" id="overlay" onclick="if(event.target===this)closeDetail()"><div class="detail-panel" id="detail"></div></div>')
 
 # Now the script tag - ALL Chinese pre-escaped
 js_parts = []
 js_parts.append('var DATA = ' + json_ascii + ';')
+# 嵌入"仅字源、无真迹古文字段"缺字集，供演变行诚实标注（避免空白"待补全"误导）
+try:
+    with open('D:/WorkBuddy/projects/说文解字/data/glyph_missing.json', encoding='utf-8') as _mf:
+        _missing_chars = json.load(_mf).get('chars', [])
+except Exception:
+    _missing_chars = []
+js_parts.append('var NO_ANCIENT_GLYPH = new Set(' + json.dumps(_missing_chars, ensure_ascii=True) + ');')
 js_parts.append('var CHARS = DATA.characters;')
 js_parts.append('var SRC_YP = "' + u('《玉篇》（543年）') + '";')
 js_parts.append('var SRC_GY = "' + u('《广韵》（1008年）') + '";')
@@ -221,44 +230,38 @@ js_parts.append('  if (hasTrad) stages.push({era:"' + u('繁体') + '", glyph: c
 js_parts.append('  stages.push({era:"' + u('简体') + '", glyph: c.char});')
 js_parts.append('  return stages;')
 js_parts.append('}')
-# 古文字阶段运行时补全：探测 GlyphWiki 关联字形图（CC BY-SA 2.1 JP，沙箱/浏览器直连可达，CORS 开放）
-# 实证：uXXXX-j=甲骨文、uXXXX-t=隶书（GlyphWiki 关联字形命名）；金文/篆用 -b/-s 候选探测
-# 命中即显示，未命中保持"待补全"，不破坏现有渲染
+# 古文字阶段运行时补全：仅依赖已落地的开源古文字字体（FontFace + document.fonts.check 网关）。
+# 曾尝试经 GlyphWiki 关联字形后缀（-j/-t/-b/-s）探测甲骨/金文/篆/隶，经核验该命名不成立：
+#   GlyphWiki 的 -t/-k/-g/-v 实为「地区变体」（台湾/香港/大陆/异体，见 u8ff0-t 等），并非书体阶段；
+#   GlyphWiki 本身是宋体/楷书字形库，无系统化的甲骨/金文/篆/隶书体后缀命名（u4EBA-j/-t/-b/-s 实测全 404）。
+#   故关闭 GlyphWiki 后缀探测，改回只走 bundled 字体兜底，避免误把台湾异体当「隶书」显示。
+# 甲骨/金文/篆：已由 cluesurf/mark(OFL) + 崇羲篆體(CC-BY-ND-3.0-TW) 离线补全；隶书：待字体就位（见 manifest.json）。
 js_parts.append('function fillAncientGlyphs(){')
-js_parts.append('  var map = { "oracle-bone":["-j","-o"], "bronze":["-b","-bronze","-c"], "seal":["-s","-ss","-seal","-sh"], "clerical":["-t","-tl","-l"] };')
 js_parts.append('  var nodes = document.querySelectorAll(".evo-step.pending[data-script]");')
 js_parts.append('  nodes.forEach(function(node){')
 js_parts.append('    var script = node.getAttribute("data-script");')
 js_parts.append('    var code = node.getAttribute("data-code");')
-js_parts.append('    var cands = map[script]; if (!cands || !code) return;')
-js_parts.append('    var base = "u" + code.toUpperCase();')
+js_parts.append('    if (!script || !code) return;')
 js_parts.append('    var era = node.querySelector(".era-name") ? node.querySelector(".era-name").textContent : "";')
-js_parts.append('    tryGw(base, cands, 0, node, era, script);')
+js_parts.append('    tryFontStage(script, code, node, era);')
 js_parts.append('  });')
-js_parts.append('}')
-js_parts.append('function tryGw(base, cands, i, node, era, script){')
-js_parts.append('  if (i >= cands.length) { tryFontStage(script, base.substring(1), node, era); return; }')
-js_parts.append('  var name = base + cands[i];')
-js_parts.append('  var tried = 0;')
-js_parts.append('  function loadNext(){')
-js_parts.append('    if (tried >= 2) { tryGw(base, cands, i+1, node, era); return; }')
-js_parts.append('    var suffix = tried === 0 ? ".png" : "@1.png";')
-js_parts.append('    tried++;')
-js_parts.append('    var img = new Image();')
-js_parts.append('    img.onload = function(){')
-js_parts.append('      node.classList.remove("pending");')
-js_parts.append('      node.innerHTML = "<div class=\'era-name\'>"+era+"</div>" + (window.ERA_DESC && ERA_DESC[era] ? "<div class=\'era-desc\'>"+ERA_DESC[era]+"</div>" : "") + "<img class=\'era-img\' src=\'"+img.src+"\'>";')
-js_parts.append('    };')
-js_parts.append('    img.onerror = loadNext;')
-js_parts.append('    img.src = "https://glyphwiki.org/glyph/" + name + suffix;')
-js_parts.append('  }')
-js_parts.append('  loadNext();')
+js_parts.append('  // 诚实标注：仅字源、无任何真迹古文字段的字，字体兜底后仍 pending，不再显示空白"待补全"')
+js_parts.append('  nodes.forEach(function(node){')
+js_parts.append('    if (!node.classList.contains("pending")) return;')
+js_parts.append('    var code = node.getAttribute("data-code"); if (!code) return;')
+js_parts.append('    var ch = String.fromCodePoint(parseInt(code, 16));')
+js_parts.append('    if (typeof NO_ANCIENT_GLYPH !== "undefined" && NO_ANCIENT_GLYPH.has(ch)) {')
+js_parts.append('      node.classList.remove("pending"); node.classList.add("no-ancient");')
+js_parts.append('      var era = node.querySelector(".era-name") ? node.querySelector(".era-name").textContent : "";')
+js_parts.append('      node.innerHTML = "<div class=\'era-name\'>" + era + "</div><div class=\'era-no-ancient\'>后起字·无古文字形</div>";')
+js_parts.append('    }')
+js_parts.append('  });')
 js_parts.append('}')
 # 字体降级层：开源古文字字体就位后，离线补满四阶段（清单与授权见 data/fonts/manifest.json）
 # 用 FontFace 加载 + document.fonts.check 网关，避免缺字显示豆腐块；字体缺失则静默跳过，退回"待补全"
 js_parts.append(r'''var STAGE_FONTS = {
-  "oracle-bone": {"file":"data/fonts/oracle-bone.ttf","family":"AncientOracle"},
-  "bronze": {"file":"data/fonts/bronze-script.ttf","family":"AncientBronze"},
+  "oracle-bone": {"file":"data/fonts/oracle-bone.otf","family":"AncientOracle"},
+  "bronze": {"file":"data/fonts/bronze-script.otf","family":"AncientBronze"},
   "seal": {"file":"data/fonts/chongxi-seal.otf","family":"ChongXiSeal"},
   "clerical": {"file":"data/fonts/clerical-script.ttf","family":"AncientClerical"}
 };''')
@@ -374,7 +377,7 @@ js_parts.append('      "<div>' + u('五行') + ': <span>" + (c.wuxing||"-") + "<
 js_parts.append('      "<div>' + u('拼音') + ': <span>" + c.pinyin + "</span></div>" +')
 js_parts.append('      (c.fanqie ? "<div>' + u('反切') + ': <span>" + c.fanqie + "</span><i class=\'src-mini\'>' + u('出《说文》') + '</i></div>" : "") +')
 js_parts.append('    "</div>" +')
-js_parts.append('    "<div class=\'detail-section\'><h4>' + u('字形演变') + '</h4><i class=\'src-mini\'>' + u('字源图：GlyphWiki（CC BY-SA 2.1 JP）｜甲骨→隶：中研院漢字構形資料庫（CC BY-SA 2.5 TW，待字体就位）｜篆书已由崇羲篆体（CC-BY-ND-3.0-TW）离线补全，甲骨/金文/隶待字体落地') + '</i>" + houqiNote + noteHTML + "<div class=\'evo-timeline\'>" + evoHTML + "</div></div>" +')
+js_parts.append('    "<div class=\'detail-section\'><h4>' + u('字形演变') + '</h4><i class=\'src-mini\'>' + u('字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文：cluesurf/mark（OFL）｜隶书：待字体就位（中研院漢字構形資料庫 CC BY-SA 2.5 TW，受地理封锁，须用户浏览器或海外伙伴取字后落入 data/fonts/clerical-script.ttf）') + '</i>" + houqiNote + noteHTML + "<div class=\'evo-timeline\'>" + evoHTML + "</div></div>" +')
 js_parts.append('    "<div class=\'detail-section\'><h4>' + u('本义 vs 今义') + '</h4>" +')
 js_parts.append('      "<div class=\'meaning-compare\'>" +')
 js_parts.append('        "<div class=\'meaning-box\'><div class=\'label\'>' + u('本义（原始含义）') + '</div><div class=\'content\'>" + (c.original||"") + "</div></div>" +')

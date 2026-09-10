@@ -1,0 +1,59 @@
+{
+  "purpose": "古文字四阶段（甲骨/金文/篆/隶）开源字体清单与授权。字体文件放入 data/fonts/ 后，应用运行时经 FontFace + document.fonts.check 网关自动离线补满缺失阶段，无需改代码。",
+  "architecture": "STAGE_FONTS 在 build_web.py 中定义：oracle-bone/bronze/seal/clerical 各指向一个字体文件。字体缺失则静默跳过，退回'待补全'。当前 seal + oracle-bone + bronze 已落地（靠 bundled 字体渲染）。",
+  "correction_2026_09_10": "此前记录'甲骨/金文/隶卡在 GFW、cluesurf/mark 含 clerical-script'有误。实测：① raw.githubusercontent.com 与 api.github.com 从沙箱可直连（git 协议 clone/ls-remote 仍被 502，但 raw/API 通道通）；② cluesurf/mark 的 base/ 顶层仅有 aztec/bronze/oracle-bone 等 14 个目录，不含 clerical-script。故甲骨+金文可直接抓取，隶书需另寻源。",
+  "correction_2026_09_10b": "新证：① 中研院漢字構形資料庫/小學堂 xiaoxue.iis.sinica.edu.tw 现返回『Access Restricted』地理封锁页（HTTP 200 实为封锁页）——此前'200 可达'即撞此页，实为双向不可达（与长期记忆一致），'走中研院汉隶'路线本机/海外均取不到。② build_web.py 原 fillAncientGlyphs 用 -j/-t/-b/-s 后缀探测 GlyphWiki 被误称'实证 uXXXX-t=隶书'；经核验 GlyphWiki 的 -t/-k/-g/-v 是地区变体（台湾/香港/大陆/异体，见 u8ff0-t），非书体阶段，且 u4EBA-j/-t/-b/-s 实测全 404。已关闭该探测，改回只走 bundled 字体兜底，消除误把台湾异体当'隶书'显示的风险。③ 沙箱仅 GitHub raw 可达；maoken.com 被 Cloudflare 403、GlyphWiki 被 Cloudflare 拦。",
+  "stages": {
+    "seal": {
+      "status": "DONE",
+      "file": "data/fonts/chongxi-seal.otf",
+      "family": "ChongXiSeal",
+      "name": "崇羲篆體 (Chong Xi Small Seal)",
+      "license": "CC-BY-ND-3.0-TW-or-later（可商用，须署名，禁止修改字形）",
+      "coverage": "通用规范汉字表 4341/8105 + 繁体 8591；以《说文》大徐本为依据",
+      "how_to_get": "猫啃网 https://www.maoken.com/freefonts/16595.html 或小学堂 https://xiaoxue.iis.sinica.edu.tw/chongxi/ 。oss.maoken.com 直链有防盗链，须带 Referer: https://www.maoken.com/ 才能下载（curl -e 即可）；小学堂 ChongXi.ttf 直链返回的是 HTML 错误页，必须下 zip 解压取 chongxi_seal.otf。",
+      "problem": "非网络问题，是防盗链（hotlink protection）。无 Referer 返回 403，带 Referer 即 200 真文件。"
+    },
+    "oracle-bone": {
+      "status": "DONE",
+      "file": "data/fonts/oracle-bone.otf",
+      "family": "AncientOracle",
+      "recommended": [
+        {"name": "cluesurf/mark · OracleBoneMark.otf", "license": "OFL (SIL Open Font License 1.1，可商用)", "note": "Unicode 映射；仓库 github.com/cluesurf/mark，真实路径 base/oracle-bone/base/OracleBoneMark.otf（539KB，OTTO）。"}
+      ],
+      "how_to_get": "经 API 取 download_url 后 raw 直连下载：https://raw.githubusercontent.com/cluesurf/mark/make/base/oracle-bone/base/OracleBoneMark.otf （沙箱实测 raw 通道可达，无需镜像/代理）。",
+      "problem": "之前误判为 GFW；实际 git 协议被 502，但 raw/API 通道通。已落盘并接线。"
+    },
+    "bronze": {
+      "status": "DONE",
+      "file": "data/fonts/bronze-script.otf",
+      "family": "AncientBronze",
+      "recommended": [
+        {"name": "cluesurf/mark · BronzeScriptMark.otf", "license": "OFL", "note": "Unicode 映射；真实路径 base/bronze-script/base/BronzeScriptMark.otf（1.29MB，OTTO）。"}
+      ],
+      "how_to_get": "raw 直连：https://raw.githubusercontent.com/cluesurf/mark/make/base/bronze-script/base/BronzeScriptMark.otf （沙箱可达）。",
+      "problem": "同 oracle-bone；已落盘并接线。"
+    },
+    "clerical": {
+      "status": "TODO",
+      "planned_file": "data/fonts/clerical-script.ttf",
+      "family": "AncientClerical",
+      "evaluated": [
+        {"name": "ZhengmingLishu (正文隶书 / 徵明隸書)", "license": "矛盾：fonts.do/font.download 标 OFL 可商用；FontKe 标 Non-Commercial；字体内无 OFL 声明；自带'宗教/政治用途除外'违反 OFL§1", "verdict": "REJECT（商业化风险 + 覆盖仅 1183/8105 字≈15%）", "coverage": "CJK基本区1183 + 扩展A 19，总1578码位", "source": "https://font.download/dl/font/zhengminglishu.zip", "magic": "00010000 (TrueType 有效)"}
+      ],
+      "candidates_reachable": [
+        {"name": "青柳隶书 (Qingliu Lishu)", "where": "猫啃网 maoken.com/freefonts/2508.html", "license_claim": "标'允许任何个人和企业免费商用'", "caveat": "须逐项核验是否真·可商用（无 NC/无隐藏限制）；沙箱访问 maoken 被 Cloudflare 403，须用户浏览器或海外住宅 IP 取"}
+      ],
+      "blocked_2026_09_10": {
+        "sinica_xiaoxue": "中研院漢字構形資料庫/小學堂 xiaoxue.iis.sinica.edu.tw 现返回『Access Restricted』地理封锁页（HTTP 200 实为封锁页）。此前'200 可达'即撞此页。大陆与海外均不可达（与长期记忆一致），故'走中研院汉隶'路线从本机与海外都取不到字体/图像。",
+        "glyphwiki_probe": "build_web.py 原 fillAncientGlyphs 用 -j/-t/-b/-s 后缀探测 GlyphWiki 被误称为'实证 uXXXX-t=隶书'。经核验 GlyphWiki 的 -t/-k/-g/-v 是地区变体（台湾/香港/大陆/异体，见 u8ff0-t），并非书体阶段；u4EBA-j/-t/-b/-s 实测全 404。已关闭该探测，改回只走 bundled 字体兜底，消除误标风险。",
+        "reachable_github": "GitHub raw/API 从沙箱可达，但全站无干净 OFL 隶书字体（cluesurf/mark 无 clerical 目录；Google Fonts/LXGW/Source Han 均非隶书）。",
+        "maoken": "猫啃网从沙箱被 Cloudflare 403（机器人拦截），用户浏览器/海外住宅 IP 可正常访问。"
+      },
+      "how_to_get": "交海外伙伴或用户浏览器（可达 maoken/小學堂镜像）取一版干净可商用隶书字体：首选中研院/崇羲隶书(CC BY-SA 2.5 TW)；备选青柳隶书(须核验非 NC)。落入 data/fonts/clerical-script.ttf 即自动生效（FontFace 网关）。详见 tools/rubbing_pipeline/HANDOFF_隶书字体.md。",
+      "problem": "无可达的干净全量 OFL 隶书：中研院地理封锁、GitHub 无、GlyphWiki 命名不成立且被 Cloudflare 拦、maoken 沙箱被 403。隶书阶段当前由 bundled 字体兜底层保持'待补全'。"
+    }
+  },
+  "summary_problem": "篆书=防盗链(已破)；甲骨+金文=已从 cluesurf/mark 经 raw 直连抓取并接线；隶书=cluesurf/mark 无此目录、中研院地理封锁、GlyphWiki 后缀命名不成立(已关探测)、GitHub 无干净 OFL 隶书、maoken 沙箱被 403 → 待海外伙伴/用户浏览器取字落入 data/fonts/clerical-script.ttf。落字体即自动生效。",
+  "done_2026_09_10": "崇羲篆体(chongxi-seal.otf) + OracleBoneMark(oracle-bone.otf) + BronzeScriptMark(bronze-script.otf) 均已下载落盘 data/fonts/ 并接线；build_web.py STAGE_FONTS 已更正为 .otf；index.html 已重建。BabelStoneHanPUA.ttf 已删(不可用)。build_web.py fillAncientGlyphs 已关闭错误 GlyphWiki 后缀探测(原 -t 实为台湾异体)，改回 bundled 字体兜底，消除误标风险。"
+}

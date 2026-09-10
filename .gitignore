@@ -44,7 +44,13 @@ tools/rubbing_pipeline/dataset.attribution.json
 shuowen_b_route_package.zip
 B路线操作手册.pdf
 # BabelStone 等外部字体不随仓库分发（无鉴权映射表，已确认不可用于古文字渲染）
-data/fonts/
+# 默认忽略 data/fonts/ 下全部内容，仅显式放行授权可随仓库分发（OFL / CC-BY-ND-3.0-TW）的古文字字体与清单：
+data/fonts/**
+!data/fonts/
+!data/fonts/oracle-bone.otf
+!data/fonts/bronze-script.otf
+!data/fonts/chongxi-seal.otf
+!data/fonts/manifest.json
 
 # rubbing_pipeline 运行时产物（抓取 PNG/SVG 85MB+、日志、中间 bin、自测产物）
 tools/rubbing_pipeline/_glyph_tmp/
@@ -67,3 +73,37 @@ tools/babelstone_pipeline/
 partner_package/
 partner_package.zip
 PARTNER_README.txt
+
+# 一次性调试/实验脚本与中间产物（非产品代码，不入库；注意保留 tools/_coverage_*.js|py 分析工具）
+__dl/
+data/_dataset_stages.json
+data/characters.json.bak_*
+_fix*.py
+_dbg*.py
+_dbg*.js
+_fix*.js
+_apply_*.py
+_audit_*.py
+_verify.py
+_read_bin.py
+_baseline_build.py
+_build_unified_fix.py
+_gen_p02_fix.py
+_wrap_u.py
+_index_*.html
+_ma.json
+_t*.js
+_t*.py
+_l*.js
+_l*.py
+_min*.js
+_min*.py
+_evo_test.js
+_span*.js
+_inline_check.js
+_tplus.js
+_tmini.js
+_p02*.csv
+_p0_*.csv
+_line*.txt
+*.csv
