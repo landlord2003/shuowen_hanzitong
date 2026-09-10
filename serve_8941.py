@@ -7,7 +7,7 @@ charts by making CDS_READER null).
 import os
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
-ROOT = r"D:\WorkBuddy\projects\说文解字"
+ROOT = os.path.dirname(os.path.abspath(__file__))
 os.chdir(ROOT)
 
 

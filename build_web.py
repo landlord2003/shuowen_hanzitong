@@ -1,7 +1,7 @@
 """One-shot build: simplest possible, all Chinese pre-escaped, zero template tricks"""
 import json
 
-with open('D:/WorkBuddy/projects/说文解字/data/characters.json', 'r', encoding='utf-8') as f:
+with open('data/characters.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 # Pure ASCII JSON
@@ -156,12 +156,12 @@ lines.append('<tr><th>古文字阶段</th><th>历史可考总字（基准）</th
 lines.append('<tr><td>甲骨文</td><td>约 4000+<br>（据《甲骨文编》等）</td><td>824 字</td><td>≈21%</td><td>10.2%</td></tr>')
 lines.append('<tr><td>金文</td><td>约 3500+<br>（据《金文编》等）</td><td>1399 字</td><td>≈40%</td><td>17.3%</td></tr>')
 lines.append('<tr><td>篆书</td><td>9353 字头<br>（《说文解字》小篆）</td><td>4547 字</td><td>49%</td><td>56.1%</td></tr>')
-lines.append('<tr><td>隶书</td><td>约 9353<br>（承篆，《说文》字头）</td><td>0 字</td><td>0%</td><td>0%</td></tr>')
+lines.append('<tr><td>隶书</td><td>约 9353<br>（承篆，《说文》字头）</td><td>6722 字<br>（临海隶书）</td><td>71.9%</td><td>82.9%</td></tr>')
 lines.append('<tr><td>简牍帛书</td><td>无统一总表<br>（出土文献散见）</td><td>327 字</td><td>—</td><td>4.0%</td></tr>')
 lines.append('</table>')
-lines.append('<p>口径说明：①「历史可考总字」采用学界对该书体已发现/已释读单字的统计——甲骨文《甲骨文编》约 4000+ 字头、金文《金文编》约 3500+ 字头、篆书《说文解字》9353 字头、隶书承篆以《说文》为基准；②「本产品覆盖」为本产品在 8105 常用字中能实际渲染对应阶段字形的字数（字源图 + 中研院/小學堂数据 + 开源古文字字体兜底）；③ 因常用字是历史总字的子集，占比反映「该书体历史字中，落在现代常用字且已被数字化收录的比例」；④ 隶书阶段 0% 为唯一待补数据源项，取一版干净可商用隶书字体落入 data/fonts/clerical-script.ttf 即自动补满。</p>')
+lines.append('<p>口径说明：①「历史可考总字」采用学界对该书体已发现/已释读单字的统计——甲骨文《甲骨文编》约 4000+ 字头、金文《金文编》约 3500+ 字头、篆书《说文解字》9353 字头、隶书承篆以《说文》为基准；②「本产品覆盖」为本产品在 8105 常用字中能实际渲染对应阶段字形的字数（字源图 + 中研院/小學堂数据 + 开源古文字字体兜底）；③ 因常用字是历史总字的子集，占比反映「该书体历史字中，落在现代常用字且已被数字化收录的比例」；④ 隶书阶段已由临海隶书（免费商用，猫啃网）经 FontFace 网关补满（覆盖 8105 中 6722 字=82.9%，余约 17% 简体字无隶书字形回退楷体）。</p>')
 lines.append('</div>')
-lines.append('<div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文：cluesurf/mark（OFL）｜隶书：待字体就位（中研院漢字構形資料庫 CC BY-SA 2.5 TW，受地理封锁，须用户浏览器或海外伙伴取字落入 data/fonts/clerical-script.ttf）｜说文解字·汉字通</div>')
+lines.append('<div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文：cluesurf/mark（OFL）｜隶书：临海隶书（免费商用，猫啃网 maoken.com）｜简牍帛书：中研院/小學堂（资料所限仅327字）｜说文解字·汉字通</div>')
 lines.append('<div class="overlay" id="overlay" onclick="if(event.target===this)closeDetail()"><div class="detail-panel" id="detail"></div></div>')
 
 # Now the script tag - ALL Chinese pre-escaped
@@ -169,7 +169,7 @@ js_parts = []
 js_parts.append('var DATA = ' + json_ascii + ';')
 # 嵌入"仅字源、无真迹古文字段"缺字集，供演变行诚实标注（避免空白"待补全"误导）
 try:
-    with open('D:/WorkBuddy/projects/说文解字/data/glyph_missing.json', encoding='utf-8') as _mf:
+    with open('data/glyph_missing.json', encoding='utf-8') as _mf:
         _missing_chars = json.load(_mf).get('chars', [])
 except Exception:
     _missing_chars = []
@@ -470,7 +470,7 @@ lines.append('</body></html>')
 result = '\n'.join(lines)
 
 # Write
-with open('D:/WorkBuddy/projects/说文解字/index.html', 'w', encoding='utf-8') as f:
+with open('index.html', 'w', encoding='utf-8') as f:
     f.write(result)
 
 # Verify: check no non-ASCII in script
