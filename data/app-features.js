@@ -276,18 +276,56 @@ function closeQuiz() {
   else inject();
 })();
 
-// ---- 笔顺 SVG 渲染（strokes.min.json 用 y 轴向上的 makemeahanzi 坐标，需翻转）----
+// ---- 笔顺 SVG 渲染（strokes.min.json 为 Hanzi Writer 闭合轮廓路径，y 轴向上需翻转）----
 function renderStrokeSVG(char) {
   var data = (typeof STROKE_DB !== 'undefined' && STROKE_DB) ? STROKE_DB[char] : null;
   if (!data || !data.length) return '';
+  var uid = 'st' + Math.random().toString(36).slice(2, 9);
   var inner = data.map(function (p, i) {
     var m = p.match(/M\s*([\d.]+)[\s,]+([\d.]+)/);
     var sx = m ? parseFloat(m[1]) : 512;
     var sy = m ? parseFloat(m[2]) : 512;
     var fy = 1024 - sy;
-    return "<path transform='translate(0,1024) scale(1,-1)' d='" + p + "' fill='#e0e0e0' stroke='none'/>" +
-           "<circle cx='" + sx + "' cy='" + fy + "' r='30' fill='#1e2a4a' stroke='#7c6ff0' stroke-width='6'/>" +
-           "<text x='" + sx + "' y='" + (fy + 15) + "' font-size='38' fill='#cdbcff' text-anchor='middle' dominant-baseline='middle' font-weight='bold'>" + (i + 1) + "</text>";
+    var delay = ((i + 1) * 0.45).toFixed(2);
+    // 翻转组放路径(属性transform)，动画只动 opacity/fill 不影响翻转
+    return "<g class='stroke-step'>" +
+             "<g transform='translate(0,1024) scale(1,-1)'>" +
+               "<path class='stroke-fill' d='" + p + "' style='animation:strokePop .42s ease forwards " + delay + "s'/>" +
+             "</g>" +
+             "<g class='stroke-dot' style='animation:strokeFade .25s ease forwards " + delay + "s'>" +
+               "<circle cx='" + sx + "' cy='" + fy + "' r='26' fill='#7c6ff0' stroke='#fff' stroke-width='3'/>" +
+               "<text x='" + sx + "' y='" + (fy + 12) + "' font-size='34' fill='#fff' text-anchor='middle' dominant-baseline='middle' font-weight='bold'>" + (i + 1) + "</text>" +
+             "</g>" +
+           "</g>";
   }).join('');
-  return "<div class='stroke-section'><h4>笔顺</h4><svg class='stroke-svg' viewBox='0 0 1024 1024'>" + inner + "</svg><i class='src-mini'>笔顺数据源：公开笔顺数据集（如 Hanzi Writer Data）</i></div>";
+  return "<div class='stroke-section' id='" + uid + "'><h4>笔顺</h4>" +
+         "<svg class='stroke-svg' id='svg-" + uid + "' viewBox='0 0 1024 1024'>" + inner + "</svg>" +
+         "<div class='stroke-controls'><button class='filter-btn' onclick='replayStroke(\"" + uid + "\")'>▶ 重播笔顺</button><span class='stroke-step-label' id='lab-" + uid + "'></span></div>" +
+         "<i class='src-mini'>笔顺数据源：Hanzi Writer Data（MIT，公开笔顺轮廓）</i></div>";
+}
+function replayStroke(uid) {
+  var svg = document.getElementById('svg-' + uid);
+  var lab = document.getElementById('lab-' + uid);
+  if (!svg) return;
+  var clone = svg.cloneNode(true);
+  clone.id = 'svg-' + uid;
+  svg.parentNode.replaceChild(clone, svg);
+  if (lab) lab.textContent = '';
+  var paths = clone.querySelectorAll('.stroke-fill');
+  var total = paths.length;
+  if (!total) return;
+  var start = null;
+  function frame(t) {
+    if (start === null) start = t;
+    var el = (t - start) / 1000;
+    var shown = 0;
+    for (var i = 0; i < total; i++) {
+      var d = parseFloat(paths[i].style.animationDelay || '0');
+      if (el >= d) shown = i + 1;
+    }
+    if (lab) lab.textContent = (shown ? '第 ' + shown + ' / ' + total : '准备…') + ' 笔';
+    if (shown < total) requestAnimationFrame(frame);
+    else if (lab) lab.textContent = '共 ' + total + ' 笔';
+  }
+  requestAnimationFrame(frame);
 }
