@@ -7,6 +7,13 @@ with open('data/characters.json', 'r', encoding='utf-8') as f:
 # Pure ASCII JSON
 json_ascii = json.dumps(data, ensure_ascii=True)
 
+# 隶书逐字来源映射（char -> linhai / qingliu / none），供详情页来源徽章标注
+try:
+    with open('data/clerical_source.json', 'r', encoding='utf-8') as _csf:
+        src_map = json.load(_csf)
+except Exception:
+    src_map = {}
+
 # Helper: escape a Chinese string to \uXXXX
 def u(s):
     # Return BARE \uXXXX escapes for Chinese (no quote wrapper). Call sites supply
@@ -79,7 +86,11 @@ lines.append('.meaning-box{background:var(--card);border-radius:var(--radius);pa
 lines.append('.meaning-box .label{font-size:12px;color:var(--accent);margin-bottom:4px}')
 lines.append('.meaning-box .content{font-size:14px;color:var(--text);line-height:1.6}')
 lines.append('.oracle-note{background:rgba(180,140,90,.1);border-left:3px solid rgba(180,140,90,.5);padding:8px 12px;margin:8px 0;font-size:13px;color:var(--text2);line-height:1.6;border-radius:0 6px 6px 0}')
-lines.append('.src-mini{font-style:normal;font-size:10px;color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle;white-space:nowrap}')
+lines.append('.src-mini{display:inline-block;font-style:normal;font-size:10px;color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:1px 6px;margin:2px 0 2px 6px;vertical-align:middle;white-space:normal;overflow-wrap:anywhere;word-break:break-all;max-width:100%}')
+lines.append('.clerical-badge{display:inline-block;font-size:10px;font-weight:500;border-radius:3px;padding:1px 6px;margin:2px 4px 0 0;vertical-align:middle}')
+lines.append('.clerical-badge.linhai{color:#1a7f4e;background:rgba(26,127,78,.12);border:1px solid rgba(26,127,78,.4)}')
+lines.append('.clerical-badge.qingliu{color:#1a6fd6;background:rgba(26,111,214,.12);border:1px solid rgba(26,111,214,.4)}')
+lines.append('.clerical-badge.none{color:var(--text3);background:var(--card);border:1px solid var(--border)}')
 lines.append('.src-line{font-size:13px;color:var(--text2);margin:6px 0;line-height:1.7}')
 lines.append('.src-line b{color:var(--text)}')
 lines.append('.trace-note{background:rgba(255,180,0,.08);border-left:3px solid #ffb400;padding:8px 12px;font-size:13px;color:var(--text2);border-radius:0 6px 6px 0;margin:6px 0;line-height:1.7}')
@@ -118,9 +129,9 @@ lines.append('</style></head><body>')
 lines.append('<style>.daily-banner{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--card),#1c1c22);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:14px;flex-wrap:wrap}.daily-label{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:2px;white-space:nowrap}.daily-char{font-size:42px;font-weight:700;line-height:1;cursor:pointer;color:var(--text)}.daily-char:hover{color:var(--accent)}.daily-py{font-size:15px;color:var(--text2)}.daily-desc{font-size:14px;color:var(--text2);flex:1;min-width:200px;line-height:1.6}.fav-btn{margin-left:auto;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer}.fav-btn:hover{border-color:var(--accent);color:var(--accent)}.char-card{position:relative}.fav-dot{position:absolute;top:4px;right:8px;color:#ffb300;font-size:14px}.daily-card{outline:2px solid var(--accent);outline-offset:-2px}.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}</style>')
 
 lines.append('<style>.welcome-modal{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;z-index:80}.welcome-modal.show{display:flex}.welcome-box{background:#16161a;border:1px solid var(--border);border-radius:16px;padding:26px 30px;max-width:560px;width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.5)}.welcome-box h2{margin:0 0 10px;color:var(--accent);font-size:22px}.welcome-box p{line-height:1.75;color:var(--text2);margin:8px 0;font-size:14px}.welcome-box ul{margin:10px 0;padding-left:20px;line-height:2;color:var(--text2);font-size:14px}.welcome-box .welcome-src{font-size:12px;color:var(--text3);border-top:1px solid var(--border);padding-top:12px;margin-top:14px}.welcome-btn{margin-top:14px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:15px;cursor:pointer;font-weight:600}.welcome-btn:hover{opacity:.9}.help-btn{margin-left:10px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:14px;vertical-align:middle}.help-btn:hover{border-color:var(--accent);color:var(--accent)}</style>')
-lines.append('<div id="welcomeModal" class="welcome-modal"><div class="welcome-box"><h2>说文解字 · 汉字通</h2><p>本 App 收录 8105 个规范汉字，提供字源图、字形演变、六书、本义/今义、《说文》原文与字源故事。</p><ul><li>🔍 顶部搜索框：按拼音 / 部首 / 单字检索</li><li>📜 点任意字卡 → 查看「字形演变」逐阶段标注</li><li>🧱 古字形标注：<b>✓ 有字形</b>（直接显示）｜<b>⏳ 待补</b>（该字古已有之，此阶段数据待补）｜<b>— 无古字形</b>（后起字 / 形声 / 简化字，历史上本无此阶段字形）</li><li>📊 底部「古字形阶段覆盖统计」说明各书体收录比例</li></ul><p class="welcome-src">字源图 GlyphWiki（CC BY-SA 2.1 JP）｜篆书 崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文 cluesurf/mark（OFL）｜隶书 待字体就位（数据受地理封锁，交海外伙伴取字）</p><button class="welcome-btn" onclick="closeWelcome()">开始探索 →</button></div></div>')
+lines.append('<div id="welcomeModal" class="welcome-modal"><div class="welcome-box"><h2>说文解字 · 汉字通</h2><p>本 App 收录 8105 个规范汉字，提供字源图、字形演变、六书、本义/今义、《说文》原文与字源故事。</p><ul><li>🔍 顶部搜索框：按拼音 / 部首 / 单字检索</li><li>📜 点任意字卡 → 查看「字形演变」逐阶段标注</li><li>🧱 古字形标注：<b>✓ 有字形</b>（直接显示）｜<b>⏳ 待补</b>（该字古已有之，此阶段数据待补）｜<b>— 无古字形</b>（后起字 / 形声 / 简化字，历史上本无此阶段字形）</li><li>📊 底部「古字形阶段覆盖统计」说明各书体收录比例</li></ul><p class="welcome-src">字源图 GlyphWiki（CC BY-SA 2.1 JP）｜篆书 崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文 cluesurf/mark（OFL）｜隶书 临海隶书＋青柳隶书（免费商用）</p><button class="welcome-btn" onclick="closeWelcome()">开始探索 →</button></div></div>')
 lines.append('<h1>说文解字·汉字通</h1>')
-lines.append('<p class="sub">8105字·字源溯源（100%，GlyphWiki CC BY-SA 2.1 JP）＋字形演变（甲骨/金/篆：开源字体已落地；隶书：待字体就位；简帛：资料所限仅327字）｜' + u('后起字·无古文字形已诚实标注') + '</p>')
+lines.append('<p class="sub">8105字·字源溯源（100%，GlyphWiki CC BY-SA 2.1 JP）＋字形演变（甲骨/金/篆：开源字体已落地；隶书：临海＋青柳隶书 90.7%；简帛：资料所限仅327字）｜' + u('后起字·无古文字形已诚实标注') + '</p>')
 lines.append('<input id="searchInput" placeholder="搜索：拼音(如 shuǐ)、部首(如 水)、字(如 海)；笔画筛选见下方按钮" autofocus>')
 lines.append('<div id="dailyBanner" class="daily-banner"></div>')
 lines.append('<div class="filters" id="liushuFilters">')
@@ -156,13 +167,13 @@ lines.append('<tr><th>古文字阶段</th><th>历史可考总字（基准）</th
 lines.append('<tr><td>甲骨文</td><td>约 4000+<br>（据《甲骨文编》等）</td><td>824 字</td><td>≈21%</td><td>10.2%</td></tr>')
 lines.append('<tr><td>金文</td><td>约 3500+<br>（据《金文编》等）</td><td>1399 字</td><td>≈40%</td><td>17.3%</td></tr>')
 lines.append('<tr><td>篆书</td><td>9353 字头<br>（《说文解字》小篆）</td><td>4547 字</td><td>49%</td><td>56.1%</td></tr>')
-lines.append('<tr><td>隶书</td><td>约 9353<br>（承篆，《说文》字头）</td><td>6722 字<br>（临海隶书）</td><td>71.9%</td><td>82.9%</td></tr>')
+lines.append('<tr><td>隶书</td><td>约 9353<br>（承篆，《说文》字头）</td><td>7351 字<br>（临海隶书 6722＋青柳隶书补 629）</td><td>78.6%</td><td>90.7%</td></tr>')
 lines.append('<tr><td>简牍帛书</td><td>无统一总表<br>（出土文献散见）</td><td>327 字</td><td>—</td><td>4.0%</td></tr>')
 lines.append('</table>')
-lines.append('<p>口径说明：①「历史可考总字」采用学界对该书体已发现/已释读单字的统计——甲骨文《甲骨文编》约 4000+ 字头、金文《金文编》约 3500+ 字头、篆书《说文解字》9353 字头、隶书承篆以《说文》为基准；②「本产品覆盖」为本产品在 8105 常用字中能实际渲染对应阶段字形的字数（字源图 + 中研院/小學堂数据 + 开源古文字字体兜底）；③ 因常用字是历史总字的子集，占比反映「该书体历史字中，落在现代常用字且已被数字化收录的比例」；④ 隶书阶段已由临海隶书（免费商用，猫啃网）经 FontFace 网关补满（覆盖 8105 中 6722 字=82.9%，余约 17% 简体字无隶书字形回退楷体）。</p>')
+lines.append('<p>口径说明：①「历史可考总字」采用学界对该书体已发现/已释读单字的统计——甲骨文《甲骨文编》约 4000+ 字头、金文《金文编》约 3500+ 字头、篆书《说文解字》9353 字头、隶书承篆以《说文》为基准；②「本产品覆盖」为本产品在 8105 常用字中能实际渲染对应阶段字形的字数（字源图 + 中研院/小學堂数据 + 开源古文字字体兜底）；③ 因常用字是历史总字的子集，占比反映「该书体历史字中，落在现代常用字且已被数字化收录的比例」；④ 隶书阶段已由临海隶书（6722 字，82.9%）＋青柳隶书补缺（629 字）达并集 7351 字=90.7%（两款均免费商用，猫啃网 maoken.com），详情页逐字标注字体来源；余约 9% 简体字无隶书字形回退楷体。</p>')
 lines.append('</div>')
-lines.append('<div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文：cluesurf/mark（OFL）｜隶书：临海隶书（免费商用，猫啃网 maoken.com）｜简牍帛书：中研院/小學堂（资料所限仅327字）｜说文解字·汉字通</div>')
-lines.append('<div class="overlay" id="overlay" onclick="if(event.target===this)closeDetail()"><div class="detail-panel" id="detail"></div></div>')
+lines.append('<div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文：cluesurf/mark（OFL）｜隶书：临海隶书＋青柳隶书（免费商用，猫啃网 maoken.com）｜简牍帛书：中研院/小學堂（资料所限仅327字）｜说文解字·汉字通</div>')
+lines.append('<div class="overlay" id="overlay"><div class="detail-panel" id="detail" onclick="event.stopPropagation()"></div></div>')
 
 # Now the script tag - ALL Chinese pre-escaped
 js_parts = []
@@ -254,7 +265,7 @@ js_parts.append('}')
 #   GlyphWiki 的 -t/-k/-g/-v 实为「地区变体」（台湾/香港/大陆/异体，见 u8ff0-t 等），并非书体阶段；
 #   GlyphWiki 本身是宋体/楷书字形库，无系统化的甲骨/金文/篆/隶书体后缀命名（u4EBA-j/-t/-b/-s 实测全 404）。
 #   故关闭 GlyphWiki 后缀探测，改回只走 bundled 字体兜底，避免误把台湾异体当「隶书」显示。
-# 甲骨/金文/篆：已由 cluesurf/mark(OFL) + 崇羲篆體(CC-BY-ND-3.0-TW) 离线补全；隶书：待字体就位（见 manifest.json）。
+# 甲骨/金文/篆：已由 cluesurf/mark(OFL) + 崇羲篆體(CC-BY-ND-3.0-TW) 离线补全；隶书：临海隶书＋青柳隶书双来源（见 manifest.json）。
 js_parts.append('function fillAncientGlyphs(){')
 js_parts.append('  var nodes = document.querySelectorAll(".evo-step.pending[data-script]");')
 js_parts.append('  nodes.forEach(function(node){')
@@ -284,6 +295,8 @@ js_parts.append(r'''var STAGE_FONTS = {
   "seal": {"file":"data/fonts/chongxi-seal.otf","family":"ChongXiSeal"},
   "clerical": {"file":"data/fonts/clerical-script.ttf","family":"AncientClerical"}
 };''')
+js_parts.append(r'''var CLERICAL_QINGLIU = {"file":"data/fonts/clerical-qingliu.ttf","family":"AncientClericalQingliu"};''')
+js_parts.append('var CLERICAL_SOURCE = ' + json.dumps(src_map, ensure_ascii=True, separators=(",",":")) + ';')
 js_parts.append(r'''var __fontReady = {};
 (function preloadAncientFonts(){
   if (typeof FontFace === "undefined" || !document.fonts) return;
@@ -294,11 +307,35 @@ js_parts.append(r'''var __fontReady = {};
       ff.load().then(function(loaded){ document.fonts.add(loaded); __fontReady[s] = true; if (window.__refillFont) window.__refillFont(); }).catch(function(){ __fontReady[s] = false; });
     } catch(e) { __fontReady[s] = false; }
   });
+  // Qingliu lishu as second clerical source (fills Linhai gaps), preloaded separately
+  try {
+    var qf = new FontFace(CLERICAL_QINGLIU.family, "url(" + CLERICAL_QINGLIU.file + ")");
+    qf.load().then(function(loaded){ document.fonts.add(loaded); __fontReady["clerical-qingliu"] = true; if (window.__refillFont) window.__refillFont(); }).catch(function(){ __fontReady["clerical-qingliu"] = false; });
+  } catch(e) { __fontReady["clerical-qingliu"] = false; }
 })();''')
 js_parts.append(r'''function tryFontStage(script, code, node, era){
   var f = STAGE_FONTS[script];
-  if (!f || !__fontReady[script]) return;
+  if (!f) return;
   var ch = String.fromCodePoint(parseInt(code, 16));
+  // clerical dual-source: Linhai first, fallback Qingliu; tag font source per char
+  if (script === "clerical") {
+    var srcKey = (typeof CLERICAL_SOURCE !== "undefined") ? (CLERICAL_SOURCE[ch] || "none") : "none";
+    if (srcKey === "none") return;  // neither font has it; keep pending placeholder
+    var fam, srcLabel;
+    if (srcKey === "linhai") {
+      if (!__fontReady["clerical"] || !document.fonts.check("64px " + f.family, ch)) return;
+      fam = f.family; srcLabel = "\u4e34\u6d77\u96b6\u4e66";
+    } else {  // qingliu
+      if (!__fontReady["clerical-qingliu"] || !document.fonts.check("64px " + CLERICAL_QINGLIU.family, ch)) return;
+      fam = CLERICAL_QINGLIU.family; srcLabel = "\u9752\u67f3\u96b6\u4e66";
+    }
+    node.classList.remove("pending");
+    node.classList.add("font-fill");
+    node.setAttribute("data-clerical-src", srcKey);
+    node.innerHTML = "<div class='era-name'>" + era + "</div>" + (window.ERA_DESC && ERA_DESC[era] ? "<div class='era-desc'>" + ERA_DESC[era] + "</div>" : "") + "<span class='era-font' style='font-family:" + fam + "'>" + ch + "</span><div class='clerical-badge " + srcKey + "'>" + srcLabel + "</div>";
+    return;
+  }
+  if (!__fontReady[script]) return;
   if (!document.fonts.check("64px " + f.family, ch)) return;
   node.classList.remove("pending");
   node.classList.add("font-fill");
@@ -396,7 +433,7 @@ js_parts.append('      "<div>' + u('五行') + ': <span>" + (c.wuxing||"-") + "<
 js_parts.append('      "<div>' + u('拼音') + ': <span>" + c.pinyin + "</span></div>" +')
 js_parts.append('      (c.fanqie ? "<div>' + u('反切') + ': <span>" + c.fanqie + "</span><i class=\'src-mini\'>' + u('出《说文》') + '</i></div>" : "") +')
 js_parts.append('    "</div>" +')
-js_parts.append('    "<div class=\'detail-section\'><h4>' + u('字形演变') + '</h4><i class=\'src-mini\'>' + u('字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文：cluesurf/mark（OFL）｜隶书：待字体就位（中研院漢字構形資料庫 CC BY-SA 2.5 TW，受地理封锁，须用户浏览器或海外伙伴取字后落入 data/fonts/clerical-script.ttf）') + '</i>" + houqiNote + noteHTML + "<div class=\'evo-timeline\'>" + evoHTML + "</div></div>" +')
+js_parts.append('    "<div class=\'detail-section\'><h4>' + u('字形演变') + '</h4><i class=\'src-mini\'>' + u('字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文：cluesurf/mark（OFL）｜隶书：临海隶书＋青柳隶书（免费商用，猫啃网）') + '</i>" + houqiNote + noteHTML + "<div class=\'evo-timeline\'>" + evoHTML + "</div></div>" +')
 js_parts.append('    "<div class=\'detail-section\'><h4>' + u('本义 vs 今义') + '</h4>" +')
 js_parts.append('      "<div class=\'meaning-compare\'>" +')
 js_parts.append('        "<div class=\'meaning-box\'><div class=\'label\'>' + u('本义（原始含义）') + '</div><div class=\'content\'>" + (c.original||"") + "</div></div>" +')

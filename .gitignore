@@ -51,6 +51,7 @@ data/fonts/**
 !data/fonts/bronze-script.otf
 !data/fonts/chongxi-seal.otf
 !data/fonts/clerical-script.ttf
+!data/fonts/clerical-qingliu.ttf
 !data/fonts/manifest.json
 
 # rubbing_pipeline 运行时产物（抓取 PNG/SVG 85MB+、日志、中间 bin、自测产物）

@@ -37,8 +37,11 @@
     "clerical": {
       "status": "DONE",
       "file": "data/fonts/clerical-script.ttf",
+      "file_qingliu": "data/fonts/clerical-qingliu.ttf",
       "family": "AncientClerical",
+      "family_qingliu": "AncientClericalQingliu",
       "resolved_2026_09_10": {"font": "临海隶书 (LinHai LiShu)", "license": "免费商用（猫啃网 maoken.com 标注；字体包内无 NC 限制；个人与企业均可商用）", "coverage_8105": "6722/8105 = 82.9%", "source": "https://www.maoken.com/freefonts/20208.html（直链 oss.maoken.com 带 Referer: https://www.maoken.com/ 下载）", "note": "古典隶书风格，比青柳隶书(简体覆盖低/JIS)更适合本 App；同批另取阿里妈妈刀隶体(81.9%)可作 P1-3 书法字体矩阵候选。落字体即自动生效（FontFace 网关）。"},
+      "dual_font_2026_09_10": {"second_font": "青柳隶书 (Qingliu Lishu)", "file": "data/fonts/clerical-qingliu.ttf", "license": "免费商用（猫啃网 maoken.com/freefonts/2508.html 标注'允许任何个人和企业免费商用'）", "coverage_8105": "5005/8105 = 61.8%", "role": "补临海缺口：临海优先、青柳兜底；青柳补 629 字使并集达 7351/8105 = 90.7%（两款都无 754 字回退楷体）", "source_mapping": "data/clerical_source.json 逐字标注 linhai/qingliu/none，详情页隶书阶段渲染来源徽章（🟢临海隶书 / 🔵青柳隶书）", "note": "青柳单独覆盖低于临海(61.8% vs 82.9%)，但恰好补上临海缺的 629 字（生僻/简化特字）；风格与临海不同，故逐字标注来源而非混作一团。"},
       "planned_file": "data/fonts/clerical-script.ttf",
       "evaluated": [
         {"name": "ZhengmingLishu (正文隶书 / 徵明隸書)", "license": "矛盾：fonts.do/font.download 标 OFL 可商用；FontKe 标 Non-Commercial；字体内无 OFL 声明；自带'宗教/政治用途除外'违反 OFL§1", "verdict": "REJECT（商业化风险 + 覆盖仅 1183/8105 字≈15%）", "coverage": "CJK基本区1183 + 扩展A 19，总1578码位", "source": "https://font.download/dl/font/zhengminglishu.zip", "magic": "00010000 (TrueType 有效)"}
@@ -50,13 +53,14 @@
         "sinica_xiaoxue": "中研院漢字構形資料庫/小學堂 xiaoxue.iis.sinica.edu.tw 现返回『Access Restricted』地理封锁页（HTTP 200 实为封锁页）。此前'200 可达'即撞此页。大陆与海外均不可达（与长期记忆一致），故'走中研院汉隶'路线从本机与海外都取不到字体/图像。",
         "glyphwiki_probe": "build_web.py 原 fillAncientGlyphs 用 -j/-t/-b/-s 后缀探测 GlyphWiki 被误称为'实证 uXXXX-t=隶书'。经核验 GlyphWiki 的 -t/-k/-g/-v 是地区变体（台湾/香港/大陆/异体，见 u8ff0-t），并非书体阶段；u4EBA-j/-t/-b/-s 实测全 404。已关闭该探测，改回只走 bundled 字体兜底，消除误标风险。",
         "reachable_github": "GitHub raw/API 从沙箱可达，但全站无干净 OFL 隶书字体（cluesurf/mark 无 clerical 目录；Google Fonts/LXGW/Source Han 均非隶书）。",
-        "maoken": "猫啃网从沙箱实测：HTML 页与 oss.maoken.com 直链均可用（需带 Browser UA + Referer: https://www.maoken.com/，否则 403）。临海隶书/阿里妈妈刀隶体经 oss 直链已取回；青柳隶书仅给网盘(夸克/百度/蓝奏/城通)无直链。修正旧结论'maoken 沙箱被 403'。"
+        "maoken": "猫啃网从沙箱实测：HTML 页与 oss.maoken.com 直链均可用（需带 Browser UA + Referer: https://www.maoken.com/，否则 403）。临海隶书/阿里妈妈刀隶体经 oss 直链已取回；青柳隶书经 oss.maoken.com/猫啃字体/日本汉字/青柳隶书_猫啃.zip 直链已取回（此前误判仅网盘无直链）。修正旧结论'maoken 沙箱被 403'。"
       },
-      "how_to_get": "交海外伙伴或用户浏览器（可达 maoken/小學堂镜像）取一版干净可商用隶书字体：首选中研院/崇羲隶书(CC BY-SA 2.5 TW)；备选青柳隶书(须核验非 NC)。落入 data/fonts/clerical-script.ttf 即自动生效（FontFace 网关）。详见 tools/rubbing_pipeline/HANDOFF_隶书字体.md。",
-      "problem": "已解决：临海隶书(免费商用, 6722/8105=82.9%) 经 oss.maoken.com 直链落入 data/fonts/clerical-script.ttf，隶书阶段已从'待补全'变可用。残留缺口≈17% 简体字无隶书字形(回退楷体，可接受)。"
+      "how_to_get": "已落地双字体：临海隶书(主) + 青柳隶书(补缺)。均经 oss.maoken.com 直链(带 UA+Referer)取回，无需海外伙伴。",
+      "problem": "已解决：临海隶书(免费商用, 6722/8105=82.9%) 主字体 + 青柳隶书(免费商用) 补 629 字缺口，并集 7351/8105=90.7%。逐字来源映射 data/clerical_source.json，详情页标注字体来源。残留≈9% 简体字无隶书字形(回退楷体，可接受)。"
     }
   },
-  "summary_problem": "篆书=防盗链(已破)；甲骨+金文=已从 cluesurf/mark 经 raw 直连抓取并接线；隶书=临海隶书(免费商用, 82.9% 覆盖 8105) 经 oss.maoken.com 直链落入 data/fonts/clerical-script.ttf 已落地，App 五阶段(甲骨/金/简帛/篆/隶)隶书阶段从'待补全'变可用。残留≈17% 简体字无隶书字形回退楷体。中研院地理封锁、GlyphWiki 命名不成立(已关探测)、GitHub 无干净 OFL 隶书 仍成立。",
+  "summary_problem": "篆书=防盗链(已破)；甲骨+金文=已从 cluesurf/mark 经 raw 直连抓取并接线；隶书=临海隶书(主, 82.9%) + 青柳隶书(补缺 629 字) 双字体并集 90.7%，逐字来源映射 data/clerical_source.json，详情页标注字体来源。残留≈9% 简体字无隶书字形回退楷体。中研院地理封锁、GlyphWiki 命名不成立(已关探测)、GitHub 无干净 OFL 隶书 仍成立。",
   "done_2026_09_10": "崇羲篆体(chongxi-seal.otf) + OracleBoneMark(oracle-bone.otf) + BronzeScriptMark(bronze-script.otf) 均已下载落盘 data/fonts/ 并接线；build_web.py STAGE_FONTS 已更正为 .otf；index.html 已重建。BabelStoneHanPUA.ttf 已删(不可用)。build_web.py fillAncientGlyphs 已关闭错误 GlyphWiki 后缀探测(原 -t 实为台湾异体)，改回 bundled 字体兜底，消除误标风险。",
-  "done_P1_1_2026_09_10": "隶书补源完成：临海隶书(免费商用) 经 oss.maoken.com 直链(带 UA+Referer)取回 2.78MB TrueType，落 data/fonts/clerical-script.ttf（.gitignore 已放行），App 运行时 FontFace 网关自动补满隶书阶段；manifest 隶书状态 TODO→DONE；build_web.py 页脚/覆盖表同步更新；index.html 重建。同批阿里妈妈刀隶体(81.9%)留作 P1-3 书法字体矩阵候选。"
+  "done_P1_1_2026_09_10": "隶书补源完成：临海隶书(免费商用) 经 oss.maoken.com 直链(带 UA+Referer)取回 2.78MB TrueType，落 data/fonts/clerical-script.ttf（.gitignore 已放行），App 运行时 FontFace 网关自动补满隶书阶段；manifest 隶书状态 TODO→DONE；build_web.py 页脚/覆盖表同步更新；index.html 重建。同批阿里妈妈刀隶体(81.9%)留作 P1-3 书法字体矩阵候选。",
+  "done_P1_1b_2026_09_10": "隶书双字体补缺：青柳隶书(免费商用, 4.4MB) 经 oss.maoken.com/猫啃字体/日本汉字/青柳隶书_猫啃.zip 直链取回，落 data/fonts/clerical-qingliu.ttf；生成 data/clerical_source.json 逐字标注 linhai(6722)/qingliu(629)/none(754)；build_web.py 加 CLERICAL_QINGLIU 字体 + CLERICAL_SOURCE map + tryFontStage 隶书双字体 fallback(临海优先青柳兜底) + 详情页来源徽章(.clerical-badge)；覆盖 82.9%→90.7%；修复详情页两处 bug(字形演变说明栏 src-mini 溢出、点外部关闭)。"
 }
