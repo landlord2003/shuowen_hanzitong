@@ -1,121 +1,115 @@
-# 说文解字 App — 交接文档（字形图「换源落地」补全）
+# 说文解字 App — 交接文档（字形数据已落地 · 2026-09-10 版）
 
-> 写给接手的机器 / 同事。**目标**：把甲骨 / 金文 / 篆 / 隶等位图补进 App，让「字形演变」区从纯文字降级态变成完整字形图。
-> 当前仓库已可合规商用（文字版），只差这一步。
+> 写给接手的机器 / 同事。**当前仓库已可合规商用（图文版）**，字形数据已通过多源落地，无需再跑旧的中研院抓取管线。
+> 本文件纠正了早期版本"dataset.bin=154B 空包、须跑 sinica_pipeline 抓中研院"的错误表述——那条路径已失效。
 
 ---
 
 ## 0. TL;DR（一句话）
 
-原字形图来自 **EVOBC（CC BY-NC-SA 4.0 非商业，禁止商用）**，已下架；换成 **台湾中研院 漢字構形资料库 / 小學堂（CC BY-SA 2.5 TW，可商用）** 后，因本机网络取不到数据，`data/dataset.bin` 现为 **154B 空包**（App 自动降级为纯文字）。
+字形数据**已落地**：`data/dataset.bin`（9.67MB，CEDS/zstd 字源位图库）覆盖字源图 100%，叠加三款开源古文字字体（甲骨/金文 OFL + 崇羲篆体 CC-BY-ND-3.0-TW），App 已是「图文版」。
 
-**你只需做一件事**：在**可联网环境**跑 `tools/sinica_pipeline/` 抓中研院字形图 → 打包 → 覆盖 `dataset.bin` → 验证 → 提交推送。
+**⚠️ 旧管线 `tools/sinica_pipeline/` 已废弃**：它依赖台湾中研院 小學堂（`xiaoxue.iis.sinica.edu.tw`），该站**对本机与海外均返回 "Access Restricted" 地理封锁**，抓图步骤必失败。**不要再跑 `scrape_sinica.py`**。
+
+**你只需做一件事（如需补隶书）**：在**可达环境**取一版干净可商用隶书字体，丢进 `data/fonts/clerical-script.ttf`（或 `.otf`）即自动生效，详见 `tools/rubbing_pipeline/HANDOFF_隶书字体.md`。
 
 ---
 
-## 1. 当前仓库状态
+## 1. 当前仓库状态（2026-09-10）
 
 - 主分支：`main`，已连 Gitee：`https://gitee.com/landlord2003/shuo-wen_-jie-zi.git`
-- 本次已提交（换源合规化）：`build_assets.py` / `build_final.py` / `build_web.py` / `data/characters.json` / `data/dataset-reader.js` / `data/dataset.bin`(空包) / `index.html`
-- 字形图：**缺失**（dataset.bin = 154B 空包）。App 正常工作，仅「字形演变」区只显示「繁→简」文字，无位图。
-- 授权署名：已在 App（副标题 / 数据来源 / 页脚 / 详情）内置「中央研究院漢字構形资料庫（CC BY-SA 2.5 TW）」，**勿删**。
-- 全仓 NC 残留扫描：`index.html` / `dataset-reader.js` / `characters.json` / `build_web.py` 均为 0 命中。
+- 字形数据：**已落地**
+  - `data/dataset.bin` = 9.67MB CEDS 库，**字源图（GlyphWiki 体系）覆盖 8105/8105 = 100%**
+  - 三款 bundled 古文字字体（`data/fonts/`）：`oracle-bone.otf`/`bronze-script.otf`（cluesurf/mark，OFL）、`chongxi-seal.otf`（崇羲篆体，CC-BY-ND-3.0-TW）
+- 六书：已通过人工终审回写（`六书终审_P0人工清单再审.md` + `六书终审_声素复核_核对结论.md`），`characters.json` 含 `liushu_remark` 留痕。
+- 授权署名：App（副标题 / 数据来源卡片 / 页脚 / 详情）已内置各来源署名，**勿删**。
+- 全仓无 EVOBC（CC BY-NC-SA 4.0）残留——旧 NC 字形源已下架换源，商业化阻塞已解除。
 
 ---
 
 ## 1.1 两个数据文件 —— 别混为一谈（关键）
 
-App 的「数据」其实分**两类**，本管线只处理其中一类。**务必区分**，否则会误以为补完图会自动变成 13779 字：
-
-| 文件 | 性质 | 来源 | 本管线是否改 |
+| 文件 | 性质 | 来源 | 本仓库状态 |
 |---|---|---|---|
-| `data/characters.json` | **文字内容库**（8105 字，含 modern / liushu / shuowen / duan_note 等释义文本） | 通用规范汉字表 + 说文整理 | ❌ 不改 |
-| `data/dataset.bin` | **字形图库**（甲骨/金文/篆/隶位图，现为 154B 空包） | 中研院 小學堂 | ✅ 本管线填它 |
+| `data/characters.json` | **文字内容库**（8105 字，含 modern / liushu / shuowen / duan_note 等释义文本） | 通用规范汉字表 + 说文整理 + AI 生成 | 已落地，含六书终审回写 |
+| `data/dataset.bin` | **字形图库**（字源位图，9.67MB CEDS） | GlyphWiki 字源体系 | ✅ 已落地（字源 100%） |
+| `data/fonts/*.otf` | **古文字字体兜底**（甲骨/金文/篆） | cluesurf/mark(OFL) / 崇羲(CC-BY-ND-3.0-TW) | ✅ 已入库（.gitignore 已放行） |
 
-- 跑完 `scrape + pack` 后，**只覆盖 `dataset.bin`**，`characters.json` 一字不动。
-- 因此补完图后，App **仍是 8105 字**，只是从「纯文字」升级为「图文版」。
-- 想扩到中研院 13779 字头规模，是**另一项独立任务**：须先把 `characters.json` 文字内容扩到 13779 字（需释义文本源，如《汉语大字典》/中研院字头表）；**注意中研院只给字形图、不给释义文本，故扩字内容库不依赖本管线下载**，但扩完之后本管线才能为新字匹配图形。
+- 补完字形后 App **仍是 8105 字**，从「纯文字」升级为「图文版」。
+- 想扩到中研院 13779 字头规模，是**另一项独立任务**（扩 `characters.json` 文字内容库），与本管线下载无直接依赖。
 
-## 2. 你要做的事（目标）
+---
 
-补全甲骨 / 金文 / 小篆 / 简帛 / 隶书位图，让 App 显示完整字形演变（**字数仍是 8105，字形图变完整**）。
+## 2. 字形真实来源（授权清晰，可商用）
+
+| 阶段 | 数据来源 | 许可证 | 覆盖（8105 内） |
+|---|---|---|---|
+| 字源图 | GlyphWiki 字源体系（dataset.bin） | CC BY-SA 2.1 JP | 100% (8105) |
+| 甲骨文 | 中研院/小學堂体系 + cluesurf/mark 字体兜底 | CC BY-SA 2.5 TW / OFL | 10.2% (824) |
+| 金文 | 中研院/小學堂体系 + cluesurf/mark 字体兜底 | CC BY-SA 2.5 TW / OFL | 17.3% (1399) |
+| 篆书 | 中研院/小學堂体系 + 崇羲篆体字体兜底 | CC BY-SA 2.5 TW / CC-BY-ND-3.0-TW | 56.1% (4547) |
+| 简牍帛书 | 中研院/小學堂体系 | CC BY-SA 2.5 TW | 4.0% (327) |
+| 隶书 | **缺失，待补** | — | 0% |
+
+> 注：甲骨/金/简帛/篆的「中研院/小學堂体系」指 dataset.bin 内已落地的真迹位图；中研院**在线接口**已不可达（地理封锁），但数据已随 dataset.bin 入库，无需再联网取。
 
 ---
 
 ## 3. 环境与依赖
 
-- **Python 3.10+**（3.13 已验证可跑管线）
-- **关键网络要求**：运行 `scrape_sinica.py` 的机器必须能访问 `https://xiaoxue.iis.sinica.edu.tw`（台湾中研院 小學堂）。
-  - ⚠️ **部分网络出口对台湾小學堂有地理限制（返回 "Access Restricted"）**。务必在**可达环境**运行抓图步骤。
-  - 产物 `dataset.bin` 与 App 本身**不依赖**中研院网络，打包后随便哪台机器用。
-- 依赖安装：`pip install requests beautifulsoup4 pillow zstandard`
+- **Python 3.13**（已验证可跑构建）
+- 字形数据不依赖任何外部网络：dataset.bin + 字体均随仓库分发，pull 后直接打开 `index.html` 即可。
+- 依赖安装（仅重建数据时）：`pip install requests beautifulsoup4 pillow zstandard`（见 `requirements.txt`）。
 
 ---
 
-## 4. 执行步骤（在仓库根目录 `说文解字/` 下）
+## 4. 部署（接手者）
 
 ```bash
-# ① 抓图（可联网环境，耗时依数据量，数分钟~数十分钟）
-python tools/sinica_pipeline/scrape_sinica.py --out-dir data/sinica_raw --max-order 14000
-#   输出 data/sinica_raw/manifest.jsonl
-#   每行: {"id":"<kaiOrder>","char":"<现代字>","script":"<oracle-bone|bronze|seal...>","img":"<png路径>"}
-
-# ② 打包（覆盖空包）
-python tools/sinica_pipeline/pack_dataset.py --manifest data/sinica_raw/manifest.jsonl --out data/dataset.bin
-#   生成 data/dataset.bin（CEDS0002，App 直接 fetch 加载）
-
-# ③ 验证
-python -m http.server 8099
-#   浏览器开 http://127.0.0.1:8099/index.html ，点任意字
-#   「字形演变」应显示 甲骨/金文/小篆 图；
-#   中研院没收录的字会自动降级为楷/繁文字，属正常。
+git clone https://gitee.com/landlord2003/shuo-wen_-jie-zi.git
+# 或已 clone： git pull
+# 起本地静态服务（字形数据经 HTTP 加载，不能直接 file:// 双击）
+python -m http.server 8765 --bind 127.0.0.1
+# 浏览器开 http://127.0.0.1:8765/index.html
 ```
+
+- `data/dataset.bin` 与 `data/fonts/*.otf` **均已入库**，pull 后无需任何补数据步骤。
+- 不要提交：`*.pdf`、`*.bak`、`obsidian/`、`data/sinica_raw/`（中间产物）。
 
 ---
 
-## 5. SPA 接口嗅探（若步骤①抓不到图）
+## 5. 已废弃：旧 sinica_pipeline（勿跑）
 
-小學堂后端是 ASP.NET，字形图经 **XHR** 返回，初始 HTML 可能无 `<img>`。详见 `tools/sinica_pipeline/README.md` 第五节：
+`tools/sinica_pipeline/` 早期设计用于抓中研院 小學堂字形图。因小學堂对本机与海外均返回 **"Access Restricted" 地理封锁**，该管线**当前无法工作**。
 
-1. 浏览器 DevTools → Network，过滤 `kaiOrder` / `img` / `.png` / `ashx` / `svc`；
-2. 找到形如 `GetGlyph?kaiOrder=1&type=xiaozhuan` 的接口后，把 `scrape_sinica.py` 改为 requests 直连该接口取图；
-3. 库段名：`jiaguwen`(甲骨文) / `jinwen`(金文) / `xiaozhuan`(小篆)；简牍帛书段名候选 `jiandu` / `chujian` / `boshu`。
+- 不要跑 `scrape_sinica.py`（必失败，且会误以为补完图需联网中研院）。
+- 若未来中研院可达，管线格式细节见 `tools/sinica_pipeline/README.md`（仅作存档）。
+- 字形数据已通过其他渠道落地，**无需复活该管线**。
 
 ---
 
 ## 6. 授权与合规（重要，别踩红线）
 
-- 字形图来源：中研院 漢字構形资料库 / 小學堂，**CC BY-SA 2.5 TW**（可商用，条件：①署名中央研究院 ②衍生作品同授权）。
-- App 已内置署名，**不要删**。
-- **`dataset.bin` 须以 CC BY-SA 2.5 TW 发布**（与 App 自有代码分离授权，不要求整个 App 开源）。
-- 🚫 **禁止**把旧 EVOBC（CC BY-NC-SA 4.0）数据拷回 `dataset.bin`：
-  - `build_assets.py` 的「拷 bin」步骤**已加固**，重建时不会自动回灌 NC 数据；
-  - 手动也不要加回去。
+- 字形图主源：GlyphWiki（**CC BY-SA 2.1 JP**，可商用，须署名 + 衍生同授权）。
+- 甲骨/金文字体：cluesurf/mark（**OFL**，可商用，须保留版权声明）。
+- 篆书字体：崇羲篆体（**CC-BY-ND-3.0-TW**，可商用，须署名，**禁止修改**）。
+- 旧 EVOBC（CC BY-NC-SA 4.0）**已下架换源**，本仓库无 NC 残留，可商用。
+- App 已内置上述署名，**不要删**。
+- 隶书字体待补：须取干净可商用源（首选中研院/崇羲隶书 CC BY-SA 2.5 TW，或逐项核验非 NC 的字体），详见 `tools/rubbing_pipeline/HANDOFF_隶书字体.md`。
 
 ---
 
-## 7. 提交与推送
+## 7. 回退方案
 
-```bash
-git add data/dataset.bin          # 完整字形版（产品资源，必须提交）
-git commit -m "补全中研院字形图(CC BY-SA 2.5 TW)，dataset.bin 接入甲骨/金文/小篆"
-git push origin main
-```
-
-- **不要提交**：`fonts/`（方正字体版权）、`*.pdf`、`*.bak`、`obsidian/`、`data/sinica_raw/`（中间产物，已 gitignore）。
-- `data/dataset.bin` **必须提交**（是产品资源，空包时也要在）。
-- 若修改了管线脚本，连同 `tools/sinica_pipeline/` 一起提交。
+若某字体文件损坏：删 `data/fonts/clerical-script.*` 等对应文件，App 自动降级为「该阶段待补全」，其余照常；dataset.bin 字源图不受影响。
 
 ---
 
-## 8. 回退方案
-
-若暂时无法取得中研院数据，**保持空包即可**——App 文字版零侵权可上线；将来在可达网络跑通管线，一键补入真实字形图。
-
----
-
-## 9. 上下文 / 关联文档
+## 8. 上下文 / 关联文档
 
 - 项目归属：老吴（吴自强）「虚拟经营」课题 **A 线 · 说文解字 App**
-- `字形图授权核查报告.md`：授权结论与整改清单（结论已由 🔴 改为 🟢）
-- `tools/sinica_pipeline/README.md`：管线格式细节、SPA 嗅探、回退
+- `字形图授权核查报告.md`：授权结论与整改清单（已解除 NC 阻塞）
+- `六书终审_P0人工清单再审.md` / `六书终审_声素复核_核对结论.md`：六书人工终审依据
+- `tools/glyph_coverage_report.md`：字形阶段覆盖率（含历史基准对比）
+- `tools/rubbing_pipeline/HANDOFF_隶书字体.md`：隶书补源操作指南
+- `产品化路线图_对标与下阶段.md`：路线图对标与下阶段工作内容

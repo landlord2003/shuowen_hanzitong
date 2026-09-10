@@ -28,7 +28,7 @@ python -m http.server 8765 --bind 127.0.0.1
 # 浏览器打开 http://127.0.0.1:8765
 ```
 
-> ⚠️ 字形数据（`data/dataset.bin`，35MB）需通过 HTTP 加载，**不能直接双击 `index.html`**（`file://` 协议会被浏览器拦截）。
+> ⚠️ 字形数据（`data/dataset.bin`，9.67MB）需通过 HTTP 加载，**不能直接双击 `index.html`**（`file://` 协议会被浏览器拦截）。
 
 ## 📦 目录结构
 
@@ -68,7 +68,7 @@ python -m http.server 8765 --bind 127.0.0.1
 | 拼音 | 说文数据库 + [pypinyin](https://github.com/mozillazg/python-pinyin) | MIT / Apache 2.0 | 多音字人工补注 |
 | 六书 / 本义 / 今义 / 演变 | AI 生成 | 自有 | 页面已标注"待核验" |
 
-> **⚠️ 重要许可说明**：字形图底层为 EVOBC 数据集（**CC BY-NC-SA 4.0**），其中 **NC = 非商业用途**。本项目整体受此约束，**不可用于商业用途**；衍生作品需以相同协议（CC BY-NC-SA 4.0）发布并署名 EVOBC。商业化需先获得 EVOBC 作者授权或更换字形数据源。
+> **✅ 许可说明（已解除 NC 约束）**：字形图已弃用 EVOBC（CC BY-NC-SA 4.0 非商业），更换为 GlyphWiki 字源（**CC BY-SA 2.1 JP**，可商用）＋开源古文字字体（cluesurf/mark **OFL** / 崇羲篆体 **CC-BY-ND-3.0-TW**，均可商用）。本项目**可合规商用**，须按各源要求署名（App 已内置来源声明）。
 
 ## 🔍 数据质量说明
 
@@ -96,4 +96,4 @@ python build_web.py
 
 ## 📄 许可证
 
-本项目（含代码与数据）整体采用 **CC BY-NC-SA 4.0**（署名-非商业-相同方式共享）发布，受 EVOBC 字形数据的许可证约束。详见 [LICENSE](LICENSE)。
+本项目字形数据采用 **CC BY-SA 2.1 JP（GlyphWiki）＋ OFL / CC-BY-ND-3.0-TW（开源字体）** 授权，可商用须按源署名；代码与 AI 生成文本为自有资产。详见 [LICENSE](LICENSE)。

@@ -107,3 +107,6 @@ _p02*.csv
 _p0_*.csv
 _line*.txt
 *.csv
+
+# 字源故事生成通知哨兵（运行时产物，非产品代码）
+data/.cultural_notify_sent
