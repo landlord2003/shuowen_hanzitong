@@ -278,7 +278,7 @@ function showDetail(id) {
     "<button class='detail-close' onclick='closeDetail()'>&times;</button>" +
     detailHeaderHTML(c) +
     strokeHTML + "<div class='detail-char'>" + c.char + "</div>" +
-    "<div class='detail-pinyin'>" + c.pinyin + (hasTrad ? " | \u7e41\u4f53: " + c.trad : "") + "</div>" +
+    "<div class='detail-pinyin'>" + (hasTrad ? "<span class='trad-mini'>" + c.trad + "</span> " : "") + (typeof renderPinyinAudio==='function' ? renderPinyinAudio(c) : c.pinyin) + "</div>" +
     "<div class='detail-info'>" +
       "<div>\u516d\u4e66: <span>" + c.liushu + "</span><i class='src-mini'>AI\u751f\u6210\u00b7\u5f85\u6838\u9a8c</i></div>" +
       "<div>\u90e8\u9996: <span>" + c.radical + "(" + c.radical_name + ")</span></div>" +

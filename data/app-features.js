@@ -23,6 +23,25 @@
     ".quiz-opt.correct{background:#1f3d2b;border-color:#3fbf6f;color:#bff5d0}" +
     ".quiz-opt.wrong{background:#3d1f1f;border-color:#bf3f3f;color:#f5bfbf}" +
     ".quiz-meta{color:var(--text3);font-size:13px;margin-top:10px;text-align:center}";
+  css +=
+    ".stroke-outline{fill:var(--text);stroke:var(--accent);stroke-width:9;stroke-linecap:round;stroke-linejoin:round}" +
+    ".pen-tip{fill:#ff5a5a;stroke:#fff;stroke-width:3}" +
+    ".start-dot{fill:#3fbf6f;stroke:#fff;stroke-width:3}" +
+    ".end-dot{fill:#f0a020;stroke:#fff;stroke-width:3}" +
+    ".stroke-mark{font-size:30px;font-weight:bold;text-anchor:middle;dominant-baseline:middle}" +
+    ".start-mark{fill:#3fbf6f}" +
+    ".end-mark{fill:#f0a020}" +
+    ".stroke-step-label{font-size:13px;color:var(--text2);margin-left:8px}" +
+    ".py-read{margin-right:10px;vertical-align:middle}" +
+    ".spk-btn{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:14px;vertical-align:middle}" +
+    ".spk-btn:hover{border-color:var(--accent);color:var(--accent)}" +
+    ".py-chips{display:inline-flex;flex-wrap:wrap;gap:4px;align-items:center;vertical-align:middle}" +
+    ".py-chip{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:15px;vertical-align:middle}" +
+    ".py-chip:hover{border-color:var(--accent);color:var(--accent)}" +
+    ".py-chip .spk{font-size:12px;opacity:.8}" +
+    ".py-sep{color:var(--text3);margin:0 2px}" +
+    ".py-tag{display:inline-block;margin-left:8px;font-size:11px;color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:1px 6px;vertical-align:middle}" +
+    ".trad-mini{font-size:14px;color:var(--text3)}";
   var st = document.createElement('style');
   st.textContent = css;
   document.head.appendChild(st);
@@ -276,56 +295,151 @@ function closeQuiz() {
   else inject();
 })();
 
-// ---- 笔顺 SVG 渲染（strokes.min.json 为 Hanzi Writer 闭合轮廓路径，y 轴向上需翻转）----
+// ---- 笔顺 SVG 渲染（strokes.min.json = Hanzi Writer 闭合轮廓，无中线 medians）----
+// 逐笔"运笔"：沿轮廓描边绘出(stroke-dashoffset) + 笔尖光点移动 + 起笔/落笔标注
+function farPoint(pathStr, sx, sy) {
+  // 取轮廓上离起笔最远顶点，近似"落笔点"（闭合轮廓下起=落重合，故用远端点近似）
+  var best = { x: sx, y: sy }, bd = -1;
+  var re = /([\d.]+)[\s,]+([\d.]+)/g, m;
+  while ((m = re.exec(pathStr))) {
+    var x = parseFloat(m[1]), y = parseFloat(m[2]);
+    var d = (x - sx) * (x - sx) + (y - sy) * (y - sy);
+    if (d > bd) { bd = d; best = { x: x, y: y }; }
+  }
+  return best;
+}
 function renderStrokeSVG(char) {
   var data = (typeof STROKE_DB !== 'undefined' && STROKE_DB) ? STROKE_DB[char] : null;
   if (!data || !data.length) return '';
   var uid = 'st' + Math.random().toString(36).slice(2, 9);
+  window.__strokeUid = uid;
   var inner = data.map(function (p, i) {
     var m = p.match(/M\s*([\d.]+)[\s,]+([\d.]+)/);
-    var sx = m ? parseFloat(m[1]) : 512;
-    var sy = m ? parseFloat(m[2]) : 512;
+    var sx = m ? parseFloat(m[1]) : 512, sy = m ? parseFloat(m[2]) : 512;
     var fy = 1024 - sy;
-    var delay = ((i + 1) * 0.45).toFixed(2);
-    // 翻转组放路径(属性transform)，动画只动 opacity/fill 不影响翻转
-    return "<g class='stroke-step'>" +
+    var far = farPoint(p, sx, sy);
+    var fx = far.x, fyy = 1024 - far.y;
+    return "<g class='stroke-step' data-idx='" + i + "'>" +
              "<g transform='translate(0,1024) scale(1,-1)'>" +
-               "<path class='stroke-fill' d='" + p + "' style='animation:strokePop .42s ease forwards " + delay + "s'/>" +
+               "<path class='stroke-outline' d='" + p + "'/>" +
              "</g>" +
-             "<g class='stroke-dot' style='animation:strokeFade .25s ease forwards " + delay + "s'>" +
-               "<circle cx='" + sx + "' cy='" + fy + "' r='26' fill='#7c6ff0' stroke='#fff' stroke-width='3'/>" +
-               "<text x='" + sx + "' y='" + (fy + 12) + "' font-size='34' fill='#fff' text-anchor='middle' dominant-baseline='middle' font-weight='bold'>" + (i + 1) + "</text>" +
-             "</g>" +
+             "<circle class='start-dot' cx='" + sx + "' cy='" + fy + "' r='14'/>" +
+             "<text class='stroke-mark start-mark' x='" + sx + "' y='" + (fy - 24) + "'>起</text>" +
+             "<circle class='end-dot' cx='" + fx + "' cy='" + fyy + "' r='14'/>" +
+             "<text class='stroke-mark end-mark' x='" + fx + "' y='" + (fyy + 32) + "'>落</text>" +
+             "<circle class='pen-tip' cx='" + sx + "' cy='" + fy + "' r='10'/>" +
            "</g>";
   }).join('');
+  setTimeout(function () { initStrokeAnim(); }, 0);
   return "<div class='stroke-section' id='" + uid + "'><h4>笔顺</h4>" +
          "<svg class='stroke-svg' id='svg-" + uid + "' viewBox='0 0 1024 1024'>" + inner + "</svg>" +
          "<div class='stroke-controls'><button class='filter-btn' onclick='replayStroke(\"" + uid + "\")'>▶ 重播笔顺</button><span class='stroke-step-label' id='lab-" + uid + "'></span></div>" +
-         "<i class='src-mini'>笔顺数据源：Hanzi Writer Data（MIT，公开笔顺轮廓）</i></div>";
+         "<i class='src-mini'>笔顺数据源：Hanzi Writer Data（MIT，公开笔顺轮廓）｜绿=起笔 橙=落笔（落笔为轮廓远端点近似，源数据缺中线 medians）</i></div>";
+}
+var __strokeRun = 0;
+function initStrokeAnim() {
+  var uid = window.__strokeUid;
+  if (!uid) return;
+  var svg = document.getElementById('svg-' + uid);
+  if (!svg) return;
+  var steps = svg.querySelectorAll('.stroke-step');
+  if (!steps.length) return;
+  var DUR = 620, GAP = 240;
+  var run = ++__strokeRun;
+  var lab = document.getElementById('lab-' + uid);
+  if (lab) lab.textContent = '准备…';
+  steps.forEach(function (step, i) {
+    var path = step.querySelector('.stroke-outline');
+    var pen = step.querySelector('.pen-tip');
+    var endDot = step.querySelector('.end-dot');
+    var endMark = step.querySelector('.end-mark');
+    var startDot = step.querySelector('.start-dot');
+    var startMark = step.querySelector('.start-mark');
+    var len = path.getTotalLength();
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
+    path.style.fillOpacity = '0';
+    [pen, endDot, endMark, startDot, startMark].forEach(function (el) { el.style.opacity = '0'; });
+    var start = i * (DUR + GAP);
+    setTimeout(function () {
+      if (run !== __strokeRun) return;
+      startDot.style.transition = 'opacity .2s'; startDot.style.opacity = '1';
+      startMark.style.transition = 'opacity .2s'; startMark.style.opacity = '1';
+      pen.style.opacity = '1';
+    }, start);
+    setTimeout(function () {
+      if (run !== __strokeRun) return;
+      path.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: DUR, easing: 'ease', fill: 'forwards' });
+      var t0 = performance.now();
+      function move(now) {
+        if (run !== __strokeRun) return;
+        var t = Math.min((now - t0) / DUR, 1);
+        var pt = path.getPointAtLength(len * t);
+        pen.setAttribute('cx', pt.x);
+        pen.setAttribute('cy', 1024 - pt.y);
+        if (t < 1) requestAnimationFrame(move);
+        else {
+          path.animate([{ fillOpacity: 0 }, { fillOpacity: 1 }], { duration: 260, fill: 'forwards' });
+          endDot.style.opacity = '1'; endMark.style.opacity = '1';
+          pen.style.opacity = '0';
+          if (lab) lab.textContent = '共 ' + steps.length + ' 笔';
+        }
+      }
+      requestAnimationFrame(move);
+    }, start);
+  });
 }
 function replayStroke(uid) {
   var svg = document.getElementById('svg-' + uid);
-  var lab = document.getElementById('lab-' + uid);
   if (!svg) return;
-  var clone = svg.cloneNode(true);
-  clone.id = 'svg-' + uid;
-  svg.parentNode.replaceChild(clone, svg);
-  if (lab) lab.textContent = '';
-  var paths = clone.querySelectorAll('.stroke-fill');
-  var total = paths.length;
-  if (!total) return;
-  var start = null;
-  function frame(t) {
-    if (start === null) start = t;
-    var el = (t - start) / 1000;
-    var shown = 0;
-    for (var i = 0; i < total; i++) {
-      var d = parseFloat(paths[i].style.animationDelay || '0');
-      if (el >= d) shown = i + 1;
-    }
-    if (lab) lab.textContent = (shown ? '第 ' + shown + ' / ' + total : '准备…') + ' 笔';
-    if (shown < total) requestAnimationFrame(frame);
-    else if (lab) lab.textContent = '共 ' + total + ' 笔';
+  window.__strokeUid = uid;
+  initStrokeAnim();
+}
+
+// ---- 读音发声（浏览器 Web Speech API，zh-CN 标准普通话）----
+var __zhVoice = null;
+function pickVoice() {
+  if (typeof speechSynthesis === 'undefined') return null;
+  if (!__zhVoice) {
+    var vs = speechSynthesis.getVoices() || [];
+    __zhVoice = vs.find(function (v) { return /zh/i.test(v.lang); }) || null;
   }
-  requestAnimationFrame(frame);
+  return __zhVoice;
+}
+if (typeof speechSynthesis !== 'undefined') {
+  speechSynthesis.onvoiceschanged = function () { __zhVoice = null; pickVoice(); };
+}
+function speakText(text, isPinyin) {
+  if (typeof speechSynthesis === 'undefined' || !text) return;
+  speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  var v = pickVoice();
+  if (v) u.voice = v;
+  if (isPinyin) {
+    // 拼音读法：去掉声调符号，让中文语音引擎按音节读出对应读音
+    u.text = String(text).normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+  speechSynthesis.speak(u);
+}
+function speakChar(ch) { speakText(ch, false); }
+function speakPinyin(py) { speakText(py, true); }
+
+// ---- 详情页拼音发声控件（多音字拆成可点击 chip，逐音可听）----
+function renderPinyinAudio(c) {
+  if (!c) return '';
+  var py = c.pinyin || '';
+  var parts = String(py).split('/').map(function (s) { return s.trim(); }).filter(Boolean);
+  var ch = c.char;
+  var html = "<span class='py-read'>" +
+             "<button class='spk-btn' title='听汉字读音' onclick='speakChar(\"" + ch + "\")'>🔊 听汉字</button></span>";
+  if (parts.length) {
+    html += "<span class='py-chips'>";
+    html += parts.map(function (p) {
+      return "<button class='py-chip' title='听拼音 " + p + "' onclick='speakPinyin(\"" + p + "\")'>" + p + " <span class='spk'>🔊</span></button>";
+    }).join("<span class='py-sep'>/</span>");
+    html += "</span>";
+    if (parts.length > 1) html += "<span class='py-tag'>多音字·点击听各读音</span>";
+  }
+  return html;
 }
