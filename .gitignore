@@ -59,6 +59,10 @@ tools/rubbing_pipeline/_glyph_tmp/
 tools/rubbing_pipeline/_selftest_tmp/
 tools/rubbing_pipeline/_full_run*.log
 tools/rubbing_pipeline/_thumb_guess.log
+tools/rubbing_pipeline/_indexphp_run.log
+tools/rubbing_pipeline/_auto_repack.log
+tools/rubbing_pipeline/_auto_repack.done
+tools/rubbing_pipeline/_auto_verify.txt
 tools/rubbing_pipeline/_proxy_diag.txt
 tools/rubbing_pipeline/__pycache__/
 tools/rubbing_pipeline/adapters/__pycache__/

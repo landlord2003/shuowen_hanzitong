@@ -30,12 +30,13 @@ API = "https://commons.wikimedia.org/w/api.php"
 THUMB = "https://commons.wikimedia.org/w/thumb.php?f={name}&w=512"
 
 USER_AGENT = "rubbing-pipeline/1.0 (local research; contact: none)"
-REQUEST_DELAY = 0.8  # 每字之间的延迟（秒），降低 api.php 限流概率
+REQUEST_DELAY = 5.0  # 每字之间的延迟（秒）。本机代理出口 IP 对 api.php 滑动窗口限流阈值极低，workers=1+5s 留足余量；429 时另有指数退避。
 
 # 全局限流协调（线程共享）：一旦收到 429，所有线程冷却到 deadline 后再继续
 import threading
 _RATE = threading.Lock()
 _COOLDOWN_UNTIL = 0.0  # 冷却截止时间戳（epoch 秒）
+_BACKOFF_STEP = 0      # 连续 429 计数，用于指数退避（30→60→120→240s）
 
 
 def _rate_wait():
@@ -50,12 +51,15 @@ def _rate_wait():
 
 
 def _rate_backoff(retry_after=None):
-    """收到 429 时全局退避。retry_after 为 Retry-After 秒数，默认 30s 起步。"""
-    global _COOLDOWN_UNTIL
-    wait = max(30.0, float(retry_after or 0))
+    """收到 429 时全局指数退避。连续 429 递增等待：30→60→120→240s（封顶 240s）。
+    关键：Wikimedia api.php 是滑动窗口限流，固定短冷却会死循环，必须递增。"""
+    global _COOLDOWN_UNTIL, _BACKOFF_STEP
+    _BACKOFF_STEP += 1
+    base = min(30 * (2 ** (_BACKOFF_STEP - 1)), 240)  # 30/60/120/240
+    wait = max(base, float(retry_after or 0))
     with _RATE:
         _COOLDOWN_UNTIL = time.time() + wait
-    print(f"  [wikimedia_ancient] 收到 429，全局冷却 {wait:.0f}s ...", flush=True)
+    print(f"  [wikimedia_ancient] 收到 429（第{_BACKOFF_STEP}次连续），冷却 {wait:.0f}s ...", flush=True)
 
 # 文件名后缀 -> 脚本类型（顺序即优先级，先匹配先得）
 SUFFIX_MAP = [
@@ -88,6 +92,13 @@ def _classify(filename):
         if suf in low:
             return script
     return None
+
+
+def _rate_ok():
+    """成功拿到数据后调用，重置连续 429 计数（滑动窗口已恢复）。"""
+    global _BACKOFF_STEP
+    with _RATE:
+        _BACKOFF_STEP = 0
 
 
 def _category_members(session, catname):
@@ -123,6 +134,7 @@ def _category_members(session, catname):
                 cont = d["continue"]
                 time.sleep(0.3)
                 continue
+            _rate_ok()
             return files
         except Exception:
             time.sleep(2)
@@ -200,15 +212,26 @@ def fetch(chars, out_dir, attribution=None, limit=None, workers=3, **kw):
         return out
 
     done = 0
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        futs = [ex.submit(_process_one, c) for c in items]
-        for f in as_completed(futs):
-            recs = f.result()
+    if workers <= 1:
+        # 单线程串行：每字之间明确 delay（滑动窗口限流下最稳）
+        for c in items:
+            _rate_wait()
+            recs = _process_one(c)
             results.extend(recs)
             done += 1
-            if done % 100 == 0:
-                print(f"  [wikimedia_ancient] 已处理 {done}/{len(items)}，累计字形 {len(results)}")
-            time.sleep(0.05)
+            if done % 50 == 0:
+                print(f"  [wikimedia_ancient] 已处理 {done}/{len(items)}，累计字形 {len(results)}", flush=True)
+            time.sleep(delay)
+    else:
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            futs = [ex.submit(_process_one, c) for c in items]
+            for f in as_completed(futs):
+                recs = f.result()
+                results.extend(recs)
+                done += 1
+                if done % 100 == 0:
+                    print(f"  [wikimedia_ancient] 已处理 {done}/{len(items)}，累计字形 {len(results)}")
+                time.sleep(0.05)
 
     print(f"[wikimedia_ancient] 完成：处理 {len(items)} 字，累计字形 {len(results)} 条")
     return results

@@ -167,7 +167,7 @@ var WUXING_LABEL = {"\u504f\u65c1": "\u51fa\uff1a\u504f\u65c1\u90e8\u9996", "\u5
 var CDS_READER = null;
 (function(){
   if (!window.__CDS || !window.fzstd) return;
-  fetch("data/dataset.bin?v=20260908b").then(function(r){ if(!r.ok) return null; return r.arrayBuffer(); }).then(function(ab){
+  fetch("data/dataset.bin?v=20260911r").then(function(r){ if(!r.ok) return null; return r.arrayBuffer(); }).then(function(ab){
     if(!ab) return;
     CDS_READER = new __CDS.DatasetReader(new Uint8Array(ab));
     document.body.classList.add("has-local-glyphs");

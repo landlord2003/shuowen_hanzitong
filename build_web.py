@@ -193,7 +193,7 @@ js_parts.append('var WUXING_LABEL = {"' + u('偏旁') + '": "' + u('出：偏旁
 js_parts.append('var CDS_READER = null;')
 js_parts.append('(function(){')
 js_parts.append('  if (!window.__CDS || !window.fzstd) return;')
-js_parts.append('  fetch("data/dataset.bin?v=20260908b").then(function(r){ if(!r.ok) return null; return r.arrayBuffer(); }).then(function(ab){')
+js_parts.append('  fetch("data/dataset.bin?v=20260911r").then(function(r){ if(!r.ok) return null; return r.arrayBuffer(); }).then(function(ab){')
 js_parts.append('    if(!ab) return;')
 js_parts.append('    CDS_READER = new __CDS.DatasetReader(new Uint8Array(ab));')
 js_parts.append('    document.body.classList.add("has-local-glyphs");')

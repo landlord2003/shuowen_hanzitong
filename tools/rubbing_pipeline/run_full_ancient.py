@@ -21,7 +21,7 @@ def main():
     t0 = time.time()
 
     attr = Attribution()
-    recs = fetch(chars, OUT_DIR, attribution=attr, workers=3)
+    recs = fetch(chars, OUT_DIR, attribution=attr, workers=1)
 
     dt = time.time() - t0
     from collections import Counter
