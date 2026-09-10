@@ -24,7 +24,7 @@
     ".quiz-opt.wrong{background:#3d1f1f;border-color:#bf3f3f;color:#f5bfbf}" +
     ".quiz-meta{color:var(--text3);font-size:13px;margin-top:10px;text-align:center}";
   css +=
-    ".stroke-outline{fill:var(--text);stroke:var(--accent);stroke-width:9;stroke-linecap:round;stroke-linejoin:round}" +
+    ".sw-fill{fill:var(--text);stroke:var(--text);stroke-width:1.5}" +
     ".pen-tip{fill:#ff5a5a;stroke:#fff;stroke-width:3}" +
     ".start-dot{fill:#3fbf6f;stroke:#fff;stroke-width:3}" +
     ".end-dot{fill:#f0a020;stroke:#fff;stroke-width:3}" +
@@ -313,28 +313,34 @@ function renderStrokeSVG(char) {
   if (!data || !data.length) return '';
   var uid = 'st' + Math.random().toString(36).slice(2, 9);
   window.__strokeUid = uid;
+  // 每笔在源坐标(原点左下,y向上)内算长轴角度，使起笔在左、落笔在右；
+  // sw-rot 旋转 + sw-flip 翻转(translate(0,1024) scale(1,-1)) 得正确显示；
+  // 笔尖/起落点同处该变换组(源坐标)，随笔画一起变换，位置自洽。
   var inner = data.map(function (p, i) {
     var m = p.match(/M\s*([\d.]+)[\s,]+([\d.]+)/);
     var sx = m ? parseFloat(m[1]) : 512, sy = m ? parseFloat(m[2]) : 512;
-    var fy = 1024 - sy;
     var far = farPoint(p, sx, sy);
-    var fx = far.x, fyy = 1024 - far.y;
+    var ex = far.x, ey = far.y;
+    var dx = ex - sx, dy = ey - sy;
+    var ang = Math.atan2(dy, dx) * 180 / Math.PI;
+    if (dx < 0) ang += 180;            // 旋转后起笔在左、落笔在右
+    var cx = (sx + ex) / 2, cy = (sy + ey) / 2;
     return "<g class='stroke-step' data-idx='" + i + "'>" +
-             "<g transform='translate(0,1024) scale(1,-1)'>" +
-               "<path class='stroke-outline' d='" + p + "'/>" +
+             "<g class='sw-flip' transform='translate(0,1024) scale(1,-1)'>" +
+               "<g class='sw-rot' transform='rotate(" + ang.toFixed(2) + " " + cx.toFixed(1) + " " + cy.toFixed(1) + ")'>" +
+                 "<path class='sw-fill' d='" + p + "' data-sx='" + sx + "' data-sy='" + sy + "' data-ex='" + ex + "' data-ey='" + ey + "'/>" +
+                 "<circle class='start-dot' cx='" + sx + "' cy='" + sy + "' r='14'/>" +
+                 "<circle class='end-dot' cx='" + ex + "' cy='" + ey + "' r='14'/>" +
+                 "<circle class='pen-tip' cx='" + sx + "' cy='" + sy + "' r='10'/>" +
+               "</g>" +
              "</g>" +
-             "<circle class='start-dot' cx='" + sx + "' cy='" + fy + "' r='14'/>" +
-             "<text class='stroke-mark start-mark' x='" + sx + "' y='" + (fy - 24) + "'>起</text>" +
-             "<circle class='end-dot' cx='" + fx + "' cy='" + fyy + "' r='14'/>" +
-             "<text class='stroke-mark end-mark' x='" + fx + "' y='" + (fyy + 32) + "'>落</text>" +
-             "<circle class='pen-tip' cx='" + sx + "' cy='" + fy + "' r='10'/>" +
            "</g>";
   }).join('');
   setTimeout(function () { initStrokeAnim(); }, 0);
   return "<div class='stroke-section' id='" + uid + "'><h4>笔顺</h4>" +
          "<svg class='stroke-svg' id='svg-" + uid + "' viewBox='0 0 1024 1024'>" + inner + "</svg>" +
          "<div class='stroke-controls'><button class='filter-btn' onclick='replayStroke(\"" + uid + "\")'>▶ 重播笔顺</button><span class='stroke-step-label' id='lab-" + uid + "'></span></div>" +
-         "<i class='src-mini'>笔顺数据源：Hanzi Writer Data（MIT，公开笔顺轮廓）｜绿=起笔 橙=落笔（落笔为轮廓远端点近似，源数据缺中线 medians）</i></div>";
+         "<i class='src-mini'>笔顺数据源：Hanzi Writer Data（MIT，公开笔顺轮廓）｜绿=起笔 橙=落笔（落笔为轮廓远端点近似；源缺中线 medians，本动画按长轴从起笔到落笔揭示笔画填充，不再沿轮廓描边）</i></div>";
 }
 var __strokeRun = 0;
 function initStrokeAnim() {
@@ -348,44 +354,53 @@ function initStrokeAnim() {
   var run = ++__strokeRun;
   var lab = document.getElementById('lab-' + uid);
   if (lab) lab.textContent = '准备…';
+  // 确保 <defs> 存在；重播时清除旧的 clipPath（避免 id 重复）
+  var defs = svg.querySelector('defs');
+  if (!defs) { defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs'); svg.insertBefore(defs, svg.firstChild); }
+  var old = defs.querySelectorAll('clipPath[id^="cp_"]');
+  for (var oi = 0; oi < old.length; oi++) old[oi].remove();
+  var SVGNS = 'http://www.w3.org/2000/svg';
   steps.forEach(function (step, i) {
-    var path = step.querySelector('.stroke-outline');
+    var fill = step.querySelector('.sw-fill');
     var pen = step.querySelector('.pen-tip');
-    var endDot = step.querySelector('.end-dot');
-    var endMark = step.querySelector('.end-mark');
-    var startDot = step.querySelector('.start-dot');
-    var startMark = step.querySelector('.start-mark');
-    var len = path.getTotalLength();
-    path.style.strokeDasharray = len;
-    path.style.strokeDashoffset = len;
-    path.style.fillOpacity = '0';
-    [pen, endDot, endMark, startDot, startMark].forEach(function (el) { el.style.opacity = '0'; });
+    var sDot = step.querySelector('.start-dot');
+    var eDot = step.querySelector('.end-dot');
+    if (!fill) return;
+    var bb = fill.getBBox();                 // 源坐标(本地)几何包围盒
+    var cpId = 'cp_' + uid + '_' + i;
+    var cp = document.createElementNS(SVGNS, 'clipPath');
+    cp.setAttribute('id', cpId); cp.setAttribute('clipPathUnits', 'userSpaceOnUse');
+    var rect = document.createElementNS(SVGNS, 'rect');
+    rect.setAttribute('x', bb.x); rect.setAttribute('y', bb.y);
+    rect.setAttribute('width', 0); rect.setAttribute('height', bb.height); rect.setAttribute('fill', '#fff');
+    cp.appendChild(rect); defs.appendChild(cp);
+    fill.setAttribute('clip-path', 'url(#' + cpId + ')');
+    [pen, sDot, eDot].forEach(function (el) { el.style.opacity = '0'; });
+    var sx = parseFloat(fill.getAttribute('data-sx')), sy = parseFloat(fill.getAttribute('data-sy'));
+    var ex = parseFloat(fill.getAttribute('data-ex')), ey = parseFloat(fill.getAttribute('data-ey'));
     var start = i * (DUR + GAP);
     setTimeout(function () {
       if (run !== __strokeRun) return;
-      startDot.style.transition = 'opacity .2s'; startDot.style.opacity = '1';
-      startMark.style.transition = 'opacity .2s'; startMark.style.opacity = '1';
+      sDot.style.transition = 'opacity .2s'; sDot.style.opacity = '1';
       pen.style.opacity = '1';
     }, start);
     setTimeout(function () {
       if (run !== __strokeRun) return;
-      path.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: DUR, easing: 'ease', fill: 'forwards' });
       var t0 = performance.now();
-      function move(now) {
+      function frame(now) {
         if (run !== __strokeRun) return;
         var t = Math.min((now - t0) / DUR, 1);
-        var pt = path.getPointAtLength(len * t);
-        pen.setAttribute('cx', pt.x);
-        pen.setAttribute('cy', 1024 - pt.y);
-        if (t < 1) requestAnimationFrame(move);
+        rect.setAttribute('width', (bb.width * t).toFixed(1));   // 沿长轴从起笔扫到落笔
+        pen.setAttribute('cx', (sx + (ex - sx) * t).toFixed(1));  // 笔尖直线插值(非轮廓)
+        pen.setAttribute('cy', (sy + (ey - sy) * t).toFixed(1));
+        if (t < 1) requestAnimationFrame(frame);
         else {
-          path.animate([{ fillOpacity: 0 }, { fillOpacity: 1 }], { duration: 260, fill: 'forwards' });
-          endDot.style.opacity = '1'; endMark.style.opacity = '1';
+          eDot.style.transition = 'opacity .2s'; eDot.style.opacity = '1';
           pen.style.opacity = '0';
           if (lab) lab.textContent = '共 ' + steps.length + ' 笔';
         }
       }
-      requestAnimationFrame(move);
+      requestAnimationFrame(frame);
     }, start);
   });
 }

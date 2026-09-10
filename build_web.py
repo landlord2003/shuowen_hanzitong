@@ -25,7 +25,7 @@ def u(s):
 lines = []
 lines.append('<!DOCTYPE html>')
 lines.append('<html lang="zh-CN">')
-lines.append('<head><meta charset="UTF-8"><title>说文解字·汉字知识库</title>')
+lines.append('<head><meta charset="UTF-8"><title>说文解字·汉字通</title>')
 lines.append('<style>')
 lines.append(':root{--bg:#1a1a2e;--card:#1e2a4a;--text:#e0e0e0;--text2:#999;--text3:#666;--accent:#534ab7;--accent2:rgba(83,74,183,.2);--border:#2a2a4a;--radius:8px}')
 lines.append('*{box-sizing:border-box}')
@@ -104,7 +104,7 @@ lines.append('.stroke-step-label{font-size:12px;color:var(--text2);margin-left:1
 lines.append('</style></head><body>')
 lines.append('<style>.daily-banner{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--card),#1c1c22);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:14px;flex-wrap:wrap}.daily-label{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:2px;white-space:nowrap}.daily-char{font-size:42px;font-weight:700;line-height:1;cursor:pointer;color:var(--text)}.daily-char:hover{color:var(--accent)}.daily-py{font-size:15px;color:var(--text2)}.daily-desc{font-size:14px;color:var(--text2);flex:1;min-width:200px;line-height:1.6}.fav-btn{margin-left:auto;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer}.fav-btn:hover{border-color:var(--accent);color:var(--accent)}.char-card{position:relative}.fav-dot{position:absolute;top:4px;right:8px;color:#ffb300;font-size:14px}.daily-card{outline:2px solid var(--accent);outline-offset:-2px}.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}</style>')
 
-lines.append('<h1>说文解字</h1>')
+lines.append('<h1>说文解字·汉字通</h1>')
 lines.append('<p class="sub">8105字·字源溯源＋字形演变（字源图：GlyphWiki CC BY-SA 2.1 JP，已落地；甲骨→隶五阶段：中研院漢字構形資料庫 CC BY-SA 2.5 TW，待 B 路线补全）</p>')
 lines.append('<input id="searchInput" placeholder="搜索：拼音(如 shuǐ)、部首(如 水)、字(如 海)；笔画筛选见下方按钮" autofocus>')
 lines.append('<div id="dailyBanner" class="daily-banner"></div>')
@@ -134,7 +134,7 @@ lines.append('<div class="stats" id="stats"></div>')
 lines.append('<div class="char-grid" id="charGrid"></div>')
 lines.append('<div class="src-legend"><h3>什么是「六书」？</h3><p style="margin:0 0 10px;line-height:1.7">「六书」是古人分析汉字造字与用字方法而归纳出的六种条例，由东汉许慎在《说文解字》中系统阐述。App 中的六书分类用于快速理解一个字的构形逻辑：</p><ul><li><b>象形</b>：描摹物体外形，如「日、月、山、水」</li><li><b>指事</b>：用抽象符号或在象形字上加指示符号表示抽象概念，如「上、下、本、末」</li><li><b>会意</b>：把两个或多个字组合起来表示新意，如「明（日月并照）、休（人倚木而息）」</li><li><b>形声</b>：由表示意义类别的「形旁」和表示读音的「声旁」组成，如「江（水形工声）、湖（水形胡声）」</li><li><b>转注</b>：部首相同、意义相通、可互相解释的字，如「考」与「老」</li><li><b>假借</b>：借用同音字表达新概念，如「令（本义发号，借为县令）、长（本义久远，借为长官）</li></ul><p style="margin:8px 0 0;font-size:12px;color:var(--text3)">注：本 App 将常见字归入象形、指事、会意、形声四类；转注、假借更多是用字法，未作为单字主分类。</p></div>')
 lines.append('<div class="src-legend"><h3>数据来源与说明</h3><ul><li><b>说文原文 / 反切 / 段玉裁注 / 异体重文</b>：出自《说文解字》（东汉·许慎），含清代段玉裁注</li><li><b>后起字溯源</b>：出自《玉篇》（543年）、《广韵》（1008年）、《康熙字典》（1716年）。《康熙字典》为集大成字书，整合历代韵书反切与释义；《玉篇》《广韵》年代更早，可定位更早的字义</li><li><b class="warn">⚠️ 音译字提示</b>：部分字古字书释义与今义不同——如「啡」古为「唾声」非「咖啡」、「吨」古为「气相冲」非重量单位、「她」古为「姐」非第三人称。此类已在溯源中单独标注</li><li><b>字源图（单字最古老构形）</b>：取自 GlyphWiki 汉字溯源图层（CC BY-SA 2.1 JP，可商用，须署名 + 衍生同授权），已落地 8105 字，黑底白描拓片风</li><li><b>甲骨→金文→简牍帛书→小篆→隶书五阶段图</b>：计划取自 中央研究院漢字構形資料庫（CC BY-SA 2.5 TW，可商用，须署名 + 衍生同授权）；当前版本以文字说明呈现，完整字形图将经「B 路线换源管线」补全</li><li><b>六书 / 本义 / 今义 / 演变</b>：AI 生成，待核验</li><li><b>五行属性</b>：民俗归类（字源五行法），非文字学客观属性；依「字义＞偏旁」判定并标注出处，约 44% 字（人体、动作、抽象、虚词等）无明确归属</li></ul></div>')
-lines.append('<div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜甲骨→隶五阶段：中央研究院漢字構形資料庫（CC BY-SA 2.5 TW，待补全）｜说文解字汉字知识库</div>')
+lines.append('<div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜甲骨→隶五阶段：中央研究院漢字構形資料庫（CC BY-SA 2.5 TW，待补全）｜说文解字·汉字通</div>')
 lines.append('<div class="overlay" id="overlay" onclick="if(event.target===this)closeDetail()"><div class="detail-panel" id="detail"></div></div>')
 
 # Now the script tag - ALL Chinese pre-escaped
