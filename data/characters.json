@@ -6178,7 +6178,7 @@
    "radical": "心",
    "radical_name": "心部",
    "stroke": 5,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "戈柄中间穿孔（柲的本字），引申为一定",
    "modern": "一定；必须",
    "shuowen": "分極也。从八弋，弋亦聲。",
@@ -6187,7 +6187,8 @@
    "fanqie": "卑吉切",
    "duan_note": "〔分極也。〕極猶凖也。木部棟極二字互訓。橦字下云。帪極也。凡高處謂之極。立表爲分判之準。故云分極。引伸爲䛐之必然。／〔从八弋。〕樹臬而分也。弋今字作杙。／〔八亦聲。〕八各本誤弋。今正。古八與必同讀也。卑吉切。十二部。",
    "wuxing": "火",
-   "wuxing_source": "偏旁"
+   "wuxing_source": "偏旁",
+   "liushu_remark": "P0六书终审·许慎声marker「弋亦聲」→形声(从八弋，弋亦聲（亦聲）)"
   },
   {
    "id": 322,
@@ -13318,7 +13319,7 @@
    "radical": "水",
    "radical_name": "水部",
    "stroke": 7,
-   "liushu": "象形",
+   "liushu": "形声",
    "original": "皮裘（裘的本字），假借为求取",
    "modern": "请求；追求",
    "shuowen": "皮衣也。从衣求聲。一曰象形，與衰同意。凡裘之屬皆从裘。",
@@ -13328,7 +13329,8 @@
    "duan_note": "〔皮衣也。从衣。象形。〕各本作从衣求聲、一曰象形。淺人𡚶增之也。裘之制毛在外。故象毛文。／〔與衰同意。〕皆从衣而象其形也。巨鳩切。古音在一部。／〔古文𧚍。〕此本古文裘字。後加衣爲裘。而求專爲干請之用。亦猶加艸爲蓑。而衰爲等差之用也。求之加衣。葢不待小篆矣。",
    "variant": "求（古文省衣。）",
    "wuxing": "水",
-   "wuxing_source": "偏旁"
+   "wuxing_source": "偏旁",
+   "liushu_remark": "P0六书终审·许慎声marker「从衣求聲」→形声(从衣求聲（裘本字）)"
   },
   {
    "id": 691,
@@ -70937,7 +70939,7 @@
    "radical": "阜",
    "radical_name": "阜部",
    "stroke": 6,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "陷也",
    "modern": "陷阱；陷坑",
    "shuowen": "陷也。从𨸏从井，井亦聲。",
@@ -70950,7 +70952,8 @@
    "trace_yupian": "才性切。穿地爲阱以陷獸。亦作穽。",
    "trace_guangyun": "疾郢，上同",
    "wuxing": "土",
-   "wuxing_source": "偏旁"
+   "wuxing_source": "偏旁",
+   "liushu_remark": "P0六书终审·许慎声marker「井亦聲」→形声(从𨸏从井，井亦聲)"
   },
   {
    "id": 3639,
@@ -73878,7 +73881,7 @@
    "radical": "羊",
    "radical_name": "羊部",
    "stroke": 7,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "西戎牧羊人也",
    "modern": "羌族；族名",
    "shuowen": "西戎牧羊人也。从人从羊，羊亦聲。南方蠻閩从虫，北方狄从犬，東方貉从豸，西方羌从羊：此六種也。西南僰人、僬僥，从人；蓋在坤地，頗有順理之性。唯東夷从大。大，人也。夷俗仁，仁者壽，有君子不死之國。孔子曰：“道不行，欲之九夷，乘桴浮於海。”有以也。",
@@ -73891,7 +73894,8 @@
    "trace_yupian": "去央切。西方國也。楚語辭也。卿也。反也。章也。強也。",
    "trace_guangyun": "去羊，章也強也發語端也說文云西戎牧羊人字从人羊又姓晉有石冰將羌迪去羊切四",
    "wuxing": "无明确",
-   "wuxing_source": "无明确"
+   "wuxing_source": "无明确",
+   "liushu_remark": "P0六书终审·许慎声marker「羊亦聲」→形声(从人从羊，羊亦聲)"
   },
   {
    "id": 3765,
@@ -83830,7 +83834,7 @@
    "radical": "目",
    "radical_name": "目部",
    "stroke": 9,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "一目小也",
    "modern": "微小；目盲",
    "shuowen": "一目小也。从目从少，少亦聲。",
@@ -83843,7 +83847,8 @@
    "trace_yupian": "彌紹切。《說文》云：一目小。《易》曰：眇能視。",
    "trace_guangyun": "亡沼，說文曰一目小也亡沼切十",
    "wuxing": "火",
-   "wuxing_source": "偏旁"
+   "wuxing_source": "偏旁",
+   "liushu_remark": "P0六书终审·许慎声marker「少亦聲」→形声(从目从少，少亦聲)"
   },
   {
    "id": 4193,
@@ -107929,7 +107934,7 @@
    "radical": "舛",
    "radical_name": "舛部",
    "stroke": 12,
-   "liushu": "象形",
+   "liushu": "形声",
    "original": "艸也。楚謂之葍，秦謂之藑。蔓地連華。象形",
    "modern": "古代帝王名；木槿",
    "shuowen": "艸也。楚謂之葍，秦謂之藑。蔓地連華。象形。从舛，舛亦聲。凡䑞之屬皆从䑞。(今隸變作舜。)",
@@ -107942,7 +107947,8 @@
    "trace_yupian": "尸閏切。仁聖盛明曰舜。《說文》作䑞。艸也。楚謂之葍，秦謂之藑。蔓地連華。象形。",
    "trace_guangyun": "舒閏，虞舜仁聖盛明曰舜說文作䑞艸也楚謂之䔰葍秦謂之藑蔓地連華象形舒閏切八",
    "wuxing": "无明确",
-   "wuxing_source": "无明确"
+   "wuxing_source": "无明确",
+   "liushu_remark": "P0六书终审·许慎声marker「舛亦聲」→形声(从舛，舛亦聲)"
   },
   {
    "id": 5226,
@@ -110557,7 +110563,7 @@
    "radical": "食",
    "radical_name": "食部",
    "stroke": 12,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "鄉人飲酒也",
    "modern": "款待；宴请",
    "shuowen": "鄉人飲酒也。从食从鄉，鄉亦聲。",
@@ -110570,7 +110576,8 @@
    "trace_yupian": "許掌切。設盛禮以飯賔也。",
    "trace_guangyun": "許兩，歆饗",
    "wuxing": "无明确",
-   "wuxing_source": "无明确"
+   "wuxing_source": "无明确",
+   "liushu_remark": "P0六书终审·许慎声marker「鄉亦聲」→形声(从食从鄉，鄉亦聲)"
   },
   {
    "id": 5339,
@@ -112215,7 +112222,7 @@
    "radical": "衣",
    "radical_name": "衣部",
    "stroke": 13,
-   "liushu": "象形",
+   "liushu": "形声",
    "original": "皮衣也",
    "modern": "皮衣；毛皮",
    "shuowen": "皮衣也。从衣求聲。一曰象形，與衰同意。凡裘之屬皆从裘。",
@@ -112228,7 +112235,8 @@
    "trace_yupian": "巨留切。索也。招也。終也。務也。又皮衣也。",
    "trace_guangyun": "巨鳩，上同",
    "wuxing": "无明确",
-   "wuxing_source": "无明确"
+   "wuxing_source": "无明确",
+   "liushu_remark": "P0六书终审·许慎声marker「从衣求聲」→形声(从衣求聲)"
   },
   {
    "id": 5410,
@@ -122710,7 +122718,7 @@
    "radical": "大",
    "radical_name": "大部",
    "stroke": 15,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "盛也",
    "modern": "盛大；显赫",
    "shuowen": "盛也。从大从皕，皕亦聲。此燕召公名。讀若郝。《史篇》名醜。",
@@ -122723,7 +122731,8 @@
    "trace_yupian": "",
    "trace_guangyun": "施隻，盛也又驚視皃又邵公名說文作奭",
    "wuxing": "无明确",
-   "wuxing_source": "无明确"
+   "wuxing_source": "无明确",
+   "liushu_remark": "P0六书终审·许慎声marker「皕亦聲」→形声(从大从皕，皕亦聲)"
   },
   {
    "id": 5859,
@@ -140963,7 +140972,7 @@
    "radical": "馬",
    "radical_name": "馬部",
    "stroke": 7,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "馬赤鬣縞身，目若黃金，名曰𩢌。吉皇之乘，周文王時，犬戎獻之",
    "modern": "毛色马名；良马",
    "shuowen": "馬赤鬣縞身，目若黃金，名曰𩢌。吉皇之乘，周文王時，犬戎獻之。从馬从文，文亦聲。《春秋傳》曰：“𩢌馬百駟。”畫馬也。西伯獻紂，以全其身。",
@@ -140976,7 +140985,8 @@
    "trace_yupian": "",
    "trace_guangyun": "無分，馬赤鬣縞身目如黃金文王以獻紂",
    "wuxing": "无明确",
-   "wuxing_source": "无明确"
+   "wuxing_source": "无明确",
+   "liushu_remark": "P0六书终审·许慎声marker「文亦聲」→形声(从馬从文，文亦聲)"
   },
   {
    "id": 6641,
@@ -141713,7 +141723,7 @@
    "radical": "日",
    "radical_name": "日部",
    "stroke": 8,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "日見也",
    "modern": "日光；日出",
    "shuowen": "日見也。从日从見，見亦聲。《詩》曰：“見晛曰消。”",
@@ -141726,7 +141736,8 @@
    "trace_yupian": "奴見切。日氣。又戶顯切，明也。",
    "trace_guangyun": "胡典，日出好皃又乃見切",
    "wuxing": "火",
-   "wuxing_source": "偏旁"
+   "wuxing_source": "偏旁",
+   "liushu_remark": "P0六书终审·许慎声marker「見亦聲」→形声(从日从見，見亦聲)"
   },
   {
    "id": 6673,
@@ -157272,7 +157283,7 @@
    "radical": "大",
    "radical_name": "大部",
    "stroke": 12,
-   "liushu": "会意",
+   "liushu": "形声",
    "original": "嫚也",
    "modern": "傲慢；矫健",
    "shuowen": "嫚也。从𦣻从夰，夰亦聲。《虞書》曰：“若丹朱奡。”讀若傲。《論語》：“奡湯舟。”",
@@ -157285,7 +157296,8 @@
    "trace_yupian": "午到切。慢也。亦作傲。",
    "trace_guangyun": "五到，陸地行舟人也",
    "wuxing": "无明确",
-   "wuxing_source": "无明确"
+   "wuxing_source": "无明确",
+   "liushu_remark": "P0六书终审·许慎声marker「夰亦聲」→形声(从𦣻从夰，夰亦聲)"
   },
   {
    "id": 7339,
