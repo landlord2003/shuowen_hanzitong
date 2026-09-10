@@ -319,6 +319,8 @@ function mountStroke(uid, char) {
   if (!el || typeof HanziWriter === 'undefined') return;
   var d = STROKE_DB[char];
   if (!d) return;
+  window.__strokeChar = window.__strokeChar || {};
+  window.__strokeChar[uid] = char;
   var writer = HanziWriter.create(el, char, {
     width: 220, height: 220, padding: 12,
     showCharacter: true, showOutline: true,
@@ -330,11 +332,28 @@ function mountStroke(uid, char) {
     charDataLoader: function (c, onLoad) { onLoad(STROKE_DB[c] || null); }
   });
   __hw[uid] = writer;
-  writer.animateCharacter();
+  playStrokes(uid, char);
+}
+// 逐笔动画：每笔前更新"第 N / 共 M 笔"，累积显示，落笔后接下一笔
+function playStrokes(uid, char) {
+  var w = __hw[uid];
+  var d = STROKE_DB[char];
+  if (!w || !d) return;
+  var total = (d.strokes && d.strokes.length) || 0;
+  var lab = document.getElementById('lab-' + uid);
+  if (lab) lab.textContent = total ? '准备…' : '';
+  w.hideCharacter();
+  var i = 0;
+  function step() {
+    if (i >= total) { if (lab) lab.textContent = '共 ' + total + ' 笔'; return; }
+    if (lab) lab.textContent = '第 ' + (i + 1) + ' / 共 ' + total + ' 笔';
+    w.animateStroke(i, { onComplete: function () { i++; setTimeout(step, 200); } });
+  }
+  setTimeout(step, 150);
 }
 function replayStroke(uid) {
-  var w = __hw[uid];
-  if (w) w.animateCharacter();
+  var ch = (window.__strokeChar && window.__strokeChar[uid]);
+  if (ch) playStrokes(uid, ch);
 }
 
 // ---- 读音发声（浏览器 Web Speech API，zh-CN 标准普通话）----
