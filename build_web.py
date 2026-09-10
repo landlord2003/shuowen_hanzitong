@@ -140,7 +140,7 @@ lines.append('<div class="stats" id="stats"></div>')
 lines.append('<div class="char-grid" id="charGrid"></div>')
 lines.append('<div class="src-legend"><h3>什么是「六书」？</h3><p style="margin:0 0 10px;line-height:1.7">「六书」是古人分析汉字造字与用字方法而归纳出的六种条例，由东汉许慎在《说文解字》中系统阐述。App 中的六书分类用于快速理解一个字的构形逻辑：</p><ul><li><b>象形</b>：描摹物体外形，如「日、月、山、水」</li><li><b>指事</b>：用抽象符号或在象形字上加指示符号表示抽象概念，如「上、下、本、末」</li><li><b>会意</b>：把两个或多个字组合起来表示新意，如「明（日月并照）、休（人倚木而息）」</li><li><b>形声</b>：由表示意义类别的「形旁」和表示读音的「声旁」组成，如「江（水形工声）、湖（水形胡声）」</li><li><b>转注</b>：部首相同、意义相通、可互相解释的字，如「考」与「老」</li><li><b>假借</b>：借用同音字表达新概念，如「令（本义发号，借为县令）、长（本义久远，借为长官）</li></ul><p style="margin:8px 0 0;font-size:12px;color:var(--text3)">注：本 App 将常见字归入象形、指事、会意、形声四类；转注、假借更多是用字法，未作为单字主分类。</p></div>')
 lines.append('<div class="src-legend"><h3>数据来源与说明</h3><ul><li><b>说文原文 / 反切 / 段玉裁注 / 异体重文</b>：出自《说文解字》（东汉·许慎），含清代段玉裁注</li><li><b>后起字溯源</b>：出自《玉篇》（543年）、《广韵》（1008年）、《康熙字典》（1716年）。《康熙字典》为集大成字书，整合历代韵书反切与释义；《玉篇》《广韵》年代更早，可定位更早的字义</li><li><b class="warn">⚠️ 音译字提示</b>：部分字古字书释义与今义不同——如「啡」古为「唾声」非「咖啡」、「吨」古为「气相冲」非重量单位、「她」古为「姐」非第三人称。此类已在溯源中单独标注</li><li><b>字源图（单字最古老构形）</b>：取自 GlyphWiki 汉字溯源图层（CC BY-SA 2.1 JP，可商用，须署名 + 衍生同授权），已落地 8105 字，黑底白描拓片风</li><li><b>甲骨→金文→简牍帛书→小篆→隶书五阶段图</b>：计划取自 中央研究院漢字構形資料庫（CC BY-SA 2.5 TW，可商用，须署名 + 衍生同授权）；当前版本以文字说明呈现，完整字形图将经「B 路线换源管线」补全</li><li><b>六书 / 本义 / 今义 / 演变</b>：AI 生成，待核验</li><li><b>五行属性</b>：民俗归类（字源五行法），非文字学客观属性；依「字义＞偏旁」判定并标注出处，约 44% 字（人体、动作、抽象、虚词等）无明确归属</li></ul></div>')
-lines.append('<div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜甲骨→隶五阶段：中央研究院漢字構形資料庫（CC BY-SA 2.5 TW，待补全）｜说文解字·汉字通</div>')
+lines.append('<div class="footer">字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW，已落地）｜甲骨/金文/隶：中研院漢字構形資料庫（CC BY-SA 2.5 TW，待字体就位）｜说文解字·汉字通</div>')
 lines.append('<div class="overlay" id="overlay" onclick="if(event.target===this)closeDetail()"><div class="detail-panel" id="detail"></div></div>')
 
 # Now the script tag - ALL Chinese pre-escaped
@@ -259,8 +259,8 @@ js_parts.append('}')
 js_parts.append(r'''var STAGE_FONTS = {
   "oracle-bone": {"file":"data/fonts/oracle-bone.ttf","family":"AncientOracle"},
   "bronze": {"file":"data/fonts/bronze-script.ttf","family":"AncientBronze"},
-  "seal": {"file":"data/fonts/chongxi-seal.ttf","family":"ChongXiSeal"},
-  "clerical": {"file":"data/fonts/clerical.ttf","family":"AncientClerical"}
+  "seal": {"file":"data/fonts/chongxi-seal.otf","family":"ChongXiSeal"},
+  "clerical": {"file":"data/fonts/clerical-script.ttf","family":"AncientClerical"}
 };''')
 js_parts.append(r'''var __fontReady = {};
 (function preloadAncientFonts(){
@@ -374,7 +374,7 @@ js_parts.append('      "<div>' + u('五行') + ': <span>" + (c.wuxing||"-") + "<
 js_parts.append('      "<div>' + u('拼音') + ': <span>" + c.pinyin + "</span></div>" +')
 js_parts.append('      (c.fanqie ? "<div>' + u('反切') + ': <span>" + c.fanqie + "</span><i class=\'src-mini\'>' + u('出《说文》') + '</i></div>" : "") +')
 js_parts.append('    "</div>" +')
-js_parts.append('    "<div class=\'detail-section\'><h4>' + u('字形演变') + '</h4><i class=\'src-mini\'>' + u('字源图：GlyphWiki（CC BY-SA 2.1 JP）｜甲骨→隶：中研院漢字構形資料庫（CC BY-SA 2.5 TW，待 B 路线）｜篆等可由开源字体（崇羲篆体 CC-BY-ND，见 data/fonts/manifest.json）离线补全') + '</i>" + houqiNote + noteHTML + "<div class=\'evo-timeline\'>" + evoHTML + "</div></div>" +')
+js_parts.append('    "<div class=\'detail-section\'><h4>' + u('字形演变') + '</h4><i class=\'src-mini\'>' + u('字源图：GlyphWiki（CC BY-SA 2.1 JP）｜甲骨→隶：中研院漢字構形資料庫（CC BY-SA 2.5 TW，待字体就位）｜篆书已由崇羲篆体（CC-BY-ND-3.0-TW）离线补全，甲骨/金文/隶待字体落地') + '</i>" + houqiNote + noteHTML + "<div class=\'evo-timeline\'>" + evoHTML + "</div></div>" +')
 js_parts.append('    "<div class=\'detail-section\'><h4>' + u('本义 vs 今义') + '</h4>" +')
 js_parts.append('      "<div class=\'meaning-compare\'>" +')
 js_parts.append('        "<div class=\'meaning-box\'><div class=\'label\'>' + u('本义（原始含义）') + '</div><div class=\'content\'>" + (c.original||"") + "</div></div>" +')
