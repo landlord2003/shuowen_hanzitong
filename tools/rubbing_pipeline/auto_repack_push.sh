@@ -34,30 +34,36 @@ rm -f "$SENT"
 # 主判据 = 抓取日志出现完成标记；兜底 = 进程消失。
 # 注意：tasklist CSV 里 PID 带引号（"python.exe","25824",...），模式必须含引号，
 #       否则会误判成"进程已退出"并在抓取未完成时提前收尾。
-RUNLOG="$PIPE/_indexphp_run.log"
-DONE_RE='indexphp\] 完成'
+RUNLOG="${WAIT_LOG:-$PIPE/_indexphp_run.log}"
+DONE_RE="${WAIT_MARK:-indexphp\] 完成}"
 
-if [ "$FETCH_PID" != "0" ]; then
-  log "等待抓取完成（PID=$FETCH_PID）…"
+# WAIT_SKIP=1 表示不等待、立即收尾；FETCH_PID=0 表示无进程可查（只看日志标记）。
+if [ "${WAIT_SKIP:-0}" != "1" ]; then
+  log "等待抓取完成（PID=$FETCH_PID，日志 $(basename "$RUNLOG")）…"
   WAITED=0
   while :; do
     if grep -q "$DONE_RE" "$RUNLOG" 2>/dev/null; then
       log "检测到完成标记，抓取正常结束"
       break
     fi
-    if ! MSYS_NO_PATHCONV=1 tasklist /FI "PID eq $FETCH_PID" /FO CSV 2>/dev/null \
-         | grep -qE "\"$FETCH_PID\""; then
+    if [ "$FETCH_PID" != "0" ] \
+       && ! MSYS_NO_PATHCONV=1 tasklist /FI "PID eq $FETCH_PID" /FO CSV 2>/dev/null \
+            | grep -qE "\"$FETCH_PID\""; then
       log "⚠️ 抓取进程已消失，但日志中没有完成标记 —— 疑似中途崩溃，链路中止（不推送半成品）"
       tail -5 "$RUNLOG" >> "$LOG" 2>/dev/null
       exit 1
     fi
     sleep 20
     WAITED=$((WAITED + 20))
+    if [ "$WAITED" -ge "${WAIT_MAX:-5400}" ]; then
+      log "⚠️ 等待超时（${WAIT_MAX:-5400}s）仍无完成标记，链路中止以防挂死"
+      exit 8
+    fi
     if [ $((WAITED % 300)) -eq 0 ]; then
-      log "…仍在抓取（已等待 $((WAITED / 60)) 分钟）：$(grep '进度' "$RUNLOG" | tail -1 | sed 's/^ *//')"
+      log "…仍在抓取（已等待 $((WAITED / 60)) 分钟）：$(tail -1 "$RUNLOG" | sed 's/^ *//')"
     fi
   done
-  grep -E '进度|完成' "$RUNLOG" | tail -2 >> "$LOG" 2>/dev/null
+  tail -3 "$RUNLOG" >> "$LOG" 2>/dev/null
 fi
 
 # ---------- 2) 重打包 ----------

@@ -135,7 +135,7 @@ input:focus{border-color:var(--accent)}
 <div class="stats" id="stats"></div>
 <div class="char-grid" id="charGrid"></div>
 <div class="src-legend"><h3>什么是「六书」？</h3><p style="margin:0 0 10px;line-height:1.7">「六书」是古人分析汉字造字与用字方法而归纳出的六种条例，由东汉许慎在《说文解字》中系统阐述。App 中的六书分类用于快速理解一个字的构形逻辑：</p><ul><li><b>象形</b>：描摹物体外形，如「日、月、山、水」</li><li><b>指事</b>：用抽象符号或在象形字上加指示符号表示抽象概念，如「上、下、本、末」</li><li><b>会意</b>：把两个或多个字组合起来表示新意，如「明（日月并照）、休（人倚木而息）」</li><li><b>形声</b>：由表示意义类别的「形旁」和表示读音的「声旁」组成，如「江（水形工声）、湖（水形胡声）」</li><li><b>转注</b>：部首相同、意义相通、可互相解释的字，如「考」与「老」</li><li><b>假借</b>：借用同音字表达新概念，如「令（本义发号，借为县令）、长（本义久远，借为长官）</li></ul><p style="margin:8px 0 0;font-size:12px;color:var(--text3)">注：本 App 将常见字归入象形、指事、会意、形声四类；转注、假借更多是用字法，未作为单字主分类。</p></div>
-<div class="src-legend"><h3>数据来源与说明</h3><ul><li><b>说文原文 / 反切 / 段玉裁注 / 异体重文</b>：出自《说文解字》（东汉·许慎），含清代段玉裁注</li><li><b>后起字溯源</b>：出自《玉篇》（543年）、《广韵》（1008年）、《康熙字典》（1716年）。《康熙字典》为集大成字书，整合历代韵书反切与释义；《玉篇》《广韵》年代更早，可定位更早的字义</li><li><b class="warn">⚠️ 音译字提示</b>：部分字古字书释义与今义不同——如「啡」古为「唾声」非「咖啡」、「吨」古为「气相冲」非重量单位、「她」古为「姐」非第三人称。此类已在溯源中单独标注</li><li><b>字源图（单字最古老构形）</b>：取自 GlyphWiki 汉字溯源图层（CC BY-SA 2.1 JP，可商用，须署名 + 衍生同授权），已落地 8105 字，黑底白描拓片风</li><li><b>甲骨→金文→简牍帛书→小篆→隶书五阶段图</b>：计划取自 中央研究院漢字構形資料庫（CC BY-SA 2.5 TW，可商用，须署名 + 衍生同授权）；当前版本以文字说明呈现，完整字形图将经「B 路线换源管线」补全</li><li><b>六书 / 本义 / 今义 / 演变</b>：AI 生成，待核验</li><li><b>五行属性</b>：民俗归类（字源五行法），非文字学客观属性；依「字义＞偏旁」判定并标注出处，约 44% 字（人体、动作、抽象、虚词等）无明确归属</li></ul></div>
+<div class="src-legend"><h3>数据来源与说明</h3><ul><li><b>说文原文 / 反切 / 段玉裁注 / 异体重文</b>：出自《说文解字》（东汉·许慎），含清代段玉裁注</li><li><b>后起字溯源</b>：出自《玉篇》（543年）、《广韵》（1008年）、《康熙字典》（1716年）。《康熙字典》为集大成字书，整合历代韵书反切与释义；《玉篇》《广韵》年代更早，可定位更早的字义</li><li><b class="warn">⚠️ 音译字提示</b>：部分字古字书释义与今义不同——如「啡」古为「唾声」非「咖啡」、「吨」古为「气相冲」非重量单位、「她」古为「姐」非第三人称。此类已在溯源中单独标注</li><li><b>字源图（单字最古老构形）</b>：取自 GlyphWiki 汉字溯源图层（CC BY-SA 2.1 JP，可商用，须署名 + 衍生同授权），已落地 8105 字，黑底白描拓片风</li><li><b>甲骨→金文→简牍帛书→大篆→小篆→隶书演变图</b>：字形取自 Wikimedia Commons 古文字形 SVG（公版，可自由商用），经本机换源管线栅格化为 160×160 拓片风灰度图；大篆（籀文）为新增独立书体；未收录的字形阶段以「待补」标注，不虚构、不回退远程源</li><li><b>六书 / 本义 / 今义 / 演变</b>：AI 生成，待核验</li><li><b>五行属性</b>：民俗归类（字源五行法），非文字学客观属性；依「字义＞偏旁」判定并标注出处，约 44% 字（人体、动作、抽象、虚词等）无明确归属</li></ul></div>
 <div class="src-legend cov-note"><h3>古字形阶段覆盖统计</h3>
 <p style="margin:0 0 10px;line-height:1.7">下表对比「各古文字阶段历史上能写的字数（学界基准）」与「本产品在 8105 个规范汉字中实际收录展示的字数」：</p>
 <table class="cov-table">
@@ -167,7 +167,7 @@ var WUXING_LABEL = {"\u504f\u65c1": "\u51fa\uff1a\u504f\u65c1\u90e8\u9996", "\u5
 var CDS_READER = null;
 (function(){
   if (!window.__CDS || !window.fzstd) return;
-  fetch("data/dataset.bin?v=20260911r").then(function(r){ if(!r.ok) return null; return r.arrayBuffer(); }).then(function(ab){
+  fetch("data/dataset.bin?v=20260911b").then(function(r){ if(!r.ok) return null; return r.arrayBuffer(); }).then(function(ab){
     if(!ab) return;
     CDS_READER = new __CDS.DatasetReader(new Uint8Array(ab));
     document.body.classList.add("has-local-glyphs");
@@ -203,13 +203,14 @@ function buildLocalStages(baseChar, hasTrad, c){
   var glyphs = CDS_READER.glyphsForCharacter(baseChar);
   if ((!glyphs || !glyphs.length) && hasTrad) glyphs = CDS_READER.glyphsForCharacter(c.char);
   if (!glyphs || !glyphs.length) return [];
-  var order = ["glyphwiki","oracle-bone","bronze","bamboo-silk","seal","clerical","regular"];
+  var order = ["glyphwiki","oracle-bone","bronze","bamboo-silk","bigseal","seal","clerical","regular"];
   var stages = [];
   var gcode = c.char.codePointAt(0).toString(16).toUpperCase();
   for (var i=0;i<order.length;i++){
     var script = order[i];
     if (script === "regular") continue;
     var list = glyphs.filter(function(g){ return g.script === script; });
+    if (!list.length && script === "bigseal") continue;
     if (list.length){
       var raw = CDS_READER.getRaw(list[0].key);
       var era = __CDS.SCRIPT_METADATA[script].chinese;

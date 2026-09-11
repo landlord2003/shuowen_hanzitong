@@ -60,6 +60,8 @@ tools/rubbing_pipeline/_selftest_tmp/
 tools/rubbing_pipeline/_full_run*.log
 tools/rubbing_pipeline/_thumb_guess.log
 tools/rubbing_pipeline/_indexphp_run.log
+tools/rubbing_pipeline/_bulk_run.log
+tools/rubbing_pipeline/_bulk_rerun.log
 tools/rubbing_pipeline/_auto_repack.log
 tools/rubbing_pipeline/_auto_repack.done
 tools/rubbing_pipeline/_auto_verify.txt

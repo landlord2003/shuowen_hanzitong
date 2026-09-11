@@ -49,6 +49,7 @@ SCRIPT_PREFIX = {
     "oracle-bone": "O_",
     "bronze": "J_",
     "bamboo-silk": "W_",
+    "bigseal": "D_",   # 大篆 / 籀文（西周晚期—春秋），与秦小篆区分
     "seal": "Z_",
     "clerical": "L_",
     "regular": "K_",

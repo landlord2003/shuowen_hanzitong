@@ -7,21 +7,26 @@
   "seal": {
     "source": "Wikimedia Commons (Ancient Chinese characters)",
     "license": "Public Domain / 公版（可自由商用）",
-    "count": 1424
+    "count": 2848
   },
   "bamboo-silk": {
     "source": "Wikimedia Commons (Ancient Chinese characters)",
     "license": "Public Domain / 公版（可自由商用）",
-    "count": 486
+    "count": 612
+  },
+  "bigseal": {
+    "source": "Wikimedia Commons (Ancient Chinese characters)",
+    "license": "Public Domain / 公版（可自由商用）",
+    "count": 1362
   },
   "bronze": {
     "source": "Wikimedia Commons (Ancient Chinese characters)",
     "license": "Public Domain / 公版（可自由商用）",
-    "count": 865
+    "count": 1056
   },
   "oracle-bone": {
     "source": "Wikimedia Commons (Ancient Chinese characters)",
     "license": "Public Domain / 公版（可自由商用）",
-    "count": 633
+    "count": 758
   }
 }

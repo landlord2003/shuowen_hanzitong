@@ -35,10 +35,19 @@ THUMB = "https://commons.wikimedia.org/w/thumb.php?f={name}&w=512"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36"
 
 # ACC 编号前缀 -> 脚本
-ACC_LETTER = {"j": "oracle-bone", "b": "bronze", "s": "seal", "L": "seal"}
+# 实测（2026-09-11，读文件页 action=raw 的 {{ACClicense}} 模板确认）：
+#   ACC-j##### = oracle（小写 j）
+#   ACC-B##### = bronze（**大写** B；旧代码只注册小写 b，导致整批被丢弃）
+#   ACC-s##### = seal（小写 s）
+#   ACC-L##### = bigseal|Great seal（**大写** L；旧代码错映射为 seal，把大篆当小篆）
+ACC_LETTER = {"j": "oracle-bone", "J": "oracle-bone",
+              "b": "bronze", "B": "bronze",
+              "s": "seal", "S": "seal",
+              "L": "bigseal", "l": "bigseal"}
 # 汉字命名后缀 -> 脚本（顺序即优先级）
-NAMED = [("-oracle", "oracle-bone"), ("-bronze", "bronze"), ("-seal", "seal"),
-         ("-bigseal", "seal"), ("-silk", "bamboo-silk"), ("-slip", "bamboo-silk")]
+NAMED = [("-oracle", "oracle-bone"), ("-bronze", "bronze"),
+         ("-seal", "seal"), ("-bigseal", "bigseal"),
+         ("-silk", "bamboo-silk"), ("-slip", "bamboo-silk")]
 
 # 全局限流协调（软限流：失败即退避）
 _LK = threading.Lock()

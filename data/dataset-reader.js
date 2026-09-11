@@ -66,10 +66,11 @@ const SCRIPT_ORDER = {
 	"oracle-bone": 1,
 	"bronze": 2,
 	"bamboo-silk": 3,
-	"seal": 4,
-	"clerical": 5,
-	"regular": 6,
-	"other": 7
+	"bigseal": 4,
+	"seal": 5,
+	"clerical": 6,
+	"regular": 7,
+	"other": 8
 };
 /**
 * Classify a glyph key (or bare filename) into a {@link Script} from its prefix.
@@ -85,6 +86,7 @@ function parseScript(keyOrFilename) {
 	if (filename.startsWith("O_")) return "oracle-bone";
 	if (filename.startsWith("J_")) return "bronze";
 	if (filename.startsWith("W_")) return "bamboo-silk";
+	if (filename.startsWith("D_")) return "bigseal";
 	if (filename.startsWith("Z_")) return "seal";
 	if (filename.startsWith("L_")) return "clerical";
 	if (filename.startsWith("K_")) return "regular";
@@ -328,7 +330,8 @@ var SCRIPT_METADATA = {
   "oracle-bone": { chinese: "甲骨文" },
   "bronze": { chinese: "金文" },
   "bamboo-silk": { chinese: "简牍帛书" },
-  "seal": { chinese: "篆文" },
+  "bigseal": { chinese: "大篆" },
+  "seal": { chinese: "小篆" },
   "clerical": { chinese: "隶书" },
   "regular": { chinese: "楷书" },
   "glyphwiki": { chinese: "字源" },
