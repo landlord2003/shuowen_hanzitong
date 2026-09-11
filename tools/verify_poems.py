@@ -13,12 +13,17 @@ import opencc, json, sqlite3, re, os, glob, sys
 ROOT = os.path.join(os.path.dirname(__file__), "..", ".cache", "poetry_src")
 CULT = os.path.join(os.path.dirname(__file__), "..", "data", "cultural.json")
 
-t2s = opencc.OpenCC("t2s")
-
-def norm(s):
-    """繁->简，仅保留汉字，去标点/空白。"""
-    s = t2s.convert(s or "")
-    return re.sub(r"[^\u4e00-\u9fff]", "", s)
+try:
+    import opencc
+    _t2s = opencc.OpenCC("t2s")
+    def norm(s):
+        """繁->简，仅保留汉字，去标点/空白。"""
+        s = _t2s.convert(s or "")
+        return re.sub(r"[^\u4e00-\u9fff]", "", s)
+except Exception:
+    # 未安装 opencc（pip install opencc）时退化为仅归一化，覆盖简体版数据源
+    def norm(s):
+        return re.sub(r"[^\u4e00-\u9fff]", "", s or "")
 
 def build_index():
     idx = {}  # norm_sentence -> (author, title)
