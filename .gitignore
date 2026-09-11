@@ -53,6 +53,11 @@ data/fonts/**
 !data/fonts/clerical-script.ttf
 !data/fonts/clerical-qingliu.ttf
 !data/fonts/manifest.json
+# P1-5 书法矩阵：OFL 可商用现代书法家字体（楷/行/行草），Google Fonts 授权，可随仓库分发
+!data/fonts/kai-MaShanZheng.ttf
+!data/fonts/xing-LongCang.ttf
+!data/fonts/xing-ZhiMangXing.ttf
+!data/fonts/xingcao-LiuJianMaoCao.ttf
 
 # rubbing_pipeline 运行时产物（抓取 PNG/SVG 85MB+、日志、中间 bin、自测产物）
 tools/rubbing_pipeline/_glyph_tmp/
