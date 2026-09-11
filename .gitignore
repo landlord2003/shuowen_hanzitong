@@ -159,3 +159,8 @@ zdic_compare.js
 甲骨文缺口*.docx
 篆书缺口*.docx
 简牍帛书缺口*.docx
+
+# P0 诗词核实中间产物（语料缓存 + cultural 时间戳备份，体积大/可重建，不入库）
+tools/poetry_corpus/
+data/cultural.json.bak_*
+tools/*.log
