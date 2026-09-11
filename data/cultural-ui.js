@@ -4,7 +4,7 @@
 // 文化内容数据库（字源故事 / 成语 / 诗词），由 tools/gen_cultural.py 经本地 Ollama 生成。
 var CULTURAL_DB = null;
 (function () {
-  fetch("data/cultural.json?v=20260908c")
+  fetch("data/cultural.json?v=20260911c")
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (d) { CULTURAL_DB = d; if (typeof renderDaily === 'function') renderDaily(); })
     .catch(function () {});
