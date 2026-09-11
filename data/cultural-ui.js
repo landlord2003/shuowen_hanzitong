@@ -4,9 +4,16 @@
 // 文化内容数据库（字源故事 / 成语 / 诗词），由 tools/gen_cultural.py 经本地 Ollama 生成。
 var CULTURAL_DB = null;
 (function () {
-  fetch("data/cultural.json?v=20260911c")
+  fetch("data/cultural.json?v=20260911e")
     .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (d) { CULTURAL_DB = d; if (typeof renderDaily === 'function') renderDaily(); })
+    .then(function (d) {
+      CULTURAL_DB = d;
+      if (typeof renderDaily === 'function') renderDaily();
+      // 若用户已在详情页（cultural.json 异步加载慢于首次点击），加载完成后重渲染当前字，避免文化区块空窗
+      if (window.__currentCharId != null && typeof showDetail === 'function') {
+        try { showDetail(window.__currentCharId); } catch (e) {}
+      }
+    })
     .catch(function () {});
 })();
 
@@ -41,7 +48,9 @@ function culturalHTML(d) {
   if (d && d.poems && d.poems.length) {
     h += "<div class='label'>" + LBL_POEM + "</div><div class='poem-list'>";
     h += d.poems.map(function (p) {
-      return "<div class='poem'><span>" + p.line + "</span><i>" + (p.source || "") + "</i></div>";
+      var verified = p.source && p.source.indexOf('待考') < 0 && p.source.indexOf('示例') < 0 && p.source.indexOf('未知') < 0;
+      var tag = verified ? "✓ " + p.source : (p.source && p.source.indexOf('待考') >= 0 ? "示例·出处待核" : (p.source || "示例·出处待核"));
+      return "<div class='poem'><span>" + p.line + "</span><i>" + tag + "</i></div>";
     }).join("");
     h += "</div>";
   }

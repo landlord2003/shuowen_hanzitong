@@ -362,7 +362,15 @@ function pickVoice() {
   if (typeof speechSynthesis === 'undefined') return null;
   if (!__zhVoice) {
     var vs = speechSynthesis.getVoices() || [];
-    __zhVoice = vs.find(function (v) { return /zh/i.test(v.lang); }) || null;
+    var zh = vs.filter(function (v) { return /zh/i.test(v.lang); });
+    if (!zh.length) return null;
+    // 偏好顺序：神经/云中文语音优先（音质更自然）；其次任意中文语音
+    var pref = ['Xiaoxiao', 'Yunxi', 'Microsoft', 'Google', 'Tingting', 'Yaoyao', 'Huihui', 'Kangkang'];
+    var best = null;
+    for (var i = 0; i < pref.length && !best; i++) {
+      best = zh.find(function (v) { return v.name && v.name.indexOf(pref[i]) >= 0; }) || null;
+    }
+    __zhVoice = best || zh[0];
   }
   return __zhVoice;
 }
@@ -376,9 +384,11 @@ function speakText(text, isPinyin) {
   u.lang = 'zh-CN';
   var v = pickVoice();
   if (v) u.voice = v;
+  u.rate = 0.95;   // 略慢更清晰自然
+  u.pitch = 1.0;
   if (isPinyin) {
-    // 拼音读法：去掉声调符号，让中文语音引擎按音节读出对应读音
-    u.text = String(text).normalize('NFD').replace(/[̀-ͯ]/g, '');
+    // 拼音读法：去声调符号，ü->u，让中文语音引擎按音节读出对应读音
+    u.text = String(text).normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ü/g, 'u').replace(/Ü/g, 'u');
   }
   speechSynthesis.speak(u);
 }
