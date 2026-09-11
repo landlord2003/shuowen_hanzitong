@@ -24,6 +24,14 @@ try:
 except Exception:
     _font_glyphs = {}
 
+# 书法欣赏字体 cmap 覆盖集（由 tools/extract_calli_cmap.py 离线提取，落在 data/calli_glyphs.json）
+# 用途同 STAGE_FONT_GLYPHS：门控缺字，避免书法字体缺字时回退成系统宋体（误导）。
+try:
+    with open('data/calli_glyphs.json', 'r', encoding='utf-8') as _cgf:
+        _calli_glyphs = json.load(_cgf)
+except Exception:
+    _calli_glyphs = {}
+
 # Helper: escape a Chinese string to \uXXXX
 def u(s):
     # Return BARE \uXXXX escapes for Chinese (no quote wrapper). Call sites supply
@@ -77,6 +85,10 @@ lines.append('.detail-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;a
 lines.append('@media (max-width:640px){.detail-hero{flex-direction:column}.detail-cols{grid-template-columns:1fr}.evo-timeline{flex-wrap:wrap;overflow-x:visible}}')
 lines.append('.evo-timeline{display:flex;align-items:flex-start;gap:8px;flex-wrap:nowrap;overflow-x:auto;margin:8px 0;justify-content:center}')
 lines.append('.evo-step{text-align:center;flex:1 1 0;min-width:0;padding:8px 4px;border-radius:8px;background:var(--card);border:1px solid var(--border)}')
+lines.append('.calli-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin:8px 0}')
+lines.append('.calli-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 6px;text-align:center}')
+lines.append('.calli-char{font-size:48px;line-height:1.1;color:var(--text)}')
+lines.append('.calli-name{font-size:12px;color:var(--text3);margin-top:6px}')
 lines.append('.evo-step .era-name{font-size:11px;color:var(--text2);margin-bottom:4px}')
 lines.append('.evo-step .era-img{width:100%;max-width:72px;height:auto;aspect-ratio:1/1;object-fit:contain;display:block;margin:0 auto;background:#0a0a0a;border:1px solid #555;border-radius:4px}')
 lines.append('.evo-step.pending{border-style:dashed;opacity:.92}')
@@ -376,6 +388,40 @@ js_parts.append(r'''function tryFontStage(script, code, node, era){
   node.innerHTML = "<div class='era-name'>" + era + "</div>" + (window.ERA_DESC && ERA_DESC[era] ? "<div class='era-desc'>" + ERA_DESC[era] + "</div>" : "") + "<span class='era-font' style='font-family:" + f.family + "'>" + ch + "</span>";
 }''')
 js_parts.append(r'''window.__refillFont = function(){ try { fillAncientGlyphs(); } catch(e){} };''')
+# 书法欣赏：4 个 Google Fonts OFL 可商用书法家字体（楷/行/行草），门控缺字不回退系统字
+js_parts.append(r'''var CALLI_FONTS = [
+  {"name":"楷书·马善政","family":"MaShanZheng","file":"data/fonts/kai-MaShanZheng.ttf"},
+  {"name":"行书·龙藏","family":"LongCang","file":"data/fonts/xing-LongCang.ttf"},
+  {"name":"行书·志莽","family":"ZhiMangXing","file":"data/fonts/xing-ZhiMangXing.ttf"},
+  {"name":"行草·刘建毛","family":"LiuJianMaoCao","file":"data/fonts/xingcao-LiuJianMaoCao.ttf"}
+];''')
+js_parts.append('var CALLI_GLYPHS = ' + json.dumps(_calli_glyphs, ensure_ascii=True, separators=(",",":")) + ';')
+js_parts.append('for (var _ck in CALLI_GLYPHS) CALLI_GLYPHS[_ck] = new Set(CALLI_GLYPHS[_ck]);')
+js_parts.append('var __calliReady = {};')
+js_parts.append(r'''(function preloadCalliFonts(){
+  if (typeof FontFace === "undefined" || !document.fonts) return;
+  CALLI_FONTS.forEach(function(f){
+    try {
+      var ff = new FontFace(f.family, "url(" + f.file + ")");
+      ff.load().then(function(loaded){ document.fonts.add(loaded); __calliReady[f.family] = true;
+        if (window.__currentCharId != null) { try { showDetail(window.__currentCharId); } catch(e){} }
+      }).catch(function(){ __calliReady[f.family] = false; });
+    } catch(e) { __calliReady[f.family] = false; }
+  });
+})();''')
+js_parts.append(r'''function buildCalliHTML(c){
+  if (typeof CALLI_FONTS === "undefined" || !CALLI_FONTS.length) return "";
+  var ch = c.char; var cp = ch.codePointAt(0);
+  var cards = [];
+  CALLI_FONTS.forEach(function(f){
+    if (!__calliReady[f.family]) return;  // 字体未就绪：等加载完成由 preload 回调重渲染
+    var set = (typeof CALLI_GLYPHS !== "undefined" && CALLI_GLYPHS[f.family]) ? CALLI_GLYPHS[f.family] : null;
+    if (set && !set.has(cp)) return;  // 该字体不含此字：跳过，不回退为系统字
+    cards.push("<div class='calli-card'><div class='calli-char' style='font-family:\"" + f.family + "\"'>" + ch + "</div><div class='calli-name'>" + f.name + "</div></div>");
+  });
+  if (!cards.length) return "";
+  return "<div class='detail-section calli-section'><h4>书法欣赏（名家字体·OFL 可商用）</h4><div class='calli-grid'>" + cards.join("") + "</div><i class='src-mini'>字体：马善政楷书 / 龙藏行书 / 志莽行书 / 刘建毛行草（Google Fonts，SIL Open Font License，可商用）</i></div>";
+}''')
 js_parts.append('var activeLiuShu = "' + u('全部') + '";')
 js_parts.append('var activeCategory = "' + u('全部') + '";')
 js_parts.append('var activeSort = "default";')
@@ -454,6 +500,7 @@ js_parts.append('    strokeHTML = renderStrokeSVG(c.char);')
 js_parts.append('  } else {')
 js_parts.append('    strokeHTML = "<div class=\'stroke-fallback\'><span class=\'fallback-char\'>" + c.char + "</span><div class=\'src-mini\'>' + u('笔顺动画待数据接入') + '</div></div>";')
 js_parts.append('  }')
+js_parts.append('  var calliHTML = buildCalliHTML(c);')
 js_parts.append('  var noteHTML = c.oracle_note ? "<div class=\'oracle-note\'>' + u('⭐甲骨文说明：') + '" + c.oracle_note + "</div>" : "";')
 js_parts.append('    document.getElementById("detail").innerHTML = ')
 js_parts.append('    detailHeaderHTML(c) +')
@@ -472,6 +519,7 @@ js_parts.append('        "</div>" +')
 js_parts.append('      "</div>" +')
 js_parts.append('    "</div>" +')
 js_parts.append('    "<div class=\'detail-section\'><h4>' + u('字形演变') + '</h4><i class=\'src-mini\'>' + u('字源图：GlyphWiki（CC BY-SA 2.1 JP）｜篆书：崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文：cluesurf/mark（OFL）｜隶书：临海隶书＋青柳隶书（免费商用，猫啃网）｜笔顺：Hanzi Writer Data（Make Me a Hanzi · Arphic 公共许可，可商用）') + '</i>" + houqiNote + noteHTML + "<div class=\'evo-timeline\'>" + evoHTML + "</div></div>" +')
+js_parts.append('    calliHTML +')
 js_parts.append('    "<div class=\'detail-cols\'>" +')
 js_parts.append('      "<div class=\'detail-section\'><h4>' + u('演变过程') + '</h4><p>" + (c.evolution||"") + "</p><i class=\'src-mini\'>' + u('AI生成·待核验') + '</i></div>" +')
 js_parts.append('      (c.trace_kangxi || c.trace_yupian || c.trace_guangyun || c.trace_note ? "<div class=\'detail-section\'><h4>' + u('后起字溯源') + '</h4>" +')
