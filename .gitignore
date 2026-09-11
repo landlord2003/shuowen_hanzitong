@@ -65,6 +65,10 @@ tools/rubbing_pipeline/_bulk_rerun.log
 tools/rubbing_pipeline/_auto_repack.log
 tools/rubbing_pipeline/_auto_repack.done
 tools/rubbing_pipeline/_auto_verify.txt
+tools/rubbing_pipeline/_finish_bulk.log
+tools/rubbing_pipeline/_wait_finish.log
+tools/rubbing_pipeline/_bulk_finish_done
+tools/rubbing_pipeline/_push_pending
 tools/rubbing_pipeline/_proxy_diag.txt
 tools/rubbing_pipeline/__pycache__/
 tools/rubbing_pipeline/adapters/__pycache__/
