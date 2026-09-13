@@ -312,7 +312,7 @@ function renderStrokeSVG(char) {
   return "<div class='stroke-section' id='" + uid + "'><h4>笔顺</h4>" +
          "<div class='hw-target' id='hw-" + uid + "'></div>" +
          "<div class='stroke-controls'><button class='filter-btn' onclick='replayStroke(\"" + uid + "\")'>▶ 重播笔顺</button><span class='stroke-step-label' id='lab-" + uid + "'></span></div>" +
-         "<i class='src-mini'>笔顺数据源：Hanzi Writer Data（Make Me a Hanzi · Arphic 公共许可，可商用）｜含笔画中线 medians，起笔→落笔精确运笔</i></div>";
+         "</div>";
 }
 function mountStroke(uid, char) {
   var el = document.getElementById('hw-' + uid);
@@ -358,14 +358,28 @@ function replayStroke(uid) {
 
 // ---- 读音发声（浏览器 Web Speech API，zh-CN 标准普通话）----
 var __zhVoice = null;
+var __ttsToast = null;
+function flashTTS(msg) {
+  try {
+    if (!__ttsToast) {
+      __ttsToast = document.createElement('div');
+      __ttsToast.style.cssText = 'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#c0392b;color:#fff;padding:8px 14px;border-radius:6px;font-size:13px;z-index:9999;max-width:80%;text-align:center;display:none';
+      document.body.appendChild(__ttsToast);
+    }
+    __ttsToast.textContent = msg;
+    __ttsToast.style.display = 'block';
+    clearTimeout(__ttsToast._t);
+    __ttsToast._t = setTimeout(function () { __ttsToast.style.display = 'none'; }, 2800);
+  } catch (e) {}
+}
 function pickVoice() {
   if (typeof speechSynthesis === 'undefined') return null;
   if (!__zhVoice) {
     var vs = speechSynthesis.getVoices() || [];
     var zh = vs.filter(function (v) { return /zh/i.test(v.lang); });
-    if (!zh.length) return null;
-    // 偏好顺序：神经/云中文语音优先（音质更自然）；其次任意中文语音
-    var pref = ['Xiaoxiao', 'Yunxi', 'Microsoft', 'Google', 'Tingting', 'Yaoyao', 'Huihui', 'Kangkang'];
+    if (!zh.length) { flashTTS('当前浏览器没有中文语音包，读音不可用或质量差（建议用 Edge/Chrome 并安装中文语音）'); return null; }
+    // 神经/云中文语音优先（音质最自然）；其次任意中文语音
+    var pref = ['Neural', 'Xiaoxiao', 'Xiaoyi', 'Yunxi', 'Yunyang', 'Microsoft', 'Google', 'Tingting', 'Yaoyao', 'Huihui', 'Kangkang'];
     var best = null;
     for (var i = 0; i < pref.length && !best; i++) {
       best = zh.find(function (v) { return v.name && v.name.indexOf(pref[i]) >= 0; }) || null;
@@ -377,23 +391,23 @@ function pickVoice() {
 if (typeof speechSynthesis !== 'undefined') {
   speechSynthesis.onvoiceschanged = function () { __zhVoice = null; pickVoice(); };
 }
-function speakText(text, isPinyin) {
-  if (typeof speechSynthesis === 'undefined' || !text) return;
+function speakText(text) {
+  if (!text) return;
+  if (typeof speechSynthesis === 'undefined') { flashTTS('当前浏览器不支持语音合成（Web Speech API），读音不可用'); return; }
   speechSynthesis.cancel();
   var u = new SpeechSynthesisUtterance(text);
   u.lang = 'zh-CN';
   var v = pickVoice();
-  if (v) u.voice = v;
-  u.rate = 0.95;   // 略慢更清晰自然
+  if (!v) return; // 无中文语音时 pickVoice 已提示，直接退出
+  u.voice = v;
+  u.rate = 0.9;
+  u.volume = 1.0;
   u.pitch = 1.0;
-  if (isPinyin) {
-    // 拼音读法：去声调符号，ü->u，让中文语音引擎按音节读出对应读音
-    u.text = String(text).normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ü/g, 'u').replace(/Ü/g, 'u');
-  }
   speechSynthesis.speak(u);
 }
-function speakChar(ch) { speakText(ch, false); }
-function speakPinyin(py) { speakText(py, true); }
+function speakChar(ch) { speakText(ch); }
+// 拼音按钮改念对应汉字：拼音字母串喂中文TTS不可靠且丢声调，汉字跟读最准
+function speakPinyin(py, ch) { speakText(ch || py); }
 
 // ---- 详情页拼音发声控件（多音字拆成可点击 chip，逐音可听）----
 function renderPinyinAudio(c) {
@@ -406,7 +420,7 @@ function renderPinyinAudio(c) {
   if (parts.length) {
     html += "<span class='py-chips'>";
     html += parts.map(function (p) {
-      return "<button class='py-chip' title='听拼音 " + p + "' onclick='speakPinyin(\"" + p + "\")'>" + p + " <span class='spk'>🔊</span></button>";
+      return "<button class='py-chip' title='听「" + ch + "」读音 " + p + "' onclick='speakPinyin(\"" + p + "\",\"" + ch + "\")'>" + p + " <span class='spk'>🔊</span></button>";
     }).join("<span class='py-sep'>/</span>");
     html += "</span>";
     if (parts.length > 1) html += "<span class='py-tag'>多音字·点击听各读音</span>";
