@@ -122,3 +122,40 @@ _line*.txt
 
 # 字源故事生成通知哨兵（运行时产物，非产品代码）
 data/.cultural_notify_sent
+
+# ---------- 2026-09-13 清理：统一收口 AI 调试残留与运行期产出 ----------
+# 1) `_` 开头的临时脚本 / 日志 / 缓存（AI 调试残留，统一忽略，不再逐个枚举）
+#    gitignore 不作用于已跟踪文件，故 tools/_coverage_*.py|js 等已入库工具不受影响
+_*
+!tools/_coverage_*.py
+!tools/_coverage_*.js
+
+# 2) 缺口字抓取原料（150MB+ / 3 万文件，可由 tools/zdic_pipeline 重建）
+output/
+
+# 3) dataset.bin 分源 / 备份 / 中间产物
+*.bak*
+data/oracle_overlay.json
+
+# 4) 甲骨文素材（运行期下载，非产品代码）
+obc_chars/
+obc_img/
+obc_src.docx
+
+# 5) 字形分析报告与缺口清单（可由脚本重建）
+hanzi_*.html
+glyph_table.html
+oracle_char_mapping.html
+hanzi_zdic_progress.json
+oracle_char_mapping.json
+oracle_supplement_197.json
+oracle_overlay_decode_list.json
+oracle_supplement_chars.txt
+zdic_scan.js
+zdic_compare.js
+
+# 6) 缺口字对照文档（B 线交付物，走微信分发，不入库）
+金文缺口*.docx
+甲骨文缺口*.docx
+篆书缺口*.docx
+简牍帛书缺口*.docx
