@@ -126,7 +126,7 @@ pool = [[s, lab] for s, lab in rest[:1800]]
 
 out = {
     'meta': {
-        'built': '2026-09-11',
+        'built': __import__('datetime').date.today().isoformat(),
         'corpus': SOURCES,
         'poems': poems,
         'segments': len(segments),
