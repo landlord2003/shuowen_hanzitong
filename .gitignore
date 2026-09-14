@@ -174,3 +174,14 @@ tools/*.log
 # docs/汉典重建/ 是三书体缺口重建的表与取图台账；CSV 需绕过上面的全局 *.csv 忽略。
 # 字形图（约 101MB）仍不入库，见该目录 README 第四节。
 !docs/汉典重建/*.csv
+
+# ---------- 2026-09-14 P0-3 / P1-4 审计中间产物（可重建，不入库） ----------
+# 成语白名单「原始下载」（9.84MB，由 download_idiom_retry.cjs 重建）；
+# 提取后的成品 data/idioms_whitelist.json（0.45MB）入库。
+data/idioms_whitelist_src.json
+# P1-4 研判中间缓存（可由 p1_prefilter.cjs -> p1_judge_v4.cjs 重建）
+data/p1_candidates.json
+data/p1_judge*.json
+data/p1_benchmark_cache.json
+# 汉典各字书体覆盖扫描缓存（可由 scan_zdic_coverage.mjs 重建）
+zdic_coverage_cache.json
