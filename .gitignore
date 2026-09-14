@@ -185,3 +185,8 @@ data/p1_judge*.json
 data/p1_benchmark_cache.json
 # 汉典各字书体覆盖扫描缓存（可由 scan_zdic_coverage.mjs 重建）
 zdic_coverage_cache.json
+
+# ---------- 2026-09-11 简繁/六书复核 + 飞花令/闯关 ----------
+# 复核脚本下载的第三方原始件（Unihan.zip 8.5MB、诗词源仓库克隆，可重下）
+.cache/
+# 简繁宽松关联清单（成品，入库）：data/s2t_loose_assoc.json
