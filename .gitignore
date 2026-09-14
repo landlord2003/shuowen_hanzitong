@@ -169,3 +169,8 @@ zdic_compare.js
 tools/poetry_corpus/
 data/cultural.json.bak_*
 tools/*.log
+
+# ---------- 2026-09-14 汉典缺口重建交付物（显式放行） ----------
+# docs/汉典重建/ 是三书体缺口重建的表与取图台账；CSV 需绕过上面的全局 *.csv 忽略。
+# 字形图（约 101MB）仍不入库，见该目录 README 第四节。
+!docs/汉典重建/*.csv
