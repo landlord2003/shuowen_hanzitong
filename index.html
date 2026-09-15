@@ -112,7 +112,7 @@ input:focus{border-color:var(--accent)}
 .stroke-step-label{font-size:12px;color:var(--text2);margin-left:10px}
 </style></head><body>
 <style>.daily-banner{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--card),#1c1c22);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:14px;flex-wrap:wrap}.daily-label{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:2px;white-space:nowrap}.daily-char{font-size:42px;font-weight:700;line-height:1;cursor:pointer;color:var(--text)}.daily-char:hover{color:var(--accent)}.daily-py{font-size:15px;color:var(--text2)}.daily-desc{font-size:14px;color:var(--text2);flex:1;min-width:200px;line-height:1.6}.fav-btn{margin-left:auto;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer}.fav-btn:hover{border-color:var(--accent);color:var(--accent)}.char-card{position:relative}.fav-dot{position:absolute;top:4px;right:8px;color:#ffb300;font-size:14px}
-.bopo{font-size:9px;color:var(--text3);opacity:.75;margin-left:2px;letter-spacing:.5px}.daily-card{outline:2px solid var(--accent);outline-offset:-2px}.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}</style>
+.bopo{font-size:9px;color:var(--text3);opacity:.75;margin-left:2px;letter-spacing:.5px}.daily-card{outline:2px solid var(--accent);outline-offset:-2px}.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.py-hit{color:var(--accent);font-weight:700}</style>
 <style>.welcome-modal{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;z-index:80}.welcome-modal.show{display:flex}.welcome-box{background:#16161a;border:1px solid var(--border);border-radius:16px;padding:26px 30px;max-width:560px;width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.5)}.welcome-box h2{margin:0 0 10px;color:var(--accent);font-size:22px}.welcome-box p{line-height:1.75;color:var(--text2);margin:8px 0;font-size:14px}.welcome-box ul{margin:10px 0;padding-left:20px;line-height:2;color:var(--text2);font-size:14px}.welcome-box .welcome-src{font-size:12px;color:var(--text3);border-top:1px solid var(--border);padding-top:12px;margin-top:14px}.welcome-btn{margin-top:14px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:15px;cursor:pointer;font-weight:600}.welcome-btn:hover{opacity:.9}.help-btn{margin-left:10px;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:14px;vertical-align:middle}.help-btn:hover{border-color:var(--accent);color:var(--accent)}</style>
 <div id="welcomeModal" class="welcome-modal"><div class="welcome-box"><h2>说文解字 · 汉字通</h2><p>本 App 收录 8105 个规范汉字，提供字源图、字形演变、六书、本义/今义、《说文》原文与字源故事。</p><ul><li>🔍 「字库」页：顶部搜索框（拼音 / 部首 / 单字）＋ 六书 / 分类 / 笔画 / 排序筛选</li><li>📜 点任意字卡 → 查看「字形演变」逐阶段标注</li><li>🧱 古字形标注：<b>✓ 有字形</b>（直接显示）｜<b>— 汉典等字书暂未收录其古形</b>（后起字 / 形声 / 简化字等本无该阶段字形，或本库未收，<b>非「待补」</b>）｜<b>隶书</b>以字体替代（未收汉隶真迹）</li><li>📊 「介绍」页有统计卡片、知识卡片与数据说明</li>
 <li>🎮 「游戏」页：飞花令（全宋诗＋宋词元曲语料）与六书闯关 · 学习计划</li></ul><p class="welcome-src">字源图 GlyphWiki（CC BY-SA 2.1 JP）｜篆书 崇羲篆体（CC-BY-ND-3.0-TW）｜甲骨/金文 cluesurf/mark（OFL）｜隶书 临海隶书＋青柳隶书（免费商用）</p><button class="welcome-btn" onclick="closeWelcome()">开始探索 →</button></div></div>
@@ -123,7 +123,7 @@ input:focus{border-color:var(--accent)}
 <h1>说文解字·汉字通</h1>
 <p class="sub">8105字·字源溯源（100%，GlyphWiki CC BY-SA 2.1 JP）＋字形演变（甲骨758·金文1056·简帛612·大篆1362·小篆2848 字真迹已收；隶书以临海＋青柳隶书字体替代，未收汉隶真迹）｜缺失阶段按权威源分两档标注：「有此字形，待补」（该书体在权威字书/出土文献中已著录，本库未收）或「根据权威数据源，未发现有此字形」（据汉典等字书该字未见该书体字形）</p>
 <div class="stat-cards"><div class="stat-card accent"><b>8105</b><span>规范汉字全收录（通用规范汉字表）</span></div><div class="stat-card accent"><b>100%</b><span>字源图覆盖　GlyphWiki 溯源图层</span></div><div class="stat-card"><b>15,931</b><span>古文字形图（真迹 7,826 ＋ 字源 8,105）</span></div><div class="stat-card"><b>7</b><span>字形演变阶段（甲骨·金文·简帛·大篆·小篆·隶·楷）</span></div><div class="stat-card"><b>8105</b><span>字源故事 / 成语 / 诗句（AI 生成·待抽检）</span></div><div class="stat-card"><b>344,900</b><span>飞花令语料诗篇（全宋诗＋宋词元曲诗经楚辞等）</span></div><div class="stat-card"><b>2,606,264</b><span>可用诗句（简体，零简繁误字）</span></div><div class="stat-card"><b>48</b><span>飞花令令字</span></div></div>
-<div class="intro-block"><h2>📚 知识卡片 · 六书与古文字起源</h2>
+<div class="intro-block"><h2>📚 知识卡片 · 六书、古文字起源与反切</h2>
 <div class="src-legend"><h3>什么是「六书」？</h3><p style="margin:0 0 10px;line-height:1.7">「六书」是古人分析汉字造字与用字方法而归纳出的六种条例，由东汉许慎在《说文解字》中系统阐述。App 中的六书分类用于快速理解一个字的构形逻辑：</p><ul><li><b>象形</b>：描摹物体外形，如「日、月、山、水」</li><li><b>指事</b>：用抽象符号或在象形字上加指示符号表示抽象概念，如「上、下、本、末」</li><li><b>会意</b>：把两个或多个字组合起来表示新意，如「明（日月并照）、休（人倚木而息）」</li><li><b>形声</b>：由表示意义类别的「形旁」和表示读音的「声旁」组成，如「江（水形工声）、湖（水形胡声）」</li><li><b>会意兼形声</b>：会意的两部件中其一声旁兼表读音（《说文》称「某亦聲」），如「眇（从目从少，少亦聲）、字（从宀从子，子亦聲）」</li><li><b>转注</b>：部首相同、意义相通、可互相解释的字，如「考」与「老」</li><li><b>假借</b>：借用同音字表达新概念，如「令（本义发号，借为县令）、长（本义久远，借为长官）」</li></ul><p style="margin:10px 0 6px;font-size:13px;line-height:1.7"><b>本产品 8105 字六书分布</b>（取自《说文解字》字段）：</p>
 <table class="cov-table"><tr><th>六书</th><th>字数</th><th>占比</th></tr>
 <tr><td>形声</td><td>7032</td><td>86.8%</td></tr>
@@ -144,6 +144,14 @@ input:focus{border-color:var(--accent)}
 <li><b>隶书（秦汉，约前 3 世纪起）</b>：由篆书简便化、笔画方折演变而来，标志着「隶变」——古文字向今文字转折的关键节点。</li>
 <li><b>楷书（汉末成熟，魏晋定型）</b>：由隶书进一步笔画化、结构方正规范而来，沿用至今的标准字体（本产品以系统字体呈现，非古文字真迹）。</li>
 </ul>
+<h3 style="margin:18px 0 8px">什么是「反切」？</h3>
+<p style="margin:0 0 10px;line-height:1.7">「反切」是汉魏以来传统的注音方法：<b>用两个汉字拼注第三个字的读音</b>——<b>上字取声母，下字取韵母与声调</b>。本 App 详情页的「反切」一栏展示该字在《说文》等字书中的音切，「说文音」即据此音切折合出的古读。</p>
+<ul style="margin:0 0 10px;padding-left:20px;line-height:1.8">
+<li><b>怎么拼</b>：如「<b>一</b>」《说文》作「<b>於悉切</b>」——上字「於」取声母 <b>y</b>，下字「悉」取韵母 <b>i</b>，拼得 <b>yī</b>，与今读相同。</li>
+<li><b>为什么不直接等于今读</b>：反切记录的是<b>唐宋以前的语音系统</b>，须经语音演变折合才是今音。如「<b>江</b>」《说文》作「<b>古雙切</b>」——上取声母 g、下取韵母 uang，直拼为 *guāng（* 表示按音切拼出、实际不存在的音节），而今读 <b>jiāng</b>：中古「见母」逢细音后颚化为 j，即「见母颚化」。</li>
+<li><b>古读与今读可以不同</b>：如「<b>缇</b>」《说文》作「<b>他禮切</b>」，折合为 <b>tǐ</b>（古读）；《广韵》作「杜奚切」，折合为 <b>tí</b>，与今读一致。这正是本 App 把读音分作两栏的原因——<b>拼音</b>＝现代规范音，<b>说文音</b>＝据《说文》音切折合的古读（两读相同者标注「与今读同」）。</li>
+</ul>
+<p style="margin:0;font-size:12px;color:var(--text3)">说明：「说文音」为按音切规则折合的结果，供溯源参考，不作为现代读音规范；8105 字中有反切者 5378 字，其余多为后起字（字书未收，故无反切）。</p>
 </div>
 </div>
 <div class="intro-block"><h2>📊 数据说明 · 来源与覆盖统计</h2><div class="src-legend"><h3>数据来源与说明</h3><ul><li><b>说文原文 / 反切 / 段玉裁注 / 异体重文</b>：出自《说文解字》（东汉·许慎），含清代段玉裁注</li><li><b>后起字溯源</b>：出自《玉篇》（543年）、《广韵》（1008年）、《康熙字典》（1716年）。《康熙字典》为集大成字书，整合历代韵书反切与释义；《玉篇》《广韵》年代更早，可定位更早的字义</li><li><b class="warn">⚠️ 音译字提示</b>：部分字古字书释义与今义不同——如「啡」古为「唾声」非「咖啡」、「吨」古为「气相冲」非重量单位、「她」古为「姐」非第三人称。此类已在溯源中单独标注</li><li><b>字源图（单字最古老构形）</b>：取自 GlyphWiki 汉字溯源图层（CC BY-SA 2.1 JP，可商用，须署名 + 衍生同授权），已落地 8105 字，黑底白描拓片风</li><li><b>甲骨→金文→简牍帛书→大篆→小篆→隶书演变图</b>：字形取自 Wikimedia Commons 古文字形 SVG（公版，可自由商用），经本机换源管线栅格化为 160×160 拓片风灰度图；大篆（籀文）为新增独立书体；本库未收的字形阶段<b>按权威源分两档标注</b>：<b>「有此字形，待补」</b>＝该书体在权威字书/出土文献中已著录、本库尚未收录（简牍帛书 612/2420、小篆 2848/5564、隶书 0 真迹，覆盖明显不足，多数缺失属此类）——逐字判据：该字在更早书体已见，或为《说文》著录之古字（有反切或实质《说文》释义）；<b>「根据权威数据源，未发现有此字形」</b>＝据汉典等字书该字未见该书体字形（后起字 / 形声 / 简化字等），甲骨文与金文本库已近收全（955/1120、2049/2072），缺失亦多属此类；隶书未收汉隶真迹，以临海＋青柳隶书字体替代</li><li><b>拼音（现代规范音）</b>：以现代普通话规范读音为准（依 pypinyin 标准读音表逐字核对），用于检索、排序与朗读；<b>说文音</b>为源数据依《说文》音切折合的古读，仅供溯源参考，详情页与拼音并列展示（两读相同者标注「与今读同」）</li><li><b>六书 / 本义 / 今义 / 演变</b>：AI 生成，待核验</li><li><b>五行属性</b>：民俗归类（字源五行法），非文字学客观属性；依「字义＞偏旁」判定并标注出处，约 44% 字（人体、动作、抽象、虚词等）无明确归属</li>
@@ -418,13 +426,23 @@ var activeSort = "default";
 var activeStroke = "\u5168\u90e8";
 var PINYIN_TONE={"\u0101":"a","\u00e1":"a","\u01ce":"a","\u00e0":"a","\u0113":"e","\u00e9":"e","\u011b":"e","\u00e8":"e","\u012b":"i","\u00ed":"i","\u01d0":"i","\u00ec":"i","\u014d":"o","\u00f3":"o","\u01d2":"o","\u00f2":"o","\u016b":"u","\u00fa":"u","\u01d4":"u","\u00f9":"u","\u00fc":"v","\u01d6":"v","\u01d8":"v","\u01da":"v","\u01dc":"v"};
 function normPinyin(s){var o="";s=s||"";for(var i=0;i<s.length;i++){var ch=s.charAt(i);o+=(PINYIN_TONE[ch]||ch);}return o;}
+var searchQueryNorm = "";  // 当前搜索词（归一化小写），供字卡高亮命中音节
 var PINYIN_TONE_NUM={"\u0101":1,"\u00e1":2,"\u01ce":3,"\u00e0":4,"\u0113":1,"\u00e9":2,"\u011b":3,"\u00e8":4,"\u012b":1,"\u00ed":2,"\u01d0":3,"\u00ec":4,"\u014d":1,"\u00f3":2,"\u01d2":3,"\u00f2":4,"\u016b":1,"\u00fa":2,"\u01d4":3,"\u00f9":4,"\u01d6":1,"\u01d8":2,"\u01da":3,"\u01dc":4};
 function pinyinTone(s){s=s||"";for(var i=0;i<s.length;i++){var t=PINYIN_TONE_NUM[s.charAt(i)];if(t)return t;}return 5;}
-function pinyinSortKey(c){var s=normPinyin(c.pinyin).toLowerCase();var i=s.indexOf("/");if(i>=0)s=s.slice(0,i);return s;}
-function cmpByPinyin(a,b){
-  var x=pinyinSortKey(a),y=pinyinSortKey(b);
+// q = 当前搜索词（归一化小写）；单字母时排序键取「以该字母开头的那个音节」
+// 例：搜 t 时「弹 dàn/tán」按 tán 排到 tan 区，而非按 dàn 挤到最前
+function pinyinSylls(c){return {raw:(c.pinyin||"").split("/"),nrm:normPinyin(c.pinyin).toLowerCase().split("/")};}
+function matchedSyllIdx(c,q){
+  var s=pinyinSylls(c);
+  if(q&&q.length===1){for(var i=0;i<s.nrm.length;i++){if(s.nrm[i].charAt(0)===q)return i;}}
+  return 0;
+}
+function pinyinSortKey(c,q){var s=pinyinSylls(c);return s.nrm[matchedSyllIdx(c,q)]||"";}
+function cmpByPinyin(a,b,q){
+  var x=pinyinSortKey(a,q),y=pinyinSortKey(b,q);
   if(x!==y)return x<y?-1:1;
-  var ta=pinyinTone(a.pinyin),tb=pinyinTone(b.pinyin);
+  var sa=pinyinSylls(a),sb=pinyinSylls(b);
+  var ta=pinyinTone(sa.raw[matchedSyllIdx(a,q)]||""),tb=pinyinTone(sb.raw[matchedSyllIdx(b,q)]||"");
   if(ta!==tb)return ta-tb;
   var pa=a.pinyin||"",pb=b.pinyin||"";
   if(pa!==pb)return pa<pb?-1:1;
@@ -446,15 +464,20 @@ function filterChars() {
     if (!q) return true;
     var _py = normPinyin(c.pinyin).toLowerCase();
     if (q.length === 1 && q >= "a" && q <= "z") {
-      if (_py.charAt(0) === q) return true;
+      // 单字母 = 检索「以该字母开头的音节」（多音字任一读法命中即可）
+      // 注意：不能再落到下面的「包含」分支，否则 h 会命中 zh/ch/sh、a 会命中 tian 之类
+      var _sy = _py.split("/");
+      for (var _si = 0; _si < _sy.length; _si++) { if (_sy[_si].charAt(0) === q) return true; }
+      return false;
     }
     return c.char===q||c.trad===q||_py.indexOf(q)>=0||c.pinyin.toLowerCase().indexOf(q)>=0||c.radical===q||(c.radical_name||"").indexOf(q)>=0;
   });
 }
 function render() {
+  searchQueryNorm = (document.getElementById("searchInput").value||"").trim().toLowerCase();
   var filtered = applyFavFilter(filterChars());
-  if (activeSort==="pinyin") filtered.sort(cmpByPinyin);
-  else if (activeSort==="stroke") filtered.sort(function(a,b){return a.stroke-b.stroke||cmpByPinyin(a,b)});
+  if (activeSort==="pinyin") filtered.sort(function(a,b){return cmpByPinyin(a,b,searchQueryNorm)});
+  else if (activeSort==="stroke") filtered.sort(function(a,b){return a.stroke-b.stroke||cmpByPinyin(a,b,searchQueryNorm)});
   document.getElementById("stats").textContent = "\u5171 " + filtered.length + " / " + CHARS.length + " \u5b57";
   var grid = document.getElementById("charGrid");
   if (filtered.length === 0) { grid.innerHTML = "<div class='no-results'>\u6ca1\u6709\u5339\u914d\u7684\u6c49\u5b57</div>"; return; }

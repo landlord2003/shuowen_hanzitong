@@ -69,12 +69,30 @@ function applyFavFilter(list) {
   if (!showFavOnly) return list;
   return list.filter(function (c) { return favSet.has(c.char); });
 }
-// 字符卡片（含收藏星标 + 每日一字高亮）
+// 高亮当前搜索命中的音节：单字母＝整个音节，多字母＝音节内的匹配片段
+function hiPinyin(raw) {
+  raw = raw || "";
+  var q = (typeof searchQueryNorm === "string") ? searchQueryNorm : "";
+  if (!q || typeof normPinyin !== "function") return raw;
+  var parts = raw.split("/"), nrm = normPinyin(raw).toLowerCase().split("/");
+  if (parts.length !== nrm.length) return raw;
+  for (var i = 0; i < nrm.length; i++) {
+    var j = (q.length === 1) ? (nrm[i].charAt(0) === q ? 0 : -1) : nrm[i].indexOf(q);
+    if (j < 0) continue;
+    var len = (q.length === 1) ? parts[i].length : q.length;
+    var hit = parts[i].slice(j, j + len);
+    if (!hit) continue;
+    parts[i] = parts[i].slice(0, j) + "<b class='py-hit'>" + hit + "</b>" + parts[i].slice(j + len);
+    break;
+  }
+  return parts.join("/");
+}
+// 字符卡片（含收藏星标 + 每日一字高亮 + 搜索命中高亮）
 function charCardHTML(c) {
   var fav = favSet.has(c.char) ? "<span class='fav-dot'>★</span>" : "";
   var daily = (c.char === dailyChar) ? " daily-card" : "";
   return "<div class='char-card" + daily + "' onclick='showDetail(" + c.id + ")'>" + fav + c.char +
-         "<div class='pinyin'>" + c.pinyin + " <span class='bopo'>" + (typeof pinyinToBopomofo==='function'?pinyinToBopomofo(c.pinyin):'') + "</span></div></div>";
+         "<div class='pinyin'>" + hiPinyin(c.pinyin) + " <span class='bopo'>" + (typeof pinyinToBopomofo==='function'?pinyinToBopomofo(c.pinyin):'') + "</span></div></div>";
 }
 // 详情头部（关闭按钮 + 收藏按钮 + 分享卡按钮）
 function detailHeaderHTML(c) {
