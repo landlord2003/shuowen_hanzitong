@@ -266,7 +266,33 @@
     box.querySelector('#qz-home').onclick = function () { renderHome(); };
   }
 
-  function open() { el.mask.classList.add('show'); renderHome(); }
+  /* ---------- 游戏页入口卡片 ---------- */
+  var metaEl = null;
+
+  function refreshMeta() {
+    if (!metaEl || !store) return;
+    var done = Object.keys(store.done || {}).length;
+    metaEl.textContent = '今日 ' + (store.todayCount || 0) + '/' + DAILY_GOAL + ' 题 · 连续打卡 ' +
+      (store.streak || 0) + ' 天 · 已通关 ' + done + '/' + LEVELS.length;
+  }
+
+  function makeCard() {
+    var d = document.createElement('div');
+    d.className = 'game-card qz';
+    d.innerHTML =
+      '<div class="ico">🏯</div>' +
+      '<h3>六书闯关 · 学习计划</h3>' +
+      '<p>三关递进：<b>六书辨识 → 部首辨识 → 笔画数</b>。每关 ' + PER_LEVEL + ' 题，答对 ' + PASS +
+      ' 题解锁下一关；带每日目标、连续打卡与错题本。题面全部取自本 App 的 8105 字真实字段。</p>' +
+      '<div class="meta"></div>' +
+      '<button class="go">开始闯关 →</button>';
+    d.querySelector('.go').onclick = open;
+    metaEl = d.querySelector('.meta');
+    refreshMeta();
+    return d;
+  }
+
+  function open() { refreshMeta(); el.mask.classList.add('show'); renderHome(); }
 
   function mount() {
     injectCSS();
@@ -277,6 +303,10 @@
     document.body.appendChild(mask);
     el.mask = mask;
 
+    var host = document.getElementById('gameCards');
+    if (host) { host.appendChild(makeCard()); return; }
+
+    // 兜底：无游戏页时仍以按钮形式挂在筛选栏后
     var btn = document.createElement('button');
     btn.className = 'filter-btn qz-entry';
     btn.textContent = '🏯 六书闯关';

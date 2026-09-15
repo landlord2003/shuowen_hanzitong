@@ -222,8 +222,34 @@
         return;
       }
       el.mask.classList.add('show');
+      refreshMeta();
       renderStart();
     });
+  }
+
+  /* ---------- 游戏页入口卡片 ---------- */
+  var metaEl = null;
+
+  function refreshMeta() {
+    if (!metaEl || !data || !data.meta) return;
+    var m = data.meta;
+    var wan = function (n) { return (n / 10000).toFixed(2) + ' 万'; };
+    metaEl.textContent = '语料 ' + wan(m.poems) + ' 首 / ' + wan(m.segments) + ' 句 · ' + m.chars + ' 个令字';
+  }
+
+  function makeCard() {
+    var d = document.createElement('div');
+    d.className = 'game-card fhl';
+    d.innerHTML =
+      '<div class="ico">🎋</div>' +
+      '<h3>飞花令</h3>' +
+      '<p>系统给出一个「令字」，从四句诗中选出真正含该字的那一句。共 ' + PER_ROUND +
+      ' 题，答对 10 分、连对额外加分；结束时有本局诗句回顾，可背下来。</p>' +
+      '<div class="meta">语料：全宋诗 · 宋词 · 元曲 · 诗经 · 楚辞 · 曹操 · 纳兰性德</div>' +
+      '<button class="go">开始飞花令 →</button>';
+    d.querySelector('.go').onclick = open;
+    metaEl = d.querySelector('.meta');
+    return d;
   }
 
   function mount() {
@@ -234,13 +260,17 @@
     document.body.appendChild(mask);
     el.mask = mask;
 
+    var host = document.getElementById('gameCards');
+    if (host) { host.appendChild(makeCard()); return; }
+
+    // 兜底：无游戏页时仍以按钮形式挂在筛选栏后
     var row = document.createElement('div');
     row.className = 'filters';
     row.id = 'fhl-game-row';
     var btn = document.createElement('button');
     btn.className = 'filter-btn fhl-entry';
     btn.textContent = '🎋 飞花令';
-    btn.title = '以「令字」找诗句的小游戏（宋词·元曲·诗经·楚辞·纳兰性德语料）';
+    btn.title = '以「令字」找诗句的小游戏';
     btn.onclick = open;
     row.appendChild(btn);
     var sf = document.getElementById('strokeFilters');
