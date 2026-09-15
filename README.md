@@ -132,6 +132,8 @@ python serve_8941.py     # 多线程静态服务，端口 8941
 > 2. **请用 `serve_8941.py`，不要用 `python -m http.server`**。后者是单线程服务，会被本应用的并发大请求压垮，偶发把大文件发成空体，导致字形演变图整片空白。`serve_8941.py` 用的是 `ThreadingHTTPServer`，可并发。
 
 > 部署前可跑一次完整性核验：`node tools/verify_deploy.cjs`（真克隆一份仓库、逐个拉取全部资源、校验字节与语法）。
+>
+> **关于「换台机器 `git clone` 后能否完整部署」**：可以完整**运行** —— `data/` 目录 39 个文件（`dataset.bin`、9 个字体、`characters.json`、`feihualing.json`、`cultural.json`、各 JS 模块）已全部入库。以下素材**不在仓库**（被 `.gitignore` 排除、仅存本地），缺它们只影响「**重新生成**数据」的能力，不影响运行：诗词语料、GlyphWiki 字源素材、PDF 研究资料。清单与重建路径见 [`docs/未入库素材台账.md`](docs/未入库素材台账.md)。
 
 ## 目录结构（节选）
 ```
@@ -147,7 +149,7 @@ data/
 scripts/                 # 数据重建与核查脚本（build_* / apply_* / audit_*，构建期工具）
 tests/                   # 回归测试（知识卡片挂载、分页早期挂载）
 tools/                   # 数据管线（字形抓取/换源、部署核验 verify_deploy.cjs）
-docs/                    # 报告与台账（含 汉典重建/ 三书体缺口台账，内部研究、未接入商用）
+docs/                    # 报告与台账（含 汉典重建/ 三书体缺口台账、未入库素材台账）
 ```
 
 ## 数据质量说明
