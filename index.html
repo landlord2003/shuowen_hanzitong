@@ -412,6 +412,18 @@ var activeSort = "default";
 var activeStroke = "\u5168\u90e8";
 var PINYIN_TONE={"\u0101":"a","\u00e1":"a","\u01ce":"a","\u00e0":"a","\u0113":"e","\u00e9":"e","\u011b":"e","\u00e8":"e","\u012b":"i","\u00ed":"i","\u01d0":"i","\u00ec":"i","\u014d":"o","\u00f3":"o","\u01d2":"o","\u00f2":"o","\u016b":"u","\u00fa":"u","\u01d4":"u","\u00f9":"u","\u00fc":"v","\u01d6":"v","\u01d8":"v","\u01da":"v","\u01dc":"v"};
 function normPinyin(s){var o="";s=s||"";for(var i=0;i<s.length;i++){var ch=s.charAt(i);o+=(PINYIN_TONE[ch]||ch);}return o;}
+var PINYIN_TONE_NUM={"\u0101":1,"\u00e1":2,"\u01ce":3,"\u00e0":4,"\u0113":1,"\u00e9":2,"\u011b":3,"\u00e8":4,"\u012b":1,"\u00ed":2,"\u01d0":3,"\u00ec":4,"\u014d":1,"\u00f3":2,"\u01d2":3,"\u00f2":4,"\u016b":1,"\u00fa":2,"\u01d4":3,"\u00f9":4,"\u01d6":1,"\u01d8":2,"\u01da":3,"\u01dc":4};
+function pinyinTone(s){s=s||"";for(var i=0;i<s.length;i++){var t=PINYIN_TONE_NUM[s.charAt(i)];if(t)return t;}return 5;}
+function pinyinSortKey(c){var s=normPinyin(c.pinyin).toLowerCase();var i=s.indexOf("/");if(i>=0)s=s.slice(0,i);return s;}
+function cmpByPinyin(a,b){
+  var x=pinyinSortKey(a),y=pinyinSortKey(b);
+  if(x!==y)return x<y?-1:1;
+  var ta=pinyinTone(a.pinyin),tb=pinyinTone(b.pinyin);
+  if(ta!==tb)return ta-tb;
+  var pa=a.pinyin||"",pb=b.pinyin||"";
+  if(pa!==pb)return pa<pb?-1:1;
+  return (a.char||"").codePointAt(0)-(b.char||"").codePointAt(0);
+}
 function getCategory(c) { return c.category || "\u5176\u4ed6"; }
 function filterChars() {
   var q = document.getElementById("searchInput").value.trim().toLowerCase();
@@ -434,10 +446,9 @@ function filterChars() {
   });
 }
 function render() {
-  var filtered = filterChars();
   var filtered = applyFavFilter(filterChars());
-  if (activeSort==="pinyin") filtered.sort(function(a,b){return a.pinyin.localeCompare(b.pinyin,"zh")});
-  else if (activeSort==="stroke") filtered.sort(function(a,b){return a.stroke-b.stroke||a.pinyin.localeCompare(b.pinyin,"zh")});
+  if (activeSort==="pinyin") filtered.sort(cmpByPinyin);
+  else if (activeSort==="stroke") filtered.sort(function(a,b){return a.stroke-b.stroke||cmpByPinyin(a,b)});
   document.getElementById("stats").textContent = "\u5171 " + filtered.length + " / " + CHARS.length + " \u5b57";
   var grid = document.getElementById("charGrid");
   if (filtered.length === 0) { grid.innerHTML = "<div class='no-results'>\u6ca1\u6709\u5339\u914d\u7684\u6c49\u5b57</div>"; return; }
