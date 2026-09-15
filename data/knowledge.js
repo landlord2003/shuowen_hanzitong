@@ -568,25 +568,40 @@
       '<div class="kk-all-in" id="kkAllBody"></div></details>';
   }
 
+  /* 是否「已由本模块挂载过」：只认带 #kkToday 的容器，
+     静态占位容器（index.html 里那个带「正在加载知识卡片…」的 #kkBlock）不算，
+     否则会把它当成品，导致 renderToday/renderAll 找不到宿主而静默空转。 */
+  function isMounted(el) { return !!(el && el.querySelector && el.querySelector('#kkToday')); }
+
   function mount() {
-    /* 已挂载则只重渲染，避免重复替换容器（脚本被加载两次 / 手工再调用时） */
-    var done = document.getElementById('kkBlock');
-    if (done) {
-      elBox = done;
+    var box = document.getElementById('kkBlock');
+
+    /* 已挂载 → 只重渲染，避免重复替换容器（脚本被加载两次 / 手工再调用时） */
+    if (isMounted(box)) {
+      elBox = box;
       base = defaultIndex();
       off = readOff();
       renderToday();
       renderAll();
       return;
     }
+
     var sec = document.getElementById('page-intro');
     if (!sec) return;
-    var blocks = sec.querySelectorAll('.intro-block'), target = null;
-    for (var i = 0; i < blocks.length; i++) {
-      var h = blocks[i].querySelector('h2');
-      if (h && h.textContent.indexOf('知识卡片') >= 0) { target = blocks[i]; break; }
+
+    if (!box) {
+      /* 兜底：占位容器不存在时，按小标题找到旧的知识卡片区块并原地替换 */
+      var blocks = sec.querySelectorAll('.intro-block'), target = null;
+      for (var i = 0; i < blocks.length; i++) {
+        var h2 = blocks[i].querySelector('h2');
+        if (h2 && h2.textContent.indexOf('知识卡片') >= 0) { target = blocks[i]; break; }
+      }
+      if (!target) return;
+      box = document.createElement('div');
+      box.className = 'intro-block';
+      box.id = 'kkBlock';
+      target.parentNode.replaceChild(box, target);
     }
-    if (!target) return;
 
     if (!document.getElementById('kk-style')) {
       var s = document.createElement('style');
@@ -594,11 +609,10 @@
       document.head.appendChild(s);
     }
 
-    var box = document.createElement('div');
+    /* 静态占位容器直接复用（就地填入外壳），无占位容器时才走上面的新建分支 */
     box.className = 'intro-block';
     box.id = 'kkBlock';
     box.innerHTML = buildShell();
-    target.parentNode.replaceChild(box, target);
 
     elBox = box;
     base = defaultIndex();
@@ -622,6 +636,9 @@
     }
   };
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
-  else mount();
+  /* 本脚本位于 #kkBlock 之后，容器已解析完即可挂载——不必等 DOMContentLoaded：
+     紧随其后的 14MB 内联 DATA 脚本会把 DCL 拖后数秒，期间只能看到「正在加载…」。
+     容器若不在（脚本被挪到 <head> 等），才退回 DOMContentLoaded。 */
+  if (document.getElementById('page-intro') || document.readyState !== 'loading') mount();
+  else document.addEventListener('DOMContentLoaded', mount);
 })();

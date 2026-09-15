@@ -43,6 +43,10 @@
 
   window.switchPage = switchPage;
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
-  else mount();
+  /* 导航骨架（#pageNav / .page）在静态 HTML 里已就绪，且位于本脚本之前，
+     因此无需等 DOMContentLoaded——紧随其后的 14MB 内联 DATA 脚本会把 DCL 拖后数秒，
+     那段时间标签点不动、#main 深链也不切页。
+     骨架若不在（脚本被挪到 <head> 等），才退回 DOMContentLoaded。 */
+  if (document.getElementById('pageNav') || document.readyState !== 'loading') mount();
+  else document.addEventListener('DOMContentLoaded', mount);
 })();
