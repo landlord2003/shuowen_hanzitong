@@ -1,0 +1,2734 @@
+{
+ "total": 8105,
+ "ok": 5356,
+ "subset": 2572,
+ "suspect": 177,
+ "cross_ref": 35,
+ "same_char": 142,
+ "rows": [
+  {
+   "char": "义",
+   "app": "yí",
+   "cand": [
+    "yì"
+   ],
+   "bad": [
+    "yí"
+   ],
+   "kind": "same_char_古音",
+   "src": "義",
+   "full": "yí",
+   "fq": "宜寄切",
+   "suggest": "yí→yì"
+  },
+  {
+   "char": "曰",
+   "app": "yuè",
+   "cand": [
+    "yuē"
+   ],
+   "bad": [
+    "yuè"
+   ],
+   "kind": "same_char_古音",
+   "src": "曰",
+   "full": "yuè",
+   "fq": "王代切",
+   "suggest": "yuè→yuē"
+  },
+  {
+   "char": "队",
+   "app": "zhuì",
+   "cand": [
+    "duì"
+   ],
+   "bad": [
+    "zhuì"
+   ],
+   "kind": "same_char_古音",
+   "src": "隊",
+   "full": "zhuì",
+   "fq": "徒對切",
+   "suggest": "zhuì→duì"
+  },
+  {
+   "char": "厌",
+   "app": "yā",
+   "cand": [
+    "yàn"
+   ],
+   "bad": [
+    "yā"
+   ],
+   "kind": "same_char_古音",
+   "src": "厭",
+   "full": "yā",
+   "fq": "於輒切",
+   "suggest": "yā→yàn"
+  },
+  {
+   "char": "页",
+   "app": "xié",
+   "cand": [
+    "yè"
+   ],
+   "bad": [
+    "xié"
+   ],
+   "kind": "same_char_古音",
+   "src": "頁",
+   "full": "xié",
+   "fq": "胡結切",
+   "suggest": "xié→yè"
+  },
+  {
+   "char": "吃",
+   "app": "jī",
+   "cand": [
+    "chī",
+    "qī"
+   ],
+   "bad": [
+    "jī"
+   ],
+   "kind": "same_char_古音",
+   "src": "吃",
+   "full": "jī",
+   "fq": "居乙切",
+   "suggest": "jī→chī"
+  },
+  {
+   "char": "企",
+   "app": "qì",
+   "cand": [
+    "qǐ"
+   ],
+   "bad": [
+    "qì"
+   ],
+   "kind": "same_char_古音",
+   "src": "企",
+   "full": "qì",
+   "fq": "去智切",
+   "suggest": "qì→qǐ"
+  },
+  {
+   "char": "闯",
+   "app": "chèn",
+   "cand": [
+    "chuǎng"
+   ],
+   "bad": [
+    "chèn"
+   ],
+   "kind": "same_char_古音",
+   "src": "闖",
+   "full": "chèn",
+   "fq": "丑禁切",
+   "suggest": "chèn→chuǎng"
+  },
+  {
+   "char": "阵",
+   "app": "chén",
+   "cand": [
+    "zhèn"
+   ],
+   "bad": [
+    "chén"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "敶",
+   "full": "chén",
+   "fq": "直刃切",
+   "suggest": "chén→zhèn"
+  },
+  {
+   "char": "尬",
+   "app": "jiè",
+   "cand": [
+    "gà"
+   ],
+   "bad": [
+    "jiè"
+   ],
+   "kind": "same_char_古音",
+   "src": "尬",
+   "full": "jiè",
+   "fq": "公八切",
+   "suggest": "jiè→gà"
+  },
+  {
+   "char": "县",
+   "app": "xuán",
+   "cand": [
+    "xiàn"
+   ],
+   "bad": [
+    "xuán"
+   ],
+   "kind": "same_char_古音",
+   "src": "縣",
+   "full": "xuán",
+   "fq": "胡涓切",
+   "suggest": "xuán→xiàn"
+  },
+  {
+   "char": "吭",
+   "app": "gāng",
+   "cand": [
+    "kēng",
+    "háng",
+    "hàng"
+   ],
+   "bad": [
+    "gāng"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "亢",
+   "full": "ɡānɡ",
+   "fq": "古郎切",
+   "suggest": "gāng→kēng"
+  },
+  {
+   "char": "钉",
+   "app": "xié",
+   "cand": [
+    "dīng",
+    "dìng"
+   ],
+   "bad": [
+    "xié"
+   ],
+   "kind": "same_char_古音",
+   "src": "钉",
+   "full": "xié",
+   "fq": "",
+   "suggest": "xié→dīng"
+  },
+  {
+   "char": "住",
+   "app": "shù",
+   "cand": [
+    "zhù"
+   ],
+   "bad": [
+    "shù"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "侸",
+   "full": "shù",
+   "fq": "常句切",
+   "suggest": "shù→zhù"
+  },
+  {
+   "char": "妙",
+   "app": "yāo",
+   "cand": [
+    "miào",
+    "miǎo"
+   ],
+   "bad": [
+    "yāo"
+   ],
+   "kind": "same_char_古音",
+   "src": "玅",
+   "full": "yāo",
+   "fq": "於霄切",
+   "suggest": "yāo→miào"
+  },
+  {
+   "char": "厕",
+   "app": "cì",
+   "cand": [
+    "cè",
+    "si"
+   ],
+   "bad": [
+    "cì"
+   ],
+   "kind": "same_char_古音",
+   "src": "廁",
+   "full": "cì",
+   "fq": "初吏切",
+   "suggest": "cì→cè"
+  },
+  {
+   "char": "欧",
+   "app": "ǒu",
+   "cand": [
+    "ōu"
+   ],
+   "bad": [
+    "ǒu"
+   ],
+   "kind": "same_char_古音",
+   "src": "歐",
+   "full": "ǒu",
+   "fq": "烏后切",
+   "suggest": "ǒu→ōu"
+  },
+  {
+   "char": "顷",
+   "app": "qīng",
+   "cand": [
+    "qǐng"
+   ],
+   "bad": [
+    "qīng"
+   ],
+   "kind": "same_char_古音",
+   "src": "頃",
+   "full": "qīnɡ",
+   "fq": "去營切",
+   "suggest": "qīng→qǐng"
+  },
+  {
+   "char": "肤",
+   "app": "lú",
+   "cand": [
+    "fū"
+   ],
+   "bad": [
+    "lú"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "臚",
+   "full": "lú",
+   "fq": "力居切",
+   "suggest": "lú→fū"
+  },
+  {
+   "char": "朋",
+   "app": "fèng",
+   "cand": [
+    "péng"
+   ],
+   "bad": [
+    "fèng"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "鳳",
+   "full": "fènɡ",
+   "fq": "馮貢切",
+   "suggest": "fèng→péng"
+  },
+  {
+   "char": "净",
+   "app": "chéng",
+   "cand": [
+    "jìng",
+    "chēng"
+   ],
+   "bad": [
+    "chéng"
+   ],
+   "kind": "same_char_古音",
+   "src": "淨",
+   "full": "chénɡ",
+   "fq": "士耕切",
+   "suggest": "chéng→chēng"
+  },
+  {
+   "char": "闸",
+   "app": "yā",
+   "cand": [
+    "zhá"
+   ],
+   "bad": [
+    "yā"
+   ],
+   "kind": "same_char_古音",
+   "src": "閘",
+   "full": "yā",
+   "fq": "烏甲切",
+   "suggest": "yā→zhá"
+  },
+  {
+   "char": "茶",
+   "app": "tú",
+   "cand": [
+    "chá"
+   ],
+   "bad": [
+    "tú"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "荼",
+   "full": "tú",
+   "fq": "同都切",
+   "suggest": "tú→chá"
+  },
+  {
+   "char": "栏",
+   "app": "liàn",
+   "cand": [
+    "lán"
+   ],
+   "bad": [
+    "liàn"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "楝",
+   "full": "liàn",
+   "fq": "郎電切",
+   "suggest": "liàn→lán"
+  },
+  {
+   "char": "鸦",
+   "app": "yǎ",
+   "cand": [
+    "yā"
+   ],
+   "bad": [
+    "yǎ"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "雅",
+   "full": "yǎ",
+   "fq": "五下切",
+   "suggest": "yǎ→yā"
+  },
+  {
+   "char": "哑",
+   "app": "è",
+   "cand": [
+    "yǎ",
+    "yā"
+   ],
+   "bad": [
+    "è"
+   ],
+   "kind": "same_char_古音",
+   "src": "啞",
+   "full": "è",
+   "fq": "於革切",
+   "suggest": "è→yǎ"
+  },
+  {
+   "char": "俘",
+   "app": "fū",
+   "cand": [
+    "fú"
+   ],
+   "bad": [
+    "fū"
+   ],
+   "kind": "same_char_古音",
+   "src": "俘",
+   "full": "fū",
+   "fq": "芳無切",
+   "suggest": "fū→fú"
+  },
+  {
+   "char": "捡",
+   "app": "liǎn",
+   "cand": [
+    "jiǎn"
+   ],
+   "bad": [
+    "liǎn"
+   ],
+   "kind": "same_char_古音",
+   "src": "撿",
+   "full": "liǎn",
+   "fq": "良冉切",
+   "suggest": "liǎn→jiǎn"
+  },
+  {
+   "char": "眠",
+   "app": "míng",
+   "cand": [
+    "mián",
+    "miǎn",
+    "mǐn"
+   ],
+   "bad": [
+    "míng"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "瞑",
+   "full": "mínɡ",
+   "fq": "武延切",
+   "suggest": "míng→mián"
+  },
+  {
+   "char": "唠",
+   "app": "chāo",
+   "cand": [
+    "láo",
+    "lào"
+   ],
+   "bad": [
+    "chāo"
+   ],
+   "kind": "same_char_古音",
+   "src": "嘮",
+   "full": "chāo",
+   "fq": "敕交切",
+   "suggest": "chāo→láo"
+  },
+  {
+   "char": "蚣",
+   "app": "sōng",
+   "cand": [
+    "gōng",
+    "zhōng"
+   ],
+   "bad": [
+    "sōng"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "蜙",
+   "full": "sōnɡ",
+   "fq": "息恭切",
+   "suggest": "sōng→gōng"
+  },
+  {
+   "char": "颂",
+   "app": "róng",
+   "cand": [
+    "sòng"
+   ],
+   "bad": [
+    "róng"
+   ],
+   "kind": "same_char_古音",
+   "src": "頌",
+   "full": "rónɡ",
+   "fq": "余封切",
+   "suggest": "róng→sòng"
+  },
+  {
+   "char": "涝",
+   "app": "láo",
+   "cand": [
+    "lào"
+   ],
+   "bad": [
+    "láo"
+   ],
+   "kind": "same_char_古音",
+   "src": "澇",
+   "full": "láo",
+   "fq": "魯刀切",
+   "suggest": "láo→lào"
+  },
+  {
+   "char": "剧",
+   "app": "jí",
+   "cand": [
+    "jù"
+   ],
+   "bad": [
+    "jí"
+   ],
+   "kind": "same_char_古音",
+   "src": "劇",
+   "full": "jí",
+   "fq": "渠力切",
+   "suggest": "jí→jù"
+  },
+  {
+   "char": "探",
+   "app": "tān",
+   "cand": [
+    "tàn",
+    "xián"
+   ],
+   "bad": [
+    "tān"
+   ],
+   "kind": "same_char_古音",
+   "src": "探",
+   "full": "tān",
+   "fq": "他含切",
+   "suggest": "tān→tàn"
+  },
+  {
+   "char": "勘",
+   "app": "kàn",
+   "cand": [
+    "kān"
+   ],
+   "bad": [
+    "kàn"
+   ],
+   "kind": "same_char_古音",
+   "src": "勘",
+   "full": "kàn",
+   "fq": "苦紺切",
+   "suggest": "kàn→kān"
+  },
+  {
+   "char": "梦",
+   "app": "méng",
+   "cand": [
+    "mèng"
+   ],
+   "bad": [
+    "méng"
+   ],
+   "kind": "same_char_古音",
+   "src": "夢",
+   "full": "ménɡ",
+   "fq": "莫忠切",
+   "suggest": "méng→mèng"
+  },
+  {
+   "char": "蛇",
+   "app": "tā",
+   "cand": [
+    "shé",
+    "yí",
+    "tuó",
+    "chí"
+   ],
+   "bad": [
+    "tā"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "它",
+   "full": "tā",
+   "fq": "託何切",
+   "suggest": "tā→shé"
+  },
+  {
+   "char": "徘",
+   "app": "péi",
+   "cand": [
+    "pái"
+   ],
+   "bad": [
+    "péi"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "裵",
+   "full": "péi",
+   "fq": "薄回切",
+   "suggest": "péi→pái"
+  },
+  {
+   "char": "添",
+   "app": "zhān",
+   "cand": [
+    "tiān",
+    "tiàn"
+   ],
+   "bad": [
+    "zhān"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "沾",
+   "full": "zhān",
+   "fq": "他兼切",
+   "suggest": "zhān→tiān"
+  },
+  {
+   "char": "综",
+   "app": "zòng",
+   "cand": [
+    "zōng",
+    "zèng"
+   ],
+   "bad": [
+    "zòng"
+   ],
+   "kind": "same_char_古音",
+   "src": "綜",
+   "full": "zònɡ",
+   "fq": "子宋切",
+   "suggest": "zòng→zōng"
+  },
+  {
+   "char": "蒋",
+   "app": "jiāng",
+   "cand": [
+    "jiǎng"
+   ],
+   "bad": [
+    "jiāng"
+   ],
+   "kind": "same_char_古音",
+   "src": "蔣",
+   "full": "jiānɡ",
+   "fq": "子良切",
+   "suggest": "jiāng→jiǎng"
+  },
+  {
+   "char": "喧",
+   "app": "huān",
+   "cand": [
+    "xuān",
+    "xuǎn"
+   ],
+   "bad": [
+    "huān"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "讙",
+   "full": "huān",
+   "fq": "呼官切",
+   "suggest": "huān→xuān"
+  },
+  {
+   "char": "嵌",
+   "app": "qiān",
+   "cand": [
+    "qiàn",
+    "hǎn",
+    "kàn"
+   ],
+   "bad": [
+    "qiān"
+   ],
+   "kind": "same_char_古音",
+   "src": "嵌",
+   "full": "qiān",
+   "fq": "口銜切",
+   "suggest": "qiān→qiàn"
+  },
+  {
+   "char": "链",
+   "app": "lián",
+   "cand": [
+    "liàn"
+   ],
+   "bad": [
+    "lián"
+   ],
+   "kind": "same_char_古音",
+   "src": "鏈",
+   "full": "lián",
+   "fq": "力延切",
+   "suggest": "lián→liàn"
+  },
+  {
+   "char": "湿",
+   "app": "tà",
+   "cand": [
+    "shī"
+   ],
+   "bad": [
+    "tà"
+   ],
+   "kind": "same_char_古音",
+   "src": "濕",
+   "full": "tà",
+   "fq": "他合切",
+   "suggest": "tà→shī"
+  },
+  {
+   "char": "缘",
+   "app": "yuàn",
+   "cand": [
+    "yuán"
+   ],
+   "bad": [
+    "yuàn"
+   ],
+   "kind": "same_char_古音",
+   "src": "緣",
+   "full": "yuàn",
+   "fq": "以絹切",
+   "suggest": "yuàn→yuán"
+  },
+  {
+   "char": "腥",
+   "app": "xìng",
+   "cand": [
+    "xīng"
+   ],
+   "bad": [
+    "xìng"
+   ],
+   "kind": "same_char_古音",
+   "src": "腥",
+   "full": "xìnɡ",
+   "fq": "穌佞切",
+   "suggest": "xìng→xīng"
+  },
+  {
+   "char": "溶",
+   "app": "yǒng",
+   "cand": [
+    "róng"
+   ],
+   "bad": [
+    "yǒng"
+   ],
+   "kind": "same_char_古音",
+   "src": "溶",
+   "full": "yǒnɡ",
+   "fq": "余隴切",
+   "suggest": "yǒng→róng"
+  },
+  {
+   "char": "雌",
+   "app": "cī",
+   "cand": [
+    "cí"
+   ],
+   "bad": [
+    "cī"
+   ],
+   "kind": "same_char_古音",
+   "src": "雌",
+   "full": "cī",
+   "fq": "此移切",
+   "suggest": "cī→cí"
+  },
+  {
+   "char": "颗",
+   "app": "kě",
+   "cand": [
+    "kē"
+   ],
+   "bad": [
+    "kě"
+   ],
+   "kind": "same_char_古音",
+   "src": "顆",
+   "full": "kě",
+   "fq": "苦惰切",
+   "suggest": "kě→kē"
+  },
+  {
+   "char": "煽",
+   "app": "shàn",
+   "cand": [
+    "shān"
+   ],
+   "bad": [
+    "shàn"
+   ],
+   "kind": "same_char_古音",
+   "src": "煽",
+   "full": "shàn",
+   "fq": "式戰切",
+   "suggest": "shàn→shān"
+  },
+  {
+   "char": "慷",
+   "app": "kàng",
+   "cand": [
+    "kāng"
+   ],
+   "bad": [
+    "kàng"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "忼",
+   "full": "kànɡ",
+   "fq": "苦浪切",
+   "suggest": "kàng→kāng"
+  },
+  {
+   "char": "醋",
+   "app": "zuó",
+   "cand": [
+    "cù",
+    "zuò"
+   ],
+   "bad": [
+    "zuó"
+   ],
+   "kind": "same_char_古音",
+   "src": "醋",
+   "full": "zuó",
+   "fq": "在各切",
+   "suggest": "zuó→zuò"
+  },
+  {
+   "char": "磕",
+   "app": "kài",
+   "cand": [
+    "kē",
+    "kě"
+   ],
+   "bad": [
+    "kài"
+   ],
+   "kind": "same_char_古音",
+   "src": "磕",
+   "full": "kài",
+   "fq": "口太切",
+   "suggest": "kài→kē"
+  },
+  {
+   "char": "影",
+   "app": "jǐng",
+   "cand": [
+    "yǐng"
+   ],
+   "bad": [
+    "jǐng"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "景",
+   "full": "jǐnɡ",
+   "fq": "居影切",
+   "suggest": "jǐng→yǐng"
+  },
+  {
+   "char": "鲫",
+   "app": "zéi",
+   "cand": [
+    "jì"
+   ],
+   "bad": [
+    "zéi"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "鰂",
+   "full": "zéi",
+   "fq": "昨則切",
+   "suggest": "zéi→jì"
+  },
+  {
+   "char": "憔",
+   "app": "jiāo",
+   "cand": [
+    "qiáo"
+   ],
+   "bad": [
+    "jiāo"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "䩌",
+   "full": "jiāo",
+   "fq": "即消切",
+   "suggest": "jiāo→qiáo"
+  },
+  {
+   "char": "缭",
+   "app": "liǎo",
+   "cand": [
+    "liáo"
+   ],
+   "bad": [
+    "liǎo"
+   ],
+   "kind": "same_char_古音",
+   "src": "繚",
+   "full": "liǎo",
+   "fq": "盧鳥切",
+   "suggest": "liǎo→liáo"
+  },
+  {
+   "char": "濒",
+   "app": "pín",
+   "cand": [
+    "bīn"
+   ],
+   "bad": [
+    "pín"
+   ],
+   "kind": "same_char_古音",
+   "src": "瀕",
+   "full": "pín",
+   "fq": "符眞切",
+   "suggest": "pín→bīn"
+  },
+  {
+   "char": "瞪",
+   "app": "chì",
+   "cand": [
+    "dèng"
+   ],
+   "bad": [
+    "chì"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "眙",
+   "full": "chì",
+   "fq": "丑吏切",
+   "suggest": "chì→dèng"
+  },
+  {
+   "char": "螺",
+   "app": "luǒ",
+   "cand": [
+    "luó"
+   ],
+   "bad": [
+    "luǒ"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "蠃",
+   "full": "luǒ",
+   "fq": "郎果切",
+   "suggest": "luǒ→luó"
+  },
+  {
+   "char": "镶",
+   "app": "ráng",
+   "cand": [
+    "xiāng"
+   ],
+   "bad": [
+    "ráng"
+   ],
+   "kind": "same_char_古音",
+   "src": "鑲",
+   "full": "ránɡ",
+   "fq": "汝羊切",
+   "suggest": "ráng→xiāng"
+  },
+  {
+   "char": "钋",
+   "app": "yīng",
+   "cand": [
+    "pō"
+   ],
+   "bad": [
+    "yīng"
+   ],
+   "kind": "same_char_古音",
+   "src": "钋",
+   "full": "yīnɡ",
+   "fq": "於陵切",
+   "suggest": "yīng→pō"
+  },
+  {
+   "char": "炀",
+   "app": "yàng",
+   "cand": [
+    "yáng"
+   ],
+   "bad": [
+    "yàng"
+   ],
+   "kind": "same_char_古音",
+   "src": "煬",
+   "full": "yànɡ",
+   "fq": "余亮切",
+   "suggest": "yàng→yáng"
+  },
+  {
+   "char": "忾",
+   "app": "xì",
+   "cand": [
+    "kài",
+    "qì"
+   ],
+   "bad": [
+    "xì"
+   ],
+   "kind": "same_char_古音",
+   "src": "愾",
+   "full": "xì",
+   "fq": "許旣切",
+   "suggest": "xì→kài"
+  },
+  {
+   "char": "纰",
+   "app": "bǐ",
+   "cand": [
+    "pī"
+   ],
+   "bad": [
+    "bǐ"
+   ],
+   "kind": "same_char_古音",
+   "src": "紕",
+   "full": "bǐ",
+   "fq": "卑履切",
+   "suggest": "bǐ→pī"
+  },
+  {
+   "char": "杻",
+   "app": "chūn",
+   "cand": [
+    "chǒu",
+    "niǔ"
+   ],
+   "bad": [
+    "chūn"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "杶",
+   "full": "chūn",
+   "fq": "敕倫切",
+   "suggest": "chūn→chǒu"
+  },
+  {
+   "char": "帙",
+   "app": "zhí",
+   "cand": [
+    "zhì"
+   ],
+   "bad": [
+    "zhí"
+   ],
+   "kind": "same_char_古音",
+   "src": "帙",
+   "full": "zhí",
+   "fq": "直質切",
+   "suggest": "zhí→zhì"
+  },
+  {
+   "char": "剀",
+   "app": "gāi",
+   "cand": [
+    "kǎi"
+   ],
+   "bad": [
+    "gāi"
+   ],
+   "kind": "same_char_古音",
+   "src": "剴",
+   "full": "ɡāi",
+   "fq": "五來切",
+   "suggest": "gāi→kǎi"
+  },
+  {
+   "char": "钍",
+   "app": "zhì",
+   "cand": [
+    "tǔ"
+   ],
+   "bad": [
+    "zhì"
+   ],
+   "kind": "same_char_古音",
+   "src": "钍",
+   "full": "zhì",
+   "fq": "支義切",
+   "suggest": "zhì→tǔ"
+  },
+  {
+   "char": "侉",
+   "app": "kuā",
+   "cand": [
+    "kuǎ",
+    "huá",
+    "è",
+    "wú"
+   ],
+   "bad": [
+    "kuā"
+   ],
+   "kind": "same_char_古音",
+   "src": "侉",
+   "full": "kuā",
+   "fq": "苦瓜切",
+   "suggest": "kuā→kuǎ"
+  },
+  {
+   "char": "侩",
+   "app": "guì",
+   "cand": [
+    "kuài"
+   ],
+   "bad": [
+    "guì"
+   ],
+   "kind": "same_char_古音",
+   "src": "儈",
+   "full": "ɡuì",
+   "fq": "古外切",
+   "suggest": "guì→kuài"
+  },
+  {
+   "char": "䏝",
+   "app": "zhuǎn",
+   "cand": [
+    "zhuān"
+   ],
+   "bad": [
+    "zhuǎn"
+   ],
+   "kind": "same_char_古音",
+   "src": "膞",
+   "full": "zhuǎn",
+   "fq": "市沇切",
+   "suggest": "zhuǎn→zhuān"
+  },
+  {
+   "char": "绉",
+   "app": "bí",
+   "cand": [
+    "zhòu"
+   ],
+   "bad": [
+    "bí"
+   ],
+   "kind": "same_char_古音",
+   "src": "绉",
+   "full": "bí",
+   "fq": "彼及切",
+   "suggest": "bí→zhòu"
+  },
+  {
+   "char": "茯",
+   "app": "bèi",
+   "cand": [
+    "fú"
+   ],
+   "bad": [
+    "bèi"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "絥",
+   "full": "bèi",
+   "fq": "平袐切",
+   "suggest": "bèi→fú"
+  },
+  {
+   "char": "荠",
+   "app": "cí",
+   "cand": [
+    "jì",
+    "qí"
+   ],
+   "bad": [
+    "cí"
+   ],
+   "kind": "same_char_古音",
+   "src": "薺",
+   "full": "cí",
+   "fq": "疾咨切",
+   "suggest": "cí→jì"
+  },
+  {
+   "char": "荨",
+   "app": "tán",
+   "cand": [
+    "xún",
+    "qián"
+   ],
+   "bad": [
+    "tán"
+   ],
+   "kind": "same_char_古音",
+   "src": "蕁",
+   "full": "tán",
+   "fq": "徒含切",
+   "suggest": "tán→xún"
+  },
+  {
+   "char": "哕",
+   "app": "yuē",
+   "cand": [
+    "huì",
+    "yuě"
+   ],
+   "bad": [
+    "yuē"
+   ],
+   "kind": "same_char_古音",
+   "src": "噦",
+   "full": "yuē",
+   "fq": "於月切",
+   "suggest": "yuē→yuě"
+  },
+  {
+   "char": "钯",
+   "app": "bā",
+   "cand": [
+    "bǎ",
+    "pá"
+   ],
+   "bad": [
+    "bā"
+   ],
+   "kind": "same_char_古音",
+   "src": "鈀",
+   "full": "bā",
+   "fq": "伯加切",
+   "suggest": "bā→bǎ"
+  },
+  {
+   "char": "俦",
+   "app": "dào",
+   "cand": [
+    "chóu"
+   ],
+   "bad": [
+    "dào"
+   ],
+   "kind": "same_char_古音",
+   "src": "儔",
+   "full": "dào",
+   "fq": "直由切",
+   "suggest": "dào→chóu"
+  },
+  {
+   "char": "俪",
+   "app": "lí",
+   "cand": [
+    "lì"
+   ],
+   "bad": [
+    "lí"
+   ],
+   "kind": "same_char_古音",
+   "src": "儷",
+   "full": "lí",
+   "fq": "呂支切",
+   "suggest": "lí→lì"
+  },
+  {
+   "char": "娈",
+   "app": "luǎn",
+   "cand": [
+    "luán"
+   ],
+   "bad": [
+    "luǎn"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "𡡗",
+   "full": "luǎn",
+   "fq": "力沇切",
+   "suggest": "luǎn→luán"
+  },
+  {
+   "char": "阂",
+   "app": "ài",
+   "cand": [
+    "hé"
+   ],
+   "bad": [
+    "ài"
+   ],
+   "kind": "same_char_古音",
+   "src": "閡",
+   "full": "ài",
+   "fq": "五漑切",
+   "suggest": "ài→hé"
+  },
+  {
+   "char": "洙",
+   "app": "shū",
+   "cand": [
+    "zhū"
+   ],
+   "bad": [
+    "shū"
+   ],
+   "kind": "same_char_古音",
+   "src": "洙",
+   "full": "shū",
+   "fq": "市朱切",
+   "suggest": "shū→zhū"
+  },
+  {
+   "char": "浍",
+   "app": "guì",
+   "cand": [
+    "huì",
+    "kuài"
+   ],
+   "bad": [
+    "guì"
+   ],
+   "kind": "same_char_古音",
+   "src": "澮",
+   "full": "ɡuì",
+   "fq": "古外切",
+   "suggest": "guì→huì"
+  },
+  {
+   "char": "娆",
+   "app": "niǎo",
+   "cand": [
+    "ráo",
+    "rǎo"
+   ],
+   "bad": [
+    "niǎo"
+   ],
+   "kind": "same_char_古音",
+   "src": "嬈",
+   "full": "niǎo",
+   "fq": "奴鳥切",
+   "suggest": "niǎo→ráo"
+  },
+  {
+   "char": "莼",
+   "app": "tuán",
+   "cand": [
+    "chún"
+   ],
+   "bad": [
+    "tuán"
+   ],
+   "kind": "same_char_古音",
+   "src": "蓴",
+   "full": "tuán",
+   "fq": "常倫切",
+   "suggest": "tuán→chún"
+  },
+  {
+   "char": "桡",
+   "app": "nào",
+   "cand": [
+    "ráo"
+   ],
+   "bad": [
+    "nào"
+   ],
+   "kind": "same_char_古音",
+   "src": "橈",
+   "full": "nào",
+   "fq": "女教切",
+   "suggest": "nào→ráo"
+  },
+  {
+   "char": "蚬",
+   "app": "xiàn",
+   "cand": [
+    "xiǎn"
+   ],
+   "bad": [
+    "xiàn"
+   ],
+   "kind": "same_char_古音",
+   "src": "蜆",
+   "full": "xiàn",
+   "fq": "胡典切",
+   "suggest": "xiàn→xiǎn"
+  },
+  {
+   "char": "钺",
+   "app": "huì",
+   "cand": [
+    "yuè"
+   ],
+   "bad": [
+    "huì"
+   ],
+   "kind": "same_char_古音",
+   "src": "鉞",
+   "full": "huì",
+   "fq": "呼會切",
+   "suggest": "huì→yuè"
+  },
+  {
+   "char": "铊",
+   "app": "shī",
+   "cand": [
+    "tā",
+    "tuó"
+   ],
+   "bad": [
+    "shī"
+   ],
+   "kind": "same_char_古音",
+   "src": "鉈",
+   "full": "shī",
+   "fq": "食遮切",
+   "suggest": "shī→tā"
+  },
+  {
+   "char": "隼",
+   "app": "zhuī",
+   "cand": [
+    "sǔn"
+   ],
+   "bad": [
+    "zhuī"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "鵻",
+   "full": "zhuī",
+   "fq": "思允切",
+   "suggest": "zhuī→sǔn"
+  },
+  {
+   "char": "颃",
+   "app": "gāng",
+   "cand": [
+    "háng"
+   ],
+   "bad": [
+    "gāng"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "亢",
+   "full": "ɡānɡ",
+   "fq": "古郎切",
+   "suggest": "gāng→háng"
+  },
+  {
+   "char": "涟",
+   "app": "lán",
+   "cand": [
+    "lián"
+   ],
+   "bad": [
+    "lán"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "瀾",
+   "full": "lán",
+   "fq": "洛干切",
+   "suggest": "lán→lián"
+  },
+  {
+   "char": "诹",
+   "app": "jū",
+   "cand": [
+    "zōu"
+   ],
+   "bad": [
+    "jū"
+   ],
+   "kind": "same_char_古音",
+   "src": "諏",
+   "full": "jū",
+   "fq": "子于切",
+   "suggest": "jū→zōu"
+  },
+  {
+   "char": "绥",
+   "app": "suī",
+   "cand": [
+    "suí"
+   ],
+   "bad": [
+    "suī"
+   ],
+   "kind": "same_char_古音",
+   "src": "綏",
+   "full": "suī",
+   "fq": "息遺切",
+   "suggest": "suī→suí"
+  },
+  {
+   "char": "掸",
+   "app": "dàn",
+   "cand": [
+    "dǎn",
+    "shàn"
+   ],
+   "bad": [
+    "dàn"
+   ],
+   "kind": "same_char_古音",
+   "src": "撣",
+   "full": "dàn",
+   "fq": "徒旱切",
+   "suggest": "dàn→dǎn"
+  },
+  {
+   "char": "梿",
+   "app": "liǎn",
+   "cand": [
+    "lián"
+   ],
+   "bad": [
+    "liǎn"
+   ],
+   "kind": "same_char_古音",
+   "src": "槤",
+   "full": "liǎn",
+   "fq": "里典切",
+   "suggest": "liǎn→lián"
+  },
+  {
+   "char": "铬",
+   "app": "luò",
+   "cand": [
+    "gè"
+   ],
+   "bad": [
+    "luò"
+   ],
+   "kind": "same_char_古音",
+   "src": "鉻",
+   "full": "luò",
+   "fq": "盧各切",
+   "suggest": "luò→gè"
+  },
+  {
+   "char": "羟",
+   "app": "qiān",
+   "cand": [
+    "qiǎng"
+   ],
+   "bad": [
+    "qiān"
+   ],
+   "kind": "same_char_古音",
+   "src": "羥",
+   "full": "qiān",
+   "fq": "口莖切",
+   "suggest": "qiān→qiǎng"
+  },
+  {
+   "char": "辍",
+   "app": "zhuó",
+   "cand": [
+    "chuò"
+   ],
+   "bad": [
+    "zhuó"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "罬",
+   "full": "zhuó",
+   "fq": "陟劣切",
+   "suggest": "zhuó→chuò"
+  },
+  {
+   "char": "嗟",
+   "app": "chā",
+   "cand": [
+    "jiē",
+    "jiè",
+    "juē"
+   ],
+   "bad": [
+    "chā"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "差",
+   "full": "chā",
+   "fq": "初牙切",
+   "suggest": "chā→jiē"
+  },
+  {
+   "char": "锑",
+   "app": "tí",
+   "cand": [
+    "tī"
+   ],
+   "bad": [
+    "tí"
+   ],
+   "kind": "same_char_古音",
+   "src": "銻",
+   "full": "tí",
+   "fq": "杜兮切",
+   "suggest": "tí→tī"
+  },
+  {
+   "char": "掣",
+   "app": "chì",
+   "cand": [
+    "chè"
+   ],
+   "bad": [
+    "chì"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "𤸪",
+   "full": "chì",
+   "fq": "尺制切",
+   "suggest": "chì→chè"
+  },
+  {
+   "char": "傧",
+   "app": "bìn",
+   "cand": [
+    "bīn"
+   ],
+   "bad": [
+    "bìn"
+   ],
+   "kind": "same_char_古音",
+   "src": "儐",
+   "full": "bìn",
+   "fq": "必刃切",
+   "suggest": "bìn→bīn"
+  },
+  {
+   "char": "颌",
+   "app": "hàn",
+   "cand": [
+    "hé",
+    "gé"
+   ],
+   "bad": [
+    "hàn"
+   ],
+   "kind": "same_char_古音",
+   "src": "頜",
+   "full": "hàn",
+   "fq": "胡感切",
+   "suggest": "hàn→hé"
+  },
+  {
+   "char": "痨",
+   "app": "lào",
+   "cand": [
+    "láo"
+   ],
+   "bad": [
+    "lào"
+   ],
+   "kind": "same_char_古音",
+   "src": "癆",
+   "full": "lào",
+   "fq": "郎到切",
+   "suggest": "lào→láo"
+  },
+  {
+   "char": "赓",
+   "app": "xù",
+   "cand": [
+    "gēng"
+   ],
+   "bad": [
+    "xù"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "續",
+   "full": "xù",
+   "fq": "似足切",
+   "suggest": "xù→gēng"
+  },
+  {
+   "char": "颏",
+   "app": "hái",
+   "cand": [
+    "kē",
+    "ké"
+   ],
+   "bad": [
+    "hái"
+   ],
+   "kind": "same_char_古音",
+   "src": "頦",
+   "full": "hái",
+   "fq": "戶來切",
+   "suggest": "hái→kē"
+  },
+  {
+   "char": "谥",
+   "app": "yì",
+   "cand": [
+    "shì"
+   ],
+   "bad": [
+    "yì"
+   ],
+   "kind": "same_char_古音",
+   "src": "謚",
+   "full": "yì",
+   "fq": "伊昔切",
+   "suggest": "yì→shì"
+  },
+  {
+   "char": "缇",
+   "app": "tǐ",
+   "cand": [
+    "tí"
+   ],
+   "bad": [
+    "tǐ"
+   ],
+   "kind": "same_char_古音",
+   "src": "緹",
+   "full": "tǐ",
+   "fq": "他禮切",
+   "suggest": "tǐ→tí"
+  },
+  {
+   "char": "趑",
+   "app": "cī",
+   "cand": [
+    "zī",
+    "cì"
+   ],
+   "bad": [
+    "cī"
+   ],
+   "kind": "same_char_古音",
+   "src": "趑",
+   "full": "cī",
+   "fq": "取私切",
+   "suggest": "cī→cì"
+  },
+  {
+   "char": "蓥",
+   "app": "yìng",
+   "cand": [
+    "yíng"
+   ],
+   "bad": [
+    "yìng"
+   ],
+   "kind": "same_char_古音",
+   "src": "鎣",
+   "full": "yìnɡ",
+   "fq": "烏定切",
+   "suggest": "yìng→yíng"
+  },
+  {
+   "char": "酰",
+   "app": "xī",
+   "cand": [
+    "xiān"
+   ],
+   "bad": [
+    "xī"
+   ],
+   "kind": "same_char_古音",
+   "src": "醯",
+   "full": "xī",
+   "fq": "呼雞切",
+   "suggest": "xī→xiān"
+  },
+  {
+   "char": "蜉",
+   "app": "liè",
+   "cand": [
+    "fú"
+   ],
+   "bad": [
+    "liè"
+   ],
+   "kind": "same_char_古音",
+   "src": "蜉",
+   "full": "liè",
+   "fq": "力輟切",
+   "suggest": "liè→fú"
+  },
+  {
+   "char": "锜",
+   "app": "yǐ",
+   "cand": [
+    "qí"
+   ],
+   "bad": [
+    "yǐ"
+   ],
+   "kind": "same_char_古音",
+   "src": "錡",
+   "full": "yǐ",
+   "fq": "魚綺切",
+   "suggest": "yǐ→qí"
+  },
+  {
+   "char": "敫",
+   "app": "yuè",
+   "cand": [
+    "jiǎo",
+    "qiāo",
+    "jiào"
+   ],
+   "bad": [
+    "yuè"
+   ],
+   "kind": "same_char_古音",
+   "src": "敫",
+   "full": "yuè",
+   "fq": "以灼切",
+   "suggest": "yuè→jiǎo"
+  },
+  {
+   "char": "腼",
+   "app": "tiǎn",
+   "cand": [
+    "miǎn"
+   ],
+   "bad": [
+    "tiǎn"
+   ],
+   "kind": "same_char_古音",
+   "src": "靦",
+   "full": "tiǎn",
+   "fq": "他典切",
+   "suggest": "tiǎn→miǎn"
+  },
+  {
+   "char": "滫",
+   "app": "xiū",
+   "cand": [
+    "xiǔ"
+   ],
+   "bad": [
+    "xiū"
+   ],
+   "kind": "same_char_古音",
+   "src": "滫",
+   "full": "xiū",
+   "fq": "息流切",
+   "suggest": "xiū→xiǔ"
+  },
+  {
+   "char": "蔷",
+   "app": "sè",
+   "cand": [
+    "qiáng"
+   ],
+   "bad": [
+    "sè"
+   ],
+   "kind": "same_char_古音",
+   "src": "薔",
+   "full": "sè",
+   "fq": "所力切",
+   "suggest": "sè→qiáng"
+  },
+  {
+   "char": "龇",
+   "app": "chái",
+   "cand": [
+    "zī"
+   ],
+   "bad": [
+    "chái"
+   ],
+   "kind": "same_char_古音",
+   "src": "齜",
+   "full": "chái",
+   "fq": "仕街切",
+   "suggest": "chái→zī"
+  },
+  {
+   "char": "蝈",
+   "app": "yù",
+   "cand": [
+    "guō"
+   ],
+   "bad": [
+    "yù"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "蜮",
+   "full": "yù",
+   "fq": "于逼切",
+   "suggest": "yù→guō"
+  },
+  {
+   "char": "睾",
+   "app": "yì",
+   "cand": [
+    "gāo",
+    "hào"
+   ],
+   "bad": [
+    "yì"
+   ],
+   "kind": "same_char_古音",
+   "src": "睪",
+   "full": "yì",
+   "fq": "羊益切",
+   "suggest": "yì→gāo"
+  },
+  {
+   "char": "麽",
+   "app": "mǒ",
+   "cand": [
+    "mó",
+    "má",
+    "ma",
+    "me"
+   ],
+   "bad": [
+    "mǒ"
+   ],
+   "kind": "same_char_古音",
+   "src": "麽",
+   "full": "mǒ",
+   "fq": "亡果切",
+   "suggest": "mǒ→mó"
+  },
+  {
+   "char": "樗",
+   "app": "huà",
+   "cand": [
+    "chū"
+   ],
+   "bad": [
+    "huà"
+   ],
+   "kind": "same_char_古音",
+   "src": "樗",
+   "full": "huà",
+   "fq": "乎化切",
+   "suggest": "huà→chū"
+  },
+  {
+   "char": "踔",
+   "app": "zhào",
+   "cand": [
+    "chuō",
+    "diào",
+    "zhuō",
+    "tiào",
+    "chuò"
+   ],
+   "bad": [
+    "zhào"
+   ],
+   "kind": "same_char_古音",
+   "src": "踔",
+   "full": "zhào",
+   "fq": "知教切",
+   "suggest": "zhào→zhuō"
+  },
+  {
+   "char": "缲",
+   "app": "zǎo",
+   "cand": [
+    "qiāo",
+    "sāo"
+   ],
+   "bad": [
+    "zǎo"
+   ],
+   "kind": "same_char_古音",
+   "src": "繰",
+   "full": "zǎo",
+   "fq": "親小切",
+   "suggest": "zǎo→qiāo"
+  },
+  {
+   "char": "缳",
+   "app": "xuàn",
+   "cand": [
+    "huán"
+   ],
+   "bad": [
+    "xuàn"
+   ],
+   "kind": "same_char_古音",
+   "src": "缳",
+   "full": "xuàn",
+   "fq": "胡畎切",
+   "suggest": "xuàn→huán"
+  },
+  {
+   "char": "髀",
+   "app": "bǐ",
+   "cand": [
+    "bì"
+   ],
+   "bad": [
+    "bǐ"
+   ],
+   "kind": "same_char_古音",
+   "src": "髀",
+   "full": "bǐ",
+   "fq": "并弭切",
+   "suggest": "bǐ→bì"
+  },
+  {
+   "char": "镣",
+   "app": "liáo",
+   "cand": [
+    "liào"
+   ],
+   "bad": [
+    "liáo"
+   ],
+   "kind": "same_char_古音",
+   "src": "鐐",
+   "full": "liáo",
+   "fq": "洛蕭切",
+   "suggest": "liáo→liào"
+  },
+  {
+   "char": "镫",
+   "app": "dēng",
+   "cand": [
+    "dèng"
+   ],
+   "bad": [
+    "dēng"
+   ],
+   "kind": "same_char_古音",
+   "src": "鐙",
+   "full": "dēnɡ",
+   "fq": "都滕切",
+   "suggest": "dēng→dèng"
+  },
+  {
+   "char": "鲽",
+   "app": "tà",
+   "cand": [
+    "dié"
+   ],
+   "bad": [
+    "tà"
+   ],
+   "kind": "same_char_古音",
+   "src": "鰈",
+   "full": "tà",
+   "fq": "土盍切",
+   "suggest": "tà→dié"
+  },
+  {
+   "char": "簪",
+   "app": "zēn",
+   "cand": [
+    "zān",
+    "zǎn"
+   ],
+   "bad": [
+    "zēn"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "兂",
+   "full": "zēn",
+   "fq": "側岑切",
+   "suggest": "zēn→zān"
+  },
+  {
+   "char": "鳟",
+   "app": "zùn",
+   "cand": [
+    "zūn"
+   ],
+   "bad": [
+    "zùn"
+   ],
+   "kind": "same_char_古音",
+   "src": "鱒",
+   "full": "zùn",
+   "fq": "慈損切",
+   "suggest": "zùn→zūn"
+  },
+  {
+   "char": "鹳",
+   "app": "huān",
+   "cand": [
+    "guàn"
+   ],
+   "bad": [
+    "huān"
+   ],
+   "kind": "same_char_古音",
+   "src": "鸛",
+   "full": "huān",
+   "fq": "呼官切",
+   "suggest": "huān→guàn"
+  },
+  {
+   "char": "戋",
+   "app": "cán",
+   "cand": [
+    "jiān"
+   ],
+   "bad": [
+    "cán"
+   ],
+   "kind": "same_char_古音",
+   "src": "戔",
+   "full": "cán",
+   "fq": "昨千切",
+   "suggest": "cán→jiān"
+  },
+  {
+   "char": "仝",
+   "app": "quán",
+   "cand": [
+    "tóng"
+   ],
+   "bad": [
+    "quán"
+   ],
+   "kind": "same_char_古音",
+   "src": "仝",
+   "full": "quán",
+   "fq": "疾緣切",
+   "suggest": "quán→tóng"
+  },
+  {
+   "char": "朸",
+   "app": "lè",
+   "cand": [
+    "lì"
+   ],
+   "bad": [
+    "lè"
+   ],
+   "kind": "same_char_古音",
+   "src": "朸",
+   "full": "lè",
+   "fq": "盧則切",
+   "suggest": "lè→lì"
+  },
+  {
+   "char": "轪",
+   "app": "dì",
+   "cand": [
+    "dài"
+   ],
+   "bad": [
+    "dì"
+   ],
+   "kind": "same_char_古音",
+   "src": "軑",
+   "full": "dì",
+   "fq": "特計切",
+   "suggest": "dì→dài"
+  },
+  {
+   "char": "呙",
+   "app": "kuā",
+   "cand": [
+    "guō"
+   ],
+   "bad": [
+    "kuā"
+   ],
+   "kind": "same_char_古音",
+   "src": "咼",
+   "full": "kuā",
+   "fq": "苦媧切",
+   "suggest": "kuā→guō"
+  },
+  {
+   "char": "玟",
+   "app": "méi",
+   "cand": [
+    "wén",
+    "mín"
+   ],
+   "bad": [
+    "méi"
+   ],
+   "kind": "same_char_古音",
+   "src": "玟",
+   "full": "méi",
+   "fq": "莫桮切",
+   "suggest": "méi→mín"
+  },
+  {
+   "char": "钐",
+   "app": "yáo",
+   "cand": [
+    "shān",
+    "shàn"
+   ],
+   "bad": [
+    "yáo"
+   ],
+   "kind": "same_char_古音",
+   "src": "钐",
+   "full": "yáo",
+   "fq": "余招切",
+   "suggest": "yáo→shān"
+  },
+  {
+   "char": "肭",
+   "app": "nǜ",
+   "cand": [
+    "nà",
+    "nù"
+   ],
+   "bad": [
+    "nǜ"
+   ],
+   "kind": "same_char_古音",
+   "src": "肭",
+   "full": "nǜ",
+   "fq": "女六切",
+   "suggest": "nǜ→nà"
+  },
+  {
+   "char": "肸",
+   "app": "xì",
+   "cand": [
+    "xī",
+    "bì"
+   ],
+   "bad": [
+    "xì"
+   ],
+   "kind": "same_char_古音",
+   "src": "肸",
+   "full": "xì",
+   "fq": "羲乙切",
+   "suggest": "xì→xī"
+  },
+  {
+   "char": "䌹",
+   "app": "jiōng",
+   "cand": [
+    "jiǒng"
+   ],
+   "bad": [
+    "jiōng"
+   ],
+   "kind": "same_char_古音",
+   "src": "絅",
+   "full": "jiōnɡ",
+   "fq": "古熒切",
+   "suggest": "jiōng→jiǒng"
+  },
+  {
+   "char": "昫",
+   "app": "xū",
+   "cand": [
+    "xù",
+    "xiǒng"
+   ],
+   "bad": [
+    "xū"
+   ],
+   "kind": "same_char_古音",
+   "src": "昫",
+   "full": "xū",
+   "fq": "火于切",
+   "suggest": "xū→xù"
+  },
+  {
+   "char": "𬬱",
+   "app": "yǐn",
+   "cand": [
+    "jīn"
+   ],
+   "bad": [
+    "yǐn"
+   ],
+   "kind": "same_char_古音",
+   "src": "釿",
+   "full": "yǐn",
+   "fq": "宜引切",
+   "suggest": "yǐn→jīn"
+  },
+  {
+   "char": "朏",
+   "app": "pěi",
+   "cand": [
+    "fěi",
+    "kū"
+   ],
+   "bad": [
+    "pěi"
+   ],
+   "kind": "same_char_古音",
+   "src": "朏",
+   "full": "pěi",
+   "fq": "普乃切",
+   "suggest": "pěi→fěi"
+  },
+  {
+   "char": "恔",
+   "app": "xiáo",
+   "cand": [
+    "jiǎo",
+    "xiào"
+   ],
+   "bad": [
+    "xiáo"
+   ],
+   "kind": "same_char_古音",
+   "src": "恔",
+   "full": "xiáo",
+   "fq": "下交切",
+   "suggest": "xiáo→xiào"
+  },
+  {
+   "char": "莶",
+   "app": "liǎn",
+   "cand": [
+    "xiān"
+   ],
+   "bad": [
+    "liǎn"
+   ],
+   "kind": "same_char_古音",
+   "src": "薟",
+   "full": "liǎn",
+   "fq": "良冉切",
+   "suggest": "liǎn→xiān"
+  },
+  {
+   "char": "莙",
+   "app": "jùn",
+   "cand": [
+    "jūn"
+   ],
+   "bad": [
+    "jùn"
+   ],
+   "kind": "same_char_古音",
+   "src": "莙",
+   "full": "jùn",
+   "fq": "渠殞切",
+   "suggest": "jùn→jūn"
+  },
+  {
+   "char": "剟",
+   "app": "zhuō",
+   "cand": [
+    "duō",
+    "chì"
+   ],
+   "bad": [
+    "zhuō"
+   ],
+   "kind": "same_char_古音",
+   "src": "剟",
+   "full": "zhuō",
+   "fq": "陟劣切",
+   "suggest": "zhuō→duō"
+  },
+  {
+   "char": "琎",
+   "app": "jīn",
+   "cand": [
+    "jìn"
+   ],
+   "bad": [
+    "jīn"
+   ],
+   "kind": "same_char_古音",
+   "src": "璡",
+   "full": "jīn",
+   "fq": "將鄰切",
+   "suggest": "jīn→jìn"
+  },
+  {
+   "char": "𬟽",
+   "app": "dòng",
+   "cand": [
+    "dōng"
+   ],
+   "bad": [
+    "dòng"
+   ],
+   "kind": "same_char_古音",
+   "src": "蝀",
+   "full": "dònɡ",
+   "fq": "多貢切",
+   "suggest": "dòng→dōng"
+  },
+  {
+   "char": "鸺",
+   "app": "jiù",
+   "cand": [
+    "xiū"
+   ],
+   "bad": [
+    "jiù"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "舊",
+   "full": "jiù",
+   "fq": "巨救切",
+   "suggest": "jiù→xiū"
+  },
+  {
+   "char": "𪣻",
+   "app": "lǒu",
+   "cand": [
+    "lóu"
+   ],
+   "bad": [
+    "lǒu"
+   ],
+   "kind": "same_char_古音",
+   "src": "塿",
+   "full": "lǒu",
+   "fq": "洛矦切",
+   "suggest": "lǒu→lóu"
+  },
+  {
+   "char": "溇",
+   "app": "lǚ",
+   "cand": [
+    "lóu"
+   ],
+   "bad": [
+    "lǚ"
+   ],
+   "kind": "same_char_古音",
+   "src": "漊",
+   "full": "lǚ",
+   "fq": "力主切",
+   "suggest": "lǚ→lóu"
+  },
+  {
+   "char": "愃",
+   "app": "xuǎn",
+   "cand": [
+    "xuān"
+   ],
+   "bad": [
+    "xuǎn"
+   ],
+   "kind": "same_char_古音",
+   "src": "愃",
+   "full": "xuǎn",
+   "fq": "況晚切",
+   "suggest": "xuǎn→xuān"
+  },
+  {
+   "char": "髢",
+   "app": "xī",
+   "cand": [
+    "dí"
+   ],
+   "bad": [
+    "xī"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "鬄",
+   "full": "xī",
+   "fq": "先彳切",
+   "suggest": "xī→dí"
+  },
+  {
+   "char": "稙",
+   "app": "zhí",
+   "cand": [
+    "zhī",
+    "zhì"
+   ],
+   "bad": [
+    "zhí"
+   ],
+   "kind": "same_char_古音",
+   "src": "稙",
+   "full": "zhí",
+   "fq": "常職切",
+   "suggest": "zhí→zhī"
+  },
+  {
+   "char": "鲏",
+   "app": "pī",
+   "cand": [
+    "pí"
+   ],
+   "bad": [
+    "pī"
+   ],
+   "kind": "same_char_古音",
+   "src": "鮍",
+   "full": "pī",
+   "fq": "𢾭羈切",
+   "suggest": "pī→pí"
+  },
+  {
+   "char": "裛",
+   "app": "yè",
+   "cand": [
+    "yì"
+   ],
+   "bad": [
+    "yè"
+   ],
+   "kind": "same_char_古音",
+   "src": "裛",
+   "full": "yè",
+   "fq": "於業切",
+   "suggest": "yè→yì"
+  },
+  {
+   "char": "𫘬",
+   "app": "xī",
+   "cand": [
+    "xí"
+   ],
+   "bad": [
+    "xī"
+   ],
+   "kind": "same_char_古音",
+   "src": "騱",
+   "full": "xī",
+   "fq": "胡雞切",
+   "suggest": "xī→xí"
+  },
+  {
+   "char": "𫚖",
+   "app": "jì",
+   "cand": [
+    "cǐ"
+   ],
+   "bad": [
+    "jì"
+   ],
+   "kind": "same_char_古音",
+   "src": "鮆",
+   "full": "jì",
+   "fq": "徂礼切",
+   "suggest": "jì→cǐ"
+  },
+  {
+   "char": "鲒",
+   "app": "jí",
+   "cand": [
+    "jié"
+   ],
+   "bad": [
+    "jí"
+   ],
+   "kind": "same_char_古音",
+   "src": "鮚",
+   "full": "jí",
+   "fq": "巨乙切",
+   "suggest": "jí→jié"
+  },
+  {
+   "char": "瘕",
+   "app": "xiá",
+   "cand": [
+    "jiǎ",
+    "xiā"
+   ],
+   "bad": [
+    "xiá"
+   ],
+   "kind": "same_char_古音",
+   "src": "瘕",
+   "full": "xiá",
+   "fq": "乎加切",
+   "suggest": "xiá→xiā"
+  },
+  {
+   "char": "皛",
+   "app": "xiào",
+   "cand": [
+    "xiǎo",
+    "jiǎo",
+    "pò"
+   ],
+   "bad": [
+    "xiào"
+   ],
+   "kind": "same_char_古音",
+   "src": "皛",
+   "full": "xiào",
+   "fq": "烏皎切",
+   "suggest": "xiào→xiǎo"
+  },
+  {
+   "char": "觭",
+   "app": "qī",
+   "cand": [
+    "jī",
+    "qǐ",
+    "qí"
+   ],
+   "bad": [
+    "qī"
+   ],
+   "kind": "same_char_古音",
+   "src": "觭",
+   "full": "qī",
+   "fq": "去奇切",
+   "suggest": "qī→qǐ"
+  },
+  {
+   "char": "翯",
+   "app": "xué",
+   "cand": [
+    "hè",
+    "hào"
+   ],
+   "bad": [
+    "xué"
+   ],
+   "kind": "same_char_古音",
+   "src": "翯",
+   "full": "xué",
+   "fq": "胡角切",
+   "suggest": "xué→hè"
+  },
+  {
+   "char": "𨱔",
+   "app": "zùn",
+   "cand": [
+    "zūn"
+   ],
+   "bad": [
+    "zùn"
+   ],
+   "kind": "same_char_古音",
+   "src": "鐏",
+   "full": "zùn",
+   "fq": "徂寸切",
+   "suggest": "zùn→zūn"
+  },
+  {
+   "char": "髃",
+   "app": "ǒu",
+   "cand": [
+    "yú"
+   ],
+   "bad": [
+    "ǒu"
+   ],
+   "kind": "same_char_古音",
+   "src": "髃",
+   "full": "ǒu",
+   "fq": "午口切",
+   "suggest": "ǒu→yú"
+  },
+  {
+   "char": "酂",
+   "app": "zuǎn",
+   "cand": [
+    "cuó",
+    "zàn"
+   ],
+   "bad": [
+    "zuǎn"
+   ],
+   "kind": "same_char_古音",
+   "src": "酇",
+   "full": "zuǎn",
+   "fq": "作管切",
+   "suggest": "zuǎn→cuó"
+  },
+  {
+   "char": "鳒",
+   "app": "qiàn",
+   "cand": [
+    "jiān"
+   ],
+   "bad": [
+    "qiàn"
+   ],
+   "kind": "same_char_古音",
+   "src": "鰜",
+   "full": "qiàn",
+   "fq": "古甜切",
+   "suggest": "qiàn→jiān"
+  },
+  {
+   "char": "彟",
+   "app": "huò",
+   "cand": [
+    "yuē"
+   ],
+   "bad": [
+    "huò"
+   ],
+   "kind": "cross_ref_串档",
+   "src": "蒦",
+   "full": "huò",
+   "fq": "乙虢切",
+   "suggest": "huò→yuē"
+  },
+  {
+   "char": "𬙋",
+   "app": "rǎng",
+   "cand": [
+    "xiāng"
+   ],
+   "bad": [
+    "rǎng"
+   ],
+   "kind": "same_char_古音",
+   "src": "纕",
+   "full": "rǎnɡ",
+   "fq": "汝羊切",
+   "suggest": "rǎng→xiāng"
+  },
+  {
+   "char": "鳠",
+   "app": "huà",
+   "cand": [
+    "hù"
+   ],
+   "bad": [
+    "huà"
+   ],
+   "kind": "same_char_古音",
+   "src": "鳠",
+   "full": "huà",
+   "fq": "胡化切",
+   "suggest": "huà→hù"
+  }
+ ]
+}
